@@ -1,9 +1,9 @@
 import './Botao.css'
 
-const Botao = () => {
+const Botao = (props) => {
   return (
     <>
- 
+    <button type='submit'>{props.nomeBotao}</button>
     </>
   )
 }

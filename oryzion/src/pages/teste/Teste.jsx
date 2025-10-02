@@ -1,10 +1,15 @@
-import Header from "../../components/header/Header"
+// import Header from "../../components/header/Header"
+// import Botao from "../../components/botao/Botao"
+// import Footer from "../../components/footer/Footer"
+
 
 const Teste = () => {
     return (
         <>
-            {/* <Header/> */}
-            
+        {/* <Header/> */}
+        {/* <Botao/> */}
+        {/* <Footer/> */}
+
         </>
     )
 }
