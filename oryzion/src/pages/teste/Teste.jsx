@@ -1,9 +1,11 @@
-import Footer from "../../components/footer/Footer";
+
+import Botao from "../../components/botao/Botao"
+
 
 const Teste = () => {
     return (
         <>
-        <Footer/>
+        <Botao/>
         </>
     )
 }
