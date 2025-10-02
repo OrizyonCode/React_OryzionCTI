@@ -1,10 +1,10 @@
 button {
-    width: 180px;
+    width: 170px;
     height: 45px;
     border: 2px solid white;
     border-radius: 10px;
     font-weight: bold;
-    background-color: #040F1E;
+    background-color: #ffffff00;
     color: white;
     font-size: 19px;
 }
