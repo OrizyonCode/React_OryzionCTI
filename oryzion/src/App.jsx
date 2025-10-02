@@ -1,10 +1,13 @@
 import './App.css'
-import Teste from "./pages/teste/Teste";
+import Login from './pages/login/Login';
+// import Teste from "./pages/teste/Teste";
+
 
 function App() {
   return (
     <>
-      <Teste/>
+      {/* <Teste/> */}
+      <Login/>
     </>
   )
 }
