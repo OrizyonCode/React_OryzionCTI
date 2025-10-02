@@ -1,7 +1,10 @@
+import Header from "../../components/header/Header"
+
 const Teste = () => {
     return (
         <>
-
+            {/* <Header/> */}
+            
         </>
     )
 }

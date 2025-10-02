@@ -1,3 +1,37 @@
-h1{
+header{
+    background-color: #040F1E;
+    height: 90px;
+    box-shadow: 4px 3px 6px rgba(0, 0, 0, 0.715);
+}
+
+.header_header{
+    display: flex
+;
+    padding: 20px;
+    color: white;
+    height: 85px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px 20px; */
+}
+
+.header_pefil{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
     color: white;
 }
+
+.header_pefil h3{
+    margin-right: 15px;
+    font-weight: 300;
+}
+
+
+

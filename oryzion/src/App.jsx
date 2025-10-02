@@ -4,7 +4,7 @@ import Teste from "./pages/teste/Teste";
 function App() {
   return (
     <>
-    <Teste/>
+      <Teste/>
     </>
   )
 }
