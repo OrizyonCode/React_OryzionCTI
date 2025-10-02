@@ -1,0 +1,20 @@
+.divs_card{
+    height: 200px;
+    background-color: blanchedalmond;
+    display: flex;
+    width: 600px;
+}
+
+.info_usuario img{
+ width: 70px;
+}
+
+.transcr_audio{
+    margin-left: 50px;
+}
+
+.audio_duracao img{
+    height: 90px;
+    width: 150px;
+}
+

@@ -1,17 +1,18 @@
 import React from "react";
 import "./perfilCliente.css";
 import iconePerfil from "../../assets/img/IconSuporte.svg";
+import Botao from '../../components/botao/Botao'
 
 const clientePerfil = () => {
   return (
-    <div className="container-perfil">
+    <section className="container-perfil">
       <div className="lado-esquerdo-perfil">
         <div className="voltar">← Voltar</div>
-
-        <div className="imagem-perfil">
+          <div className="imagem-perfil">
           <img src={iconePerfil} alt="Foto de perfil" />
-          <input type="file" className="botao-upload" />
-        </div>
+
+          </div>
+ 
 
         <div className="entrada-upload">
           <input
@@ -20,7 +21,8 @@ const clientePerfil = () => {
             placeholder="Upload de Imagem"
             name="imagem"
           />
-          <button className="botao-alterar">Alterar</button>
+          <Botao
+            nomeBotao="Alterar" />
         </div>
 
         <input
@@ -41,7 +43,9 @@ const clientePerfil = () => {
       </div>
 
       <div className="lado-direito-perfil">
-        <h2>Dados Adicionais:</h2>
+        <div className="centralizar">
+          <h2>Dados Adicionais:</h2>
+        </div>
         <input
           type="email"
           placeholder="Email"
@@ -52,9 +56,12 @@ const clientePerfil = () => {
           placeholder="Endereço"
           name="endereco"
         />
-        <button className="botao-salvar">Salvar</button>
+        <div className="centralizar">
+          <Botao
+            nomeBotao="Salvar" />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
