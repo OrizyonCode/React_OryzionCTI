@@ -20,8 +20,8 @@ const Card = () => {
                         <button>Responder </button>
                     </div>
 
-                    <div className=''>
-                        <img src="" alt="" />
+                    <div className='audio_duracao'>
+                        <img src={audio} alt="" />
                         <img src="" alt="" />
                     </div>
 
