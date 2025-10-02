@@ -1,0 +1,101 @@
+.todoOLogin {
+    background-color: #040F1E;
+    color: white;
+}
+
+.paraCentralizar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+
+.borda {
+    border: 2px solid white;
+    height: 90vh;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+
+    background-image:
+        url('../../assets/img/direita.svg'),
+        url('../../assets/img/esquerda.svg');
+
+    background-repeat: no-repeat, no-repeat;
+
+    background-position:
+        top 20px right 20px,
+        bottom 20px left 20px;
+
+    background-size: 250px, 250px;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 500px;
+    gap: 5px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 80px;
+    font-size: 30px;
+}
+
+h1 {
+    font-weight: 100;
+}
+
+.botao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 80px;
+}
+
+input {
+    background-color: white;
+    outline: none;
+    border: none;
+    color: black;
+    text-decoration: none;
+    height: 35px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-left: 8px;
+}
+
+a {
+    color: white;
+
+}
+
+/* --- Media Query para Telas Pequenas (Mobile) --- */
+@media screen and (max-width: 600px) {
+    .borda {
+        width: 340px;
+        background-size: 100px, 100px;
+    }
+
+    form {
+        width: 270px;
+    }
+
+    h1 {
+           
+    }
+}

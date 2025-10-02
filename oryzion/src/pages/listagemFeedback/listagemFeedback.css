@@ -1,0 +1,15 @@
+.listagem_feedback{
+    background-color: white;
+    height: 100vh;
+}
+
+.listagem_feedback{
+    display: flex;
+}
+
+.menu_lateral{
+    background-color: blue;
+    width: 30%;
+}
+
+

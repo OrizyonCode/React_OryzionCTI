@@ -1,10 +1,12 @@
 import './App.css'
-import Teste from "./pages/teste/Teste";
+import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
+import Login from './pages/login/Login';
+
 
 function App() {
   return (
     <>
-      <Teste/>
+      <ListagemFeedback/>
     </>
   )
 }
