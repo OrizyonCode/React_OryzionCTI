@@ -95,7 +95,13 @@ a {
         width: 270px;
     }
 
-    h1 {
-        
+    .titulo {
+        margin-bottom: 40px;
+        font-size: 25px;
+    }
+
+    .link {
+        margin-bottom: 40px;
     }
 }
+
