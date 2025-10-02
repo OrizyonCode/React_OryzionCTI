@@ -1,6 +1,4 @@
-
 import Botao from "../../components/botao/Botao"
-
 
 const Teste = () => {
     return (
