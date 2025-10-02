@@ -10,3 +10,9 @@ body {
   display: grid;
   min-height: 100vh;
 }
+
+.layout_grid {
+    width: 100%;
+    max-width: 85%;
+    margin: 0 auto;
+}

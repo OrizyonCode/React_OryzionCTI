@@ -1,0 +1,131 @@
+.container-perfil {
+  display: flex;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.lado-esquerdo-perfil,
+.lado-direito-perfil {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+}
+
+.centralizar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lado-esquerdo-perfil {
+  background-color: #2c3051;
+}
+
+.voltar {
+  align-self: flex-start;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.imagem-perfil {
+  display: flex;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.imagem-perfil img {
+  width: 30%;
+}
+
+.lado-esquerdo-perfil input {
+  background-color: white;
+  outline: none;
+  border: none;
+  color: black;
+  text-decoration: none;
+  height: 35px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding-left: 8px;
+
+}
+
+.lado-direito-perfil {
+  background-color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+}
+
+.lado-direito-perfil h2 {
+  margin-bottom: 20px;
+}
+
+.lado-direito-perfil input {
+  background-color: white;
+  outline: none;
+  border: none;
+  color: black;
+  text-decoration: none;
+  height: 35px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding-left: 8px;
+}
+
+.entrada-upload {
+  display: flex;
+  gap: 5%;
+  justify-content: space-between;
+  align-items: baseline
+}
+
+.input-upload-imagem {
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .container-perfil {
+    flex-direction: column;
+    height: auto;
+    /* deixa crescer conforme conteúdo */
+  }
+
+  .lado-esquerdo-perfil,
+  .lado-direito-perfil {
+    padding: 30px;
+    flex: none;
+    width: 100%;
+  }
+
+  .imagem-perfil img {
+    width: 50%;
+    /* aumenta pra caber melhor na tela menor */
+  }
+
+  .entrada-upload {
+    align-items: stretch;
+    flex-direction: row;
+    align-items: baseline;
+    display: flex;
+  }
+
+  .lado-direito-perfil h2 {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  input,
+  button {
+    width: 100%;
+  }
+}

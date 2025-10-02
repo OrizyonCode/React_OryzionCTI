@@ -7,7 +7,11 @@ import Card from "../../components/card/Card"
 const Teste = () => {
     return (
         <>
+<<<<<<< HEAD
+        <Card/>
+=======
          <Card/>
+>>>>>>> eae2d3c048f0707930f9f6cf4323c2e7cdfff9ac
         {/* <Header/> */}
         {/* <Botao/> */}
         {/* <Footer/> */}
@@ -16,4 +20,4 @@ const Teste = () => {
     )
 }
 
-export default Teste
+export default Teste;

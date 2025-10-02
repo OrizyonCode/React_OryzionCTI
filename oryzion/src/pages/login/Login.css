@@ -1,4 +1,4 @@
-body {
+.todoOLogin {
     background-color: #040F1E;
     color: white;
 }
@@ -21,18 +21,18 @@ body {
     align-items: center;
     border-radius: 15px;
 
-      background-image:
+    background-image:
         url('../../assets/img/direita.svg'),
         url('../../assets/img/esquerda.svg');
 
     background-repeat: no-repeat, no-repeat;
 
-    background-position: 
-        top right, 
-        bottom left;
+    background-position:
+        top 20px right 20px,
+        bottom 20px left 20px;
 
-    background-size: 200px, 200px;
-    
+    background-size: 250px, 250px;
+
 }
 
 form {
@@ -78,3 +78,35 @@ input {
     margin-bottom: 20px;
     padding-left: 8px;
 }
+
+a {
+    color: white;
+
+}
+
+/* --- Media Query para Telas Pequenas (Mobile) --- */
+@media screen and (max-width: 600px) {
+    .borda {
+        width: 340px;
+        background-size: 100px, 100px;
+    }
+
+    form {
+        width: 270px;
+    }
+
+<<<<<<< HEAD
+    h1 {
+           
+=======
+    .titulo {
+        margin-bottom: 40px;
+        font-size: 25px;
+>>>>>>> a166a1031ad9d3d45c2ffffa3a261668b436b7b8
+    }
+
+    .link {
+        margin-bottom: 40px;
+    }
+}
+
