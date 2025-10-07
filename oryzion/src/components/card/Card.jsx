@@ -7,7 +7,6 @@ import Botao from '../botao/Botao'
 
 const Card = () => {
   return (
-    <section className='card'>
         <div className='divs_card'>
             <div className='campo_usuario'>
                 <img src={imgUsuario} alt="" />
@@ -27,7 +26,6 @@ const Card = () => {
                 </div>
                 </div>
        
-    </section>
   )
 }
 

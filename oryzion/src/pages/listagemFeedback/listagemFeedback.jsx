@@ -15,7 +15,7 @@ const ListagemFeedback = () => {
                     <div className='menu_lateral'>
 
                     </div>
-
+                        
                     <div className='listagem_feed'>
 
                     </div>
