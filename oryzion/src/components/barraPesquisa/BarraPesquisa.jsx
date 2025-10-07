@@ -1,7 +1,7 @@
 import React from 'react';
-import FundoBarraPesquisa from "../../assets/BarraPesquisa.png";
+import FundoBarraPesquisa from "../../assets/img/BarraPesquisa.png";
 import './BarraPesquisa.css'; 
-import Lupa from "../../assets/Search.svg"
+import Lupa from "../../assets/img/Search.svg"
 
 const BarraPesquisa = () => {
   return (
@@ -11,9 +11,9 @@ const BarraPesquisa = () => {
         style={{ backgroundImage: `url(${FundoBarraPesquisa})` }}
       >
         <div className='pesquisas_link'>
-          <div className="search-box">
+          <div className="input_pesquisa">
             <img src={Lupa} alt="Buscar" className="search-icon" />
-            <input type="text" className="search-input" placeholder="Pesquise aqui" />
+            <input type="text" className="inpu_arrumando" placeholder="Pesquise aqui" />
           </div>
 
           <div className='links_barrapesquisa'>
