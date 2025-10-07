@@ -50,7 +50,6 @@ const ListagemFeedback = () => {
                     </div>
                 </section>
 
-
                 <section className='listagem_feedbacks'>
                     <Card/>
                 </section>

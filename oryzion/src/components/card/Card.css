@@ -1,88 +1,89 @@
-
-.divs_card{
-    /* height: 200px; */
-    height: 180px;
-    background-color: #FFFFFF;
-    display: flex;
-    width: 750px;
-    padding: 25px;
-    border-radius: 12px;
+.divs_card {
+  background-color: #FFFFFF;
+  display: flex;
+  gap: 20px;
+  width: 750px;
+  padding: 20px;
+  border-radius: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  box-shadow: 4px 15px 15px rgba(0, 0, 0, 0.1);
 }
 
-.campo_usuario img{
-    width: 90px;
+/* --- Usuário --- */
+.campo_usuario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 120px;
+  color: #2c2c2c;
+  padding: 10px;
+  gap: 10px;
 }
 
-.campo_usuario{
-    color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.campo_usuario img {
+  width: 80px;
+  border-radius: 50%;
 }
 
-.campo_feedback p {
-    
+.campo_usuario .avaliacao {
+  margin-top: 5px;
+  width: 70px;
 }
 
-
-
-.campo_audio img{
-    
-    width: 190px;
-    margin-top: 100px;
+/* --- Feedback --- */
+.campo_feedback {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-
-.campo_comentario{
-    margin-left: 50px;
-    color: black;
-    background-color: #DADDE9;
-    padding: 20px;
-    width: 730px;
-    height: 50px;
-    display: flex;
-    border-radius: 20px;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.campo_comentario p{
-    line-height: 25px;
-    font-family: "Poppins", sans-serif;
-}
-
-.campo_audio img, .duracao{
-    background-color: #DADDE9;
-    margin-top: 20px;
-    height: 3px;
-    width: 300px;
-    margin-left: 50px;
-    border-radius: 20px;
-}
-
-.campo_audio img{
-    height: 45px;
-}
-
-
-.campo_audio .duracao{
-    color: black;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 160px;
-    height: 65px;
-    margin-left: 17px;
-    font-size: 20px;
-    
-}
-
-.campo_audio{
-   display: flex;
-   
+/* Caixa de comentário */
+.campo_comentario {
+  background-color: #dadde9;
+  border-radius: 20px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 
 .campo_comentario p {
-    font-size: 20px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  line-height: 22px;
+  flex: 1;
+}
+
+/* --- Áudio --- */
+.campo_audio {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.audio_player {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #dadde9;
+  border-radius: 20px;
+  padding: 8px 15px;
+}
+
+.audio_player img {
+  width: 120px;
+}
+
+.duracao {
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    width: 30%;
+  background-color: #DADDE9;
+  font-weight: bold;
+  font-size: 18px;
 }

@@ -96,6 +96,8 @@ a {
     }
 
     h1 {
+     color: red;
+    }
            
     .titulo {
         margin-bottom: 40px;
@@ -105,5 +107,4 @@ a {
     .link {
         margin-bottom: 40px;
     }
-}
 }
