@@ -29,7 +29,7 @@ const CardHistorico = () => {
               <p>Feedbacks neutros: 3</p>
             </div>
 
-            <Botao nomeBotao="Responda aqui" /> 
+            
           </div>
 
           <div className="comportamento">
@@ -37,6 +37,10 @@ const CardHistorico = () => {
             <p><b>Simpatico</b></p>
             <p><b>Calmo</b></p>
             <p><b>Atencioso</b></p>
+
+          </div>
+          <div className='botao_responda'>
+        <Botao nomeBotao="Responda aqui" /> 
           </div>
         </div>  
     )

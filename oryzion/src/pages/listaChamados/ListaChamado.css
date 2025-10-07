@@ -1,0 +1,23 @@
+.lista_btao{
+    background-color: #313D65;
+}
+
+.img_adiciona img{
+    height: 20px;
+    
+}
+
+.img_adiciona{
+    padding: 30px;
+}
+
+.tabela_chamados{
+    
+    align-items: center;
+    width: 70%;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    border-color: 5px solid red;
+    
+}
