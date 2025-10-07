@@ -13,7 +13,6 @@ function App() {
   return (
     <>
       {/* <Login/> */}
-      <ListagemFeedback/>
       {/* <Teste/> */}
       {/* <ClientePerfil/> */}
       {/* <Login/> */}
