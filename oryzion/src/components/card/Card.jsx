@@ -1,13 +1,12 @@
 import React from 'react'
 import './Card.css'
-import audio from "../../assets/audio.svg"
-import avaliacao from "../../assets/estrelas.svg"
-import imgUsuario from "../../assets/Usuario.svg"
+import audio from "../../assets/img/audio.svg"
+import avaliacao from "../../assets/img/estrelas.svg"
+import imgUsuario from "../../assets/img/Usuario.svg"
 import Botao from '../botao/Botao'
 
 const Card = () => {
   return (
-    <section className='card'>
         <div className='divs_card'>
             <div className='campo_usuario'>
                 <img src={imgUsuario} alt="" />
@@ -20,14 +19,13 @@ const Card = () => {
                         <Botao nomeBotao = "Responder "/>
                     </div>
                         
-                    <div className='campo_audio'>
+                </div>
+                <div className='campo_audio'>
                         <img src={audio} alt="" />
                         <p className='duracao'>1:30 </p>
                     </div>
                 </div>
-                </div>
        
-    </section>
   )
 }
 
