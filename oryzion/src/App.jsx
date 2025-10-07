@@ -1,14 +1,8 @@
-
-
-import './App.css'
-// import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
+import ClientePerfil from "./pages/perfilCliente/perfilCliente";
+// import './App.css';
 // import Login from './pages/login/Login';
 // import Teste from "./pages/teste/Teste";
-// import ClientePerfil from "./pages/perfil_cliente/perfilCliente";
-import './App.css';
-// import Login from './pages/login/Login';
-// import Teste from "./pages/teste/Teste";
-import ChatCliente from './pages/chatCliente/ChatCliente';
+// import ChatCliente from './pages/chatCliente/ChatCliente';
 
 
 function App() {
@@ -18,9 +12,9 @@ function App() {
       {/* <Login/> */}
       {/* <ListagemFeedback/> */}
       {/* <Teste/> */}
-      {/* <ClientePerfil/> */}
+      <ClientePerfil/>
       {/* <Login/> */}
-      <ChatCliente/>
+      {/* <ChatCliente/> */}
   
     </>
   );

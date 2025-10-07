@@ -1,9 +1,9 @@
 .container-perfil {
   display: flex;
-  height: 100vh;
-  max-height: 100%;
+  flex: 1; /* cresce para ocupar o espaço disponível */
   max-width: 100%;
   border-radius: 10px;
+  background-color: #0f172a;
 }
 
 .lado-esquerdo-perfil,
