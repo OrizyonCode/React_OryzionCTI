@@ -13,7 +13,7 @@ function App() {
       {/* <Login/> */}
       <ListagemFeedback/>
       {/* <Teste/> */}
-      <ClientePerfil/>
+      {/* <ClientePerfil/> */}
       {/* <Login/> */}
     </>
   );
