@@ -1,4 +1,4 @@
-.todoOLogin {
+.todoOChamado {
     background-color: #040F1E;
     color: white;
 }
@@ -11,8 +11,14 @@
     width: 100%;
 }
 
+.voltar {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 100px;
+}
 
 .borda {
+    flex-direction: column;
     border: 2px solid white;
     height: 90vh;
     width: 95%;
