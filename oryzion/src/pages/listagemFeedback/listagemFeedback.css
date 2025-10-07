@@ -1,10 +1,12 @@
 
+
 /***************** MAIN ********************/
 
 main{
     background-color: white;
     width: 100%;
     height: 100%;
+    font-family: "Poppins", sans-serif;
 }
 
 
@@ -97,4 +99,38 @@ main{
 
 /*************** LISTAGEM FEEDBACKS ************/
 
+.listagem_feedbacks{
+    height: 150vh;
+}
 
+.qtd_feedback{
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+
+.qtd_feedback h2{
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.qtd_feedback hr{
+    border: 1px solid #040F1E;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.listagem_cards{
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 160vh;
+
+}
+
+.listagem_feedbacks{
+    display: flex;
+    
+}

@@ -17,7 +17,7 @@ function App() {
       {/* <Teste/> */}
       {/* <ClientePerfil/> */}
       {/* <Login/> */}
-      <HistoricoFeedback/>
+      {/* <HistoricoFeedback/> */}
 
     </>
   );

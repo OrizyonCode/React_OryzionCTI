@@ -11,7 +11,7 @@ const Card = () => {
             <div className='campo_usuario'>
                 <img src={imgUsuario} alt="" />
                 <p>Rikelme</p>
-                <img src={avaliacao} alt="" />
+              
             </div>
                 <div className='campo_feedback'>
                     <div className='campo_comentario'>

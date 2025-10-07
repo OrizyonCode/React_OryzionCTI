@@ -1,0 +1,59 @@
+.menu_paginas button{
+    background-color: #313D65;
+    height: 150px;
+    width: 20px;
+    border-radius: 0px 20px 20px 0px;
+}
+
+
+.menu_lateral{
+    background-color: white;
+    height: 130vh;
+    width: 400px;
+    border-radius: 0px 20px 20px 0px;
+    box-shadow: 10px 5px 15px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.icons_menu{
+    background-color: #313D65;
+    width: 90px;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    
+}
+
+.icons{
+    margin-top: 300px;
+}
+
+.icons img{
+    margin-top: 15px;
+}
+
+
+.usuario{
+    display: flex;
+    flex-direction: row;
+}
+
+.menu_lateral .usuarioIcon{
+    height: 100px;
+    margin-top: -400px;
+    margin-left: 100px;
+}
+
+.menu_paginas{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+
+
