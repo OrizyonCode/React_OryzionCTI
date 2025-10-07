@@ -2,8 +2,8 @@ import React from "react";
 import "./perfilCliente.css";
 import iconePerfil from "../../assets/img/IconSuporte.svg";
 import Botao from "../../components/botao/Botao";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 
 const ClientePerfil = () => {
   return (
