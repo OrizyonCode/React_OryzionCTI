@@ -11,7 +11,7 @@ const TelaInicialSuporte = () => {
         <>
             < Header />
             <div className="layout_grid centralizacao">
-                <div className="titulo"><h1>Olá, (Nome)</h1></div>
+                <div className="titulo"><h1>Olá, (Nome)</h1><p>Acesse as páginas de Chamados e Feedbacks clicando em um dos campos abaixo.</p></div>
                 <div className="campos">
                     <div className="campo_um">
                         <img className='campo_um' src={campo_um} alt="" />
