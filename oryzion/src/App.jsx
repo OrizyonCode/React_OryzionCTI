@@ -1,10 +1,11 @@
+
 import './App.css'
-import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
-import Login from './pages/login/Login';
-import ClientePerfil from "./pages/perfil_cliente/perfilCliente";
-import TelaInicialSuporte from './pages/telaIncialSuporte/TelaIncialSuporte';
-import Teste from "./pages/teste/Teste";
-import HistoricoFeedback from './pages/historicoFeedback/HistoricoFeedback';
+// import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
+// import Login from './pages/login/Login';
+// import Teste from "./pages/teste/Teste";
+// import ClientePerfil from "./pages/perfil_cliente/perfilCliente";
+// import ChatCliente from './pages/chatCliente/ChatCliente';
+
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       {/* <ListagemFeedback/> */}
       {/* <ClientePerfil/> */}
       {/* <Teste/> */}
-      <HistoricoFeedback/>
+      {/* <HistoricoFeedback/> */}
     </>
   );
 }
