@@ -1,9 +1,11 @@
 .container-perfil {
   display: flex;
-  flex: 1; /* cresce para ocupar o espaço disponível */
+  flex: 1;
   max-width: 100%;
   border-radius: 10px;
   background-color: #0f172a;
+  width: 100%;
+  min-height: 0;
 }
 
 .lado-esquerdo-perfil,
@@ -13,17 +15,19 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-
+  padding: 20px 10% 20px 10%;
+  ;
 }
 
 .centralizar {
+  margin: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .lado-esquerdo-perfil {
-  background-color: #2c3051;
+  background-color: #313D65;
 }
 
 .voltar {
@@ -34,11 +38,10 @@
 
 .imagem-perfil {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5%;
 }
 
 .imagem-perfil img {
@@ -59,7 +62,7 @@
 }
 
 .lado-direito-perfil {
-  background-color: #0f172a;
+  background-color: #040F1E;
   display: flex;
   flex-direction: column;
   color: white;
