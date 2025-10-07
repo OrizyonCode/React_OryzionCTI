@@ -12,14 +12,10 @@ function App() {
       {/* < TelaInicialSuporte /> */}
       {/* falta adicionar o texto quando passar o mouse por cima */}
       {/* <Login/>      */}
-      {/* <ListagemFeedback/>      */}
+      {/* <ListagemFeedback/> */}
       {/* <ClientePerfil/> */}
-      {/* <Login/> */}
-      <ListagemFeedback/>
       {/* <Teste/> */}
-      {/* <ClientePerfil/> */}
-      {/* <Login/> */}
-      {/* <HistoricoFeedback/> */}
+      <HistoricoFeedback/>
     </>
   );
 }
