@@ -6,8 +6,9 @@
   padding: 20px;
   border-radius: 12px;
   align-items: flex-start;
+  justify-content: flex-end;
   flex-wrap: wrap;
-  box-shadow: 4px 15px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* --- Usuário --- */
@@ -48,7 +49,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  height: 150px;
+  gap: 20px;
+}
+
+.campo_comentario button{
+  height: 40px;
+  width: 130px;
+  font-size: 15px;
+  background-color: #313D65;
 }
 
 .campo_comentario p {
@@ -63,6 +72,13 @@
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.campo_audio img{
+  background-color: #dadde9;
+  border-radius: 20px;
+  padding: 8px 15px;
+  height: 65px;
 }
 
 .audio_player {
@@ -82,8 +98,15 @@
     text-align: center;
     padding: 20px;
     border-radius: 20px;
-    width: 30%;
-  background-color: #DADDE9;
-  font-weight: bold;
-  font-size: 18px;
+    width: 140px;
+    background-color: #DADDE9;
+    font-weight: bold;
+    font-size: 15px;
+    height: 65px;
+}
+
+.campo_audio .duracao{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
