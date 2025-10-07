@@ -95,18 +95,15 @@ a {
         width: 270px;
     }
 
-<<<<<<< HEAD
     h1 {
            
-=======
     .titulo {
         margin-bottom: 40px;
         font-size: 25px;
->>>>>>> a166a1031ad9d3d45c2ffffa3a261668b436b7b8
     }
 
     .link {
         margin-bottom: 40px;
     }
 }
-
+}
