@@ -1,0 +1,94 @@
+/* ------------------------------------------------ */
+/* SEU CSS EXISTENTE */
+/* ------------------------------------------------ */
+
+.centralizacao {
+    display: flex;
+    justify-content: center;
+    height: calc(100% - 148.4px);
+    width: 100%;
+    flex-direction: column;
+}
+
+.titulo {
+    width: 100%;
+}
+
+h2 {
+    font-weight: 100;
+}
+
+.campos {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* Base dos containers - Essencial: position: relative e overflow: hidden */
+.campo_um, .campo_dois {
+    box-shadow: 10px 10px 22px 0px rgba(49, 61, 101, 0.32);
+    border-radius: 25px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    /* Transições para suavizar o hover */
+    transition: transform 0.3s ease; 
+}
+
+/* Estilo para a imagem de fundo */
+.campo_um img, .campo_dois img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Adiciona transição para o efeito de blur */
+    transition: filter 0.3s ease; 
+}
+
+
+/* ------------------------------------------------ */
+/* NOVO CSS: Overlay "Acesse aqui" */
+/* ------------------------------------------------ */
+
+/* Configuração do elemento que ficará por cima (Overlay) */
+.acesse-aqui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Centralização e estilo do texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(49, 61, 101, 0.32); /* Fundo semi-transparente */
+    color: white; 
+    font-size: 1.5em; 
+    font-weight: bold;
+    
+    /* Estado inicial: INVISÍVEL */
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+    
+    /* Garante que o texto fique acima da imagem */
+    z-index: 10; 
+    cursor: pointer;
+}
+
+
+/* ------------------------------------------------ */
+/* EFEITO HOVER (Passar o Mouse) */
+/* ------------------------------------------------ */
+
+/* 1. Torna o OVERLAY visível */
+.campo_um:hover .acesse-aqui-overlay,
+.campo_dois:hover .acesse-aqui-overlay {
+    opacity: 1; 
+}
+
+/* 2. Aplica o BLUR APENAS na IMAGEM (Conteúdo de fundo) */
+.campo_um:hover img,
+.campo_dois:hover img {
+    filter: blur(1.5px);
+}
