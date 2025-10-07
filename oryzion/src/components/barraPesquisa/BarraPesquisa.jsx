@@ -1,7 +1,7 @@
 import React from 'react';
-import FundoBarraPesquisa from "../../assets/BarraPesquisa.png";
+import FundoBarraPesquisa from "../../assets/img/BarraPesquisa.png";
 import './BarraPesquisa.css'; 
-import Lupa from "../../assets/Search.svg"
+import Lupa from "../../assets/img/Search.svg"
 
 const BarraPesquisa = () => {
   return (
