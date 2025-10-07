@@ -100,7 +100,6 @@
   .container-perfil {
     flex-direction: column;
     height: auto;
-    /* deixa crescer conforme conteúdo */
   }
 
   .lado-esquerdo-perfil,
@@ -112,7 +111,7 @@
 
   .imagem-perfil img {
     width: 50%;
-    /* aumenta pra caber melhor na tela menor */
+
   }
 
   .entrada-upload {
