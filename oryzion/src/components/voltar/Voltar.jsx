@@ -1,10 +1,11 @@
 import React from 'react'
-import voltar from '../../assets/img/voltar.svg'
+import voltar_preto from '../../assets/img/voltar_preto.svg'
+import './Voltar.css'
 
 const Voltar = ({acaoDeVoltar}) => {
     return (
-        <button onClick={acaoDeVoltar}>
-            <img src={voltar} alt="" />
+        <button className='botaoVoltar' onClick={acaoDeVoltar}>
+            <img src={voltar_preto} alt="" />
         </button>
     )
 }
