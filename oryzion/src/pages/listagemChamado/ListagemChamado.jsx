@@ -6,6 +6,7 @@ import adiciona from '../../assets/img/adicionar.svg'
 import mais from '../../assets/img/MaisBotao.svg'
 import upload from '../../assets/img/Upload.svg'
 import edita from '../../assets/img/Editar.svg'
+import Footer from '../../components/footer/Footer'
 
 const ListagemChamado = () => {
   return (
@@ -101,6 +102,8 @@ const ListagemChamado = () => {
         </div>
 
       </section>
+      
+      <Footer/>
     </>
   )
 }

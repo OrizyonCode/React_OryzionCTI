@@ -11,126 +11,34 @@ main{
 
 
 
-/************ BANNER AVALIACOES ***********/
-
-.banner_listagem{
-    background-color: #040F1E;
-    height: 500px;
-    width: 100%;
-    
-}
-
-.botBanner img{
-    opacity: initial;
-    height: 500px;
-    margin-top: -70px;
-}
-
-.banner_cards .botBanner{
-    display: flex;
-    align-items: center;
-}
-
-
-.banner_cards .titulo{
-    margin-bottom: 40px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.titulo h2{
-    color: white;
-    font-size: 20px;
-    margin-top: 30px;
-    font-weight: 600;
-}
-
-
-.card_avaliacao{
-    color: black;
-    background-color: white;
-    width: 240px;
-    height: 290px;
-
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    border-radius: 10%;
-    font-size: large;
-    box-shadow: 1px 3px 15px;
-    margin-top: -470px;
-
-    border: 4px solid #313D65;
-}
-
-.card_avaliacao p{
-    width: 60%;
-}
-
-.usuario{
-    margin-top: -90px;
-}
-
-.card_avaliacao h3{
-    margin-top: -40px;
-    font-weight: 600;
-    font-size: 20px;
-}
-
-.card_avaliacao .link_responder{
-    font-weight: 750;
-    color: #313D65;
-}
-
-.banner_cards{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
-
 
 /*************** LISTAGEM FEEDBACKS ************/
 
 .listagem_feedbacks{
     height: 150vh;
-}
-
-.qtd_feedback{
     display: flex;
-    flex-direction: column;
-    margin-left: 40px;
+    justify-content: center;
+
 }
 
 .qtd_feedback h2{
-    margin-top: 30px;
-    font-size: 20px;
+   font-size: 20px;
 }
 
 .qtd_feedback hr{
-    border: 1px solid #040F1E;
-    margin-top: 10px;
-    width: 100%;
+   width: 19%;
+   margin-top: 10px;
 }
+
+
+
 
 .listagem_cards{
     margin-top: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
     height: 160vh;
 
 }
 
-.listagem_feedbacks{
-    display: flex;
-    
-}

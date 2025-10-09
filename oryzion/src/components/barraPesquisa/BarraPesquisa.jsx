@@ -2,15 +2,11 @@ import React from 'react';
 import FundoBarraPesquisa from "../../assets/img/BarraPesquisa.png";
 import './BarraPesquisa.css'; 
 import Lupa from "../../assets/img/Search.svg"
-import volta from "../../assets/img/BotaoVoltaBranco.svg"
 
 const BarraPesquisa = (props) => {
   return (
     <section style={{ backgroundImage: `url(${FundoBarraPesquisa})` }}>
-      <div className='imagem_volta layout_grid' style = {{display:props.botaoVoltar}}> 
-        <img src={volta} alt="" />
-      </div>
-      
+       
       
         <div className='pesquisas_link'>
           <div className="input_pesquisa">
