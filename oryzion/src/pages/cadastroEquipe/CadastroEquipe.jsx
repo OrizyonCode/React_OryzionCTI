@@ -4,7 +4,7 @@ import './CadastroEquipe.css'
 const CadastroEquipe = () => {
   return (
     <>
-    
+
     </>
 )
 }

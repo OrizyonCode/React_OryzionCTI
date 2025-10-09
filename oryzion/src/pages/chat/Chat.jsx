@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
 import ModalSuporte from '../../components/modal/Modal'; 
 import { useState } from 'react';
-import "./ChatCliente.css"
+import "./Chat.css"
 
-const ChatCliente = () => {
+const Chat = () => {
   const [modalAberto, setModalAberto] = useState(false);
 
   const abrirModal = () => setModalAberto(true);
@@ -60,4 +60,4 @@ const ChatCliente = () => {
   );
 };
 
-export default ChatCliente;
+export default Chat;

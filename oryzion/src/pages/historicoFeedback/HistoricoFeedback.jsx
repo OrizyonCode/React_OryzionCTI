@@ -1,6 +1,6 @@
 import React from 'react';
 import "./HistoricoFeedback.css";
-import Header from '../../components/header/Header';
+import Header from '../../components/header/Header'
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
 import CardHistorico from '../../components/cardHistorico/CardHistorico';
 import voltar from '../../assets/img/BotaoVoltar.svg'
