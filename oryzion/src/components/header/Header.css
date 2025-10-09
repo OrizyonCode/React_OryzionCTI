@@ -1,3 +1,37 @@
+header {
+    background-color: #040F1E;
+    height: 90px;
+    box-shadow: 4px 3px 10px rgb(0, 0, 0);
+}
+
+.header_header {
+    display: flex;
+    padding: 20px;
+    color: white;
+    height: 85px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px 20px; */
+}
+
+.header_pefil {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    color: white;
+}
+
+.header_pefil h3 {
+    margin-right: 15px;
+    font-weight: 300;
+}
+
 
 
 a{
@@ -6,20 +40,62 @@ a{
     transition: 0.3s;
 }
 
-a:hover {
+a:hover{
     opacity: 0.7;
 }
 
-.logo{
-    height: 70px;
+
+.header_header li {
+    letter-spacing: 1px;
+    margin-left: 32px;
+    list-style: none;
 }
 
-nav{
+.header_header ul{
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-family: "Poppins", sans-serif;
-    background-color: #040F1E;
-    height: 9vh;
-    box-shadow: 4px 3px 10px rgb(0, 0, 0);
+}
+
+.mobile_menu div{
+    width: 32px;
+    height: 2px;
+    background-color: #fff;
+    margin: 8px;
+}
+
+.mobile_menu{
+    display: none;
+    cursor: pointer;
+}
+
+
+/* 2 */
+
+
+
+
+/* --- Media Query para Telas Pequenas (Mobile) --- */
+@media screen and (max-width: 999px) {
+    .nav_list {
+        position: absolute;
+        top: 8vh;
+        right: 0;
+        width: 50vw;
+        height: 92vh;
+        background: white;
+        flex-direction: column;
+    }
+
+    header{
+        width: 500px;
+    }
+
+    .logo_header img{
+        height: 70px;
+    }
+
+    .header_pefil{
+        display: none;
+    }
+
+
 }
