@@ -60,9 +60,18 @@ border: 5px solid #313D65;
   z-index: 10000 !important;
 }
 
-/* .dashboard-main {
-  padding: 3rem 0 4rem;
-} */
+.area-card .full-width-chart {
+  width: 100% !important;
+}
+
+.area-card .apexcharts-canvas {
+  width: 100% !important;
+}
+
+.area-card .apexcharts-inner {
+  width: 100% !important;
+}
+
 
 @media (max-width: 1200px) {
   .dashboard-grid {
