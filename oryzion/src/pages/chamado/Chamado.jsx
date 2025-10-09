@@ -5,7 +5,7 @@ import Botao from '../../components/botao/Botao'
 const Chamado = () => {
     return (
         <>
-            <div className="todoOLogin">
+            <div className="todoOChamado">
                 <div className="paraCentralizar">
                     <div className="borda">
                         <div className="borda_para_os_simbolos">

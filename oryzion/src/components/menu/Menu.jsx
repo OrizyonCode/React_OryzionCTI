@@ -8,7 +8,40 @@ import Usuario from '../../assets/img/Usuario.svg'
 const Menu = (props) => {
     return(
         <>
-            <menu className='menu_paginas'> 
+
+            <body>
+                <nav>
+                    <ul className='nav_list'>
+                        <li><a href='/'>Tela inicial</a></li>
+                        <li><a href='/'>Lista de Chamados</a></li>
+                    </ul>
+                </nav>
+            </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {/* <menu className='menu_paginas'> 
 
 
 
@@ -48,7 +81,7 @@ const Menu = (props) => {
 
 
             </menu>
-
+ */}
 
         </>
     )
