@@ -2,6 +2,7 @@ import React from 'react'
 import './Header.css'
 import Logo from '../../assets/img/LogoOryzion.svg'
 import Suporte from '../../assets/img/IconSuporte.svg'
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
@@ -21,8 +22,8 @@ const Header = () => {
           </div>
 
             <ul>
-              <li><a href=''>Tela Inicial</a></li>
-              <li><a href=''>Lista de Chamados</a></li>
+              <li><Link className='link_header' to="/telainicial">Tela Inicial</Link></li>
+              <li><Link className='link_header' to="/listagemchamado">Lista de Chamados</Link></li>
             </ul>
 
           <div className='header_pefil'>
