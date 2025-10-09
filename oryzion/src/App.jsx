@@ -1,6 +1,6 @@
 import './App.css'
 // import Dashboard from './pages/dashboardPagina/Dashboard';
-// import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
+import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
 // import Login from './pages/login/Login';
 // import Teste from "./pages/teste/Teste";
 // import ClientePerfil from "./pages/perfilCliente/perfilCliente";
