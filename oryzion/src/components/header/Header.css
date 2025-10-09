@@ -4,37 +4,23 @@ header {
     box-shadow: 4px 3px 10px rgb(0, 0, 0);
 }
 
-.header_header {
-    display: flex;
-    padding: 20px;
+a{
     color: white;
-    height: 85px;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-
-
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center; 
-    padding: 10px 20px; */
+    text-decoration: none;
+    transition: 0.3s;
 }
 
-.header_pefil {
+a:hover {
+    opacity: 0.7;
+}
+
+.logo{
+    height: 70px;
+}
+
+nav{
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-around;
     align-items: center;
-    color: white;
-}
-
-.header_pefil h3 {
-    margin-right: 15px;
-    font-weight: 300;
-}
-
-/* --- Media Query para Telas Pequenas (Mobile) --- */
-@media screen and (max-width: 600px) {
-    .header_pefil {
-        display: none;
-    }
+    font-family: "Poppins", sans-serif;
 }
