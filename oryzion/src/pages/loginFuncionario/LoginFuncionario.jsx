@@ -16,9 +16,9 @@ const LoginFuncionario = () => {
                                     <h1>Login</h1>
                                 </div>
                                 <label htmlFor="">Email</label>
-                                <input type="email" />
+                                <input type="email" placeholder='@gmail.com'/>
                                 <label htmlFor="">Senha</label>
-                                <input type="password" />
+                                <input type="password" placeholder='*************'/>
                                 <div className="link">
                                     <a href="">Esqueceu a senha?</a>
                                 </div>

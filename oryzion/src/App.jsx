@@ -1,6 +1,6 @@
 import './App.css'
 import HistoricoFeedback from './pages/historicoFeedback/HistoricoFeedback';
-import ListaChamado from './pages/listaChamados/ListaChamado';
+
 // import Dashboard from './pages/dashboardPagina/Dashboard';
 // import ListagemFeedback from './pages/listagemFeedback/listagemFeedback';
 // import Login from './pages/login/Login';
@@ -26,7 +26,7 @@ function App() {
       {/* <ClientePerfil/> */}
       {/* <Login/> */}
       {/* <HistoricoFeedback/> */}
-      <ListaChamado/>
+      
       
 
     </>

@@ -18,6 +18,7 @@ const ListagemChamado = () => {
         visiNeut="none"
         visiReso="none"
         visiPend="none"
+        
       />
 
       <section className='layout_grid'>

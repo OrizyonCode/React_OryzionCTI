@@ -11,7 +11,9 @@ const ListagemFeedback = () => {
     return(
         <>
             <Header/>
-            <BarraPesquisa/>
+            <BarraPesquisa
+            botaoVoltar ="none"
+            />
             <main>
                 <section className='banner_listagem'>
                     <div className="layout_grid banner_cards">
