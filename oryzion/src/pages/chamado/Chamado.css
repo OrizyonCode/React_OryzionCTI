@@ -1,4 +1,4 @@
-.todoOChamado {
+.todoOLogin {
     background-color: #040F1E;
     color: white;
 }
@@ -11,14 +11,8 @@
     width: 100%;
 }
 
-.voltar {
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 100px;
-}
 
 .borda {
-    flex-direction: column;
     border: 2px solid white;
     height: 90vh;
     width: 95%;
@@ -49,11 +43,11 @@ form {
     gap: 5px;
 }
 
-.titulo {
+.titulo_2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
     font-size: 30px;
 }
 
@@ -67,12 +61,6 @@ h1 {
     align-items: center;
 }
 
-.link {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 80px;
-}
-
 input {
     background-color: white;
     outline: none;
@@ -83,6 +71,10 @@ input {
     border-radius: 8px;
     margin-bottom: 20px;
     padding-left: 8px;
+}
+
+.espacamento {
+    height: 20px;
 }
 
 a {
@@ -111,7 +103,7 @@ a {
         font-size: 25px;
     }
 
-    .link {
-        margin-bottom: 40px;
+    .titulo_2 {
+        font-size: 22px;
     }
 }

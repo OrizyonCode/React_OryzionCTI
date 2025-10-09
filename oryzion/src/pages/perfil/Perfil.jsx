@@ -1,11 +1,11 @@
 import React from "react";
-import "./perfilCliente.css";
+import "./Perfil.css";
 import iconePerfil from "../../assets/img/IconSuporte.svg";
 import Botao from "../../components/botao/Botao";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
-const ClientePerfil = () => {
+const Perfil = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
@@ -52,4 +52,4 @@ const ClientePerfil = () => {
   );
 };
 
-export default ClientePerfil;
+export default Perfil;

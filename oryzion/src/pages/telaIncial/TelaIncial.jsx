@@ -2,11 +2,11 @@ import React from 'react'
 import Header from '../../components/header/Header'
 import campo_um from '../../assets/img/campo_um.svg'
 import campo_dois from '../../assets/img/campo_dois.svg'
-import './TelaIncialSuporte.css'
+import './TelaIncial.css'
 import Footer from '../../components/footer/Footer'
 import cursor from '../../assets/img/cursor.png'
 
-const TelaInicialSuporte = () => {
+const TelaInicial = () => {
     return (
         <>
             < Header />
@@ -32,4 +32,4 @@ const TelaInicialSuporte = () => {
     )
 }
 
-export default TelaInicialSuporte
+export default TelaInicial
