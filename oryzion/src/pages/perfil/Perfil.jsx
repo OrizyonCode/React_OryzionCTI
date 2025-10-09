@@ -4,28 +4,28 @@ import iconePerfil from "../../assets/img/IconSuporte.svg";
 import Botao from "../../components/botao/Botao";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import Voltar from "../../components/voltar/Voltar";
 
 const Perfil = () => {
+
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
 
       <section className="container-perfil" style={{ flex: 1 }}>
         <div className="lado-esquerdo-perfil">
-          <div className="voltar">← Voltar</div>
+          <div className="voltar">
+            <Voltar/>
+          </div>
 
           <div className="imagem-perfil">
             <img src={iconePerfil} alt="Foto de perfil" />
           </div>
 
-          <div className="entrada-upload">
-            <input
-              className="input-upload-imagem"
-              type="text"
-              placeholder="Upload de Imagem"
-              name="imagem"
-            />
-            <Botao nomeBotao="Alterar" />
+          <div class="upload-container">
+            <label for="imageUpload" class="upload-label">Escolher imagem</label>
+            <input type="file" id="imageUpload" accept="image/*" hidden></input>
+            <img id="previewImage" src="" alt="Prévia da imagem" class="preview"></img>
           </div>
 
           <input type="text" placeholder="Nome de usuário" name="usuario" />

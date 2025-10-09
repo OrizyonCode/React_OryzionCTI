@@ -1,4 +1,4 @@
-.botaoVoltar {
+.voltar a{
     /* 1. Remove a cor de fundo */
     background-color: transparent; 
     
@@ -10,4 +10,7 @@
     
     /* Opcional: Se for um ícone, ajuste o preenchimento (padding) */
     padding: 0; 
+
+    color: #040F1E;
+    font-weight: 700;
 }
