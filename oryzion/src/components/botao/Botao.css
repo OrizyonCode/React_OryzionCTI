@@ -1,4 +1,4 @@
-button {
+.botaoGeral {
     width: 180px;
     height: 50px;
     border: 2px solid white;
@@ -9,8 +9,7 @@ button {
     color: white;
     font-size: 19px;
 }
-
-button:hover {
+.botaoGeral:hover {
     border: 2px solid #040F1E;
     background-color: white;
     color: #040F1E;
