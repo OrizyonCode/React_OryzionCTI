@@ -15,11 +15,11 @@ const CadastroEquipe = () => {
                                     <h5>Equipe</h5>
                                 </div>
                                 <label htmlFor="">Nome</label>
-                                <input type="text" />
+                                <input type="text" placeholder='Digite seu nome ...'/>
                                 <label htmlFor="">Email</label>
-                                <input type="email" />
+                                <input type="email" placeholder='@gmail.com'/>
                                 <label htmlFor="">Senha</label>
-                                <input type="password" />
+                                <input type="password" placeholder='*************'/>
                                 <div className="espacamento"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Cadastrar" />

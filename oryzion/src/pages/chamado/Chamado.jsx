@@ -14,11 +14,11 @@ const Chamado = () => {
                                     <h1>Chamado</h1>
                                 </div>
                                 <label htmlFor="">Nome</label>
-                                <input type="text" />
+                                <input type="text" placeholder='Digite seu nome ...'/>
                                 <label htmlFor="">Telefone</label>
-                                <input type="tel" />
+                                <input type="tel" placeholder='(11) 91234-5678'/>
                                 <label htmlFor="">CPF</label>
-                                <input type="text" />
+                                <input type="text" placeholder='000.000.000-00'/>
                                 <div className="espacamento"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Cadastrar" />

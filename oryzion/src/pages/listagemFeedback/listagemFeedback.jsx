@@ -9,7 +9,9 @@ const ListagemFeedback = () => {
     return(
         <>
             <Header/>
-            <BarraPesquisa/>
+            <BarraPesquisa
+            botaoVoltar ="none"
+            />
             <CardAvaliacao/>
             <main>
                 
