@@ -1,5 +1,5 @@
 import React from 'react'
-import './ListaChamado.css'
+import './ListagemChamado.css'
 import Header from '../../components/header/Header'
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa'
 import adiciona from '../../assets/img/adicionar.svg'
@@ -7,7 +7,7 @@ import mais from '../../assets/img/MaisBotao.svg'
 import upload from '../../assets/img/Upload.svg'
 import edita from '../../assets/img/Editar.svg'
 
-const ListaChamado = () => {
+const ListagemChamado = () => {
   return (
     <>
       <Header />
@@ -104,4 +104,4 @@ const ListaChamado = () => {
   )
 }
 
-export default ListaChamado
+export default ListagemChamado

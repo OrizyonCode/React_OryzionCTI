@@ -8,26 +8,23 @@ const Chamado = () => {
             <div className="todoOChamado">
                 <div className="paraCentralizar">
                     <div className="borda">
-                        <div className="voltar">
-                            <p>← Voltar</p>
+                        <div className="borda_para_os_simbolos">
+                            <form action="">
+                                <div className="titulo_2">
+                                    <h1>Chamado</h1>
+                                </div>
+                                <label htmlFor="">Nome</label>
+                                <input type="text" />
+                                <label htmlFor="">Telefone</label>
+                                <input type="tel" />
+                                <label htmlFor="">CPF</label>
+                                <input type="text" />
+                                <div className="espacamento"></div>
+                                <div className="botao">
+                                    <Botao nomeBotao="Cadastrar" />
+                                </div>
+                            </form>
                         </div>
-                        <form action="">
-                            <div className="titulo">
-                                <h1>Chamado</h1>
-                            </div>
-                            <label htmlFor="">Nome</label>
-                            <input type="text" />
-                            <label htmlFor="">Telefone</label>
-                            <input type="tel" />
-                            <label htmlFor="">CPF</label>
-                            <input type="number" />
-                            <div className="link">
-                                <a href="">Esqueceu a senha?</a>
-                            </div>
-                            <div className="botao">
-                                <Botao nomeBotao="Cadastrar" />
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
