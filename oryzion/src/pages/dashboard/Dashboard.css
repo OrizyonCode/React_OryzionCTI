@@ -1,58 +1,77 @@
-.painel-principal {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #e6e9f0;
-}
-
-.conteudo-painel {
+.dashboard-main {
   flex: 1;
-  padding: 20px 40px;
-  background: #cbd2e0;
+  padding: 3rem 0 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: visible;
+  background: #DADDE9;
 }
 
-.botao-voltar {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  color: #0f172a;
-  cursor: pointer;
-  margin-bottom: 30px;
-}
-
-.container-cartoes {
+.dashboard-grid {
+  width: 90%;
+  max-width: 1300px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  justify-items: center;
+  gap: 2rem;
+  justify-items: stretch;
+  align-items: start;
+  justify-content: center;
+
 }
 
-.cartao {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 40px;
-  width: 250px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  border: 4px solid #1e3a8a;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+.dash-card {
+background: #ffffff;
+border-radius: 20px;
+padding: 1.5rem;
+box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+text-align: center;
+overflow: visible;
+position: relative;
+transition: 0.3s ease;
+border: 5px solid #313D65;
+
 }
 
-.cartao:hover {
+.dash-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 900px) {
-  .container-cartoes {
+.dash-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.comentarios-content p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.apexcharts-toolbar {
+  right: 10px !important;
+  top: 10px !important;
+  z-index: 10 !important;
+}
+
+.apexcharts-menu {
+  z-index: 10000 !important;
+}
+
+/* .dashboard-main {
+  padding: 3rem 0 4rem;
+} */
+
+@media (max-width: 1200px) {
+  .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 600px) {
-  .container-cartoes {
+@media (max-width: 768px) {
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
