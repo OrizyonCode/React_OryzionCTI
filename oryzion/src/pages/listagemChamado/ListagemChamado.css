@@ -1,5 +1,7 @@
-.lista_btao{
-    background-color: #313D65;
+.img_adiciona{
+    padding: 30px 200px;
+    align-items: center;
+
 }
 
 .img_adiciona img{
@@ -7,17 +9,67 @@
     
 }
 
-.img_adiciona{
-    padding: 30px;
+
+
+.tabela_chamados {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 30px 30px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  background-color: #fff;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 30px;
+
 }
 
-.tabela_chamados{
-    
-    align-items: center;
-    width: 70%;
-    border-radius: 30px;
-    display: flex;
-    justify-content: space-between;
-    border-color: 5px solid red;
-    
+.numero_protocolo,
+.chamado_nome,
+.resumo_chamado,
+.upload_chamado,
+.editar_chamado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  border-left: 2px solid #000;
+}
+
+.numero_protocolo {
+  border-left: none;
+}
+
+.tabela_chamados h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 40px;
+  
+}
+
+
+.numero_protocolo p,
+.chamado_nome p,
+.resumo_chamado div,
+.upload_chamado div,
+.editar_chamado div {
+  border-top: 1px solid #000;
+  width: 100%;
+  height: 45px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tabela_chamados img {
+  height: 22px;
+  
+}
+
+.numero_protocolo p,
+.chamado_nome p {
+  font-size: 15px;
+  margin: 0;
 }

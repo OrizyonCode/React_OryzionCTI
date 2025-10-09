@@ -4,6 +4,7 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
 const Resumo = () => {
+
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
@@ -11,7 +12,7 @@ const Resumo = () => {
       <section className="container-resumo" style={{ flex: 1 }}>
         <div className="modal-resumo">
           <div className="voltar">
-            ← Voltar
+            
           </div>
 
           <h2 className="titulo-resumo">Resumo 0001</h2>
