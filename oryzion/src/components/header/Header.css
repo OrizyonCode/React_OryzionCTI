@@ -32,6 +32,9 @@ header {
     font-weight: 300;
 }
 
+.usuario{
+    text-decoration: none;
+}
 
 
 .link_header{
