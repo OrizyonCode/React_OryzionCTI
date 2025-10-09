@@ -8,8 +8,10 @@ const Header = () => {
 
   return (
     <header>
-      <nav className='layout_grid header'>
-          <img src={Logo} className='logo'></img>
+      <nav className='layout_grid header_header'>
+          <div className='logo_header'>
+              <img src={Logo} alt="" />
+          </div>
 
           <div className='mobile_menu'>
               <div className='line1'></div>
@@ -23,7 +25,10 @@ const Header = () => {
               <li><a href=''>Lista de Chamados</a></li>
             </ul>
 
-         
+          <div className='header_pefil'>
+              <img src={Suporte} alt="" />
+              <h3>Suporte</h3>
+          </div>       
       </nav>
     </header>
   );
