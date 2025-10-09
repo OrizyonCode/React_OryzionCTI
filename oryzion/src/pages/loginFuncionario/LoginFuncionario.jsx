@@ -1,36 +1,38 @@
 import React from 'react'
-import './CadastroEquipe.css'
+import './LoginFuncionario.css'
 import Botao from '../../components/botao/Botao'
 
-const CadastroEquipe = () => {
-  return (
-    <>
-<div className="todoOCadastroEquipe">
+const LoginFuncionario = () => {
+    return (
+        <>
+            <div className="todoOLoginFuncionario">
                 <div className="paraCentralizar">
                     <div className="borda">
                         <div className="borda_para_os_simbolos">
+
+
                             <form action="">
-                                <div className="titulo_2">
-                                    <h1>Cadastro</h1>
-                                    <h5>Equipe</h5>
+                                <div className="titulo">
+                                    <h1>Login</h1>
                                 </div>
-                                <label htmlFor="">Nome</label>
-                                <input type="text" />
                                 <label htmlFor="">Email</label>
                                 <input type="email" />
                                 <label htmlFor="">Senha</label>
                                 <input type="password" />
-                                <div className="espacamento"></div>
+                                <div className="link">
+                                    <a href="">Esqueceu a senha?</a>
+                                </div>
                                 <div className="botao">
-                                    <Botao nomeBotao="Cadastrar" />
+                                    <Botao nomeBotao="Entrar" />
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-    </>
-)
+        </>
+
+    )
 }
 
-export default CadastroEquipe
+export default LoginFuncionario

@@ -1,4 +1,4 @@
-.todoOChamado {
+.todoOLoginCliente {
     background-color: #040F1E;
     color: white;
 }
@@ -43,11 +43,11 @@ form {
     gap: 5px;
 }
 
-.titulo_2 {
+.titulo {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
     font-size: 30px;
 }
 
@@ -59,6 +59,12 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.link {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 80px;
 }
 
 input {
@@ -74,7 +80,7 @@ input {
 }
 
 .espacamento {
-    height: 20px;
+    height: 60px;
 }
 
 a {
@@ -103,7 +109,7 @@ a {
         font-size: 25px;
     }
 
-    .titulo_2 {
-        font-size: 22px;
+    .link {
+        margin-bottom: 40px;
     }
 }

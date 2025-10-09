@@ -11,9 +11,11 @@ import HistoricoFeedback from './pages/historicoFeedback/HistoricoFeedback.jsx'
 import ListagemChamado from './pages/listagemChamado/ListagemChamado.jsx'
 import ListagemFeedback from './pages/listagemFeedback/ListagemFeedback.jsx'
 import Perfil from './pages/perfil/Perfil.jsx'
-import Resumo from './pages/resumo/resumo.jsx'
+import Resumo from './pages/resumo/Resumo.jsx'
 import TelaInicial from './pages/telaIncial/TelaIncial.jsx'
-import Login from './pages/login/Login.jsx'
+import LoginFuncionario from './pages/loginFuncionario/LoginFuncionario.jsx'
+import LoginCliente from './pages/loginCliente/LoginCliente.jsx'
+import ErrorPage from './pages/error/ErrorPage.jsx';
 
 const router = createBrowserRouter([
 
@@ -49,8 +51,12 @@ const router = createBrowserRouter([
     element: < ListagemFeedback />,
   },
   {
-    path: "/login",
-    element: < Login />,
+    path: "/logincliente",
+    element: < LoginCliente />,
+  },
+  {
+    path: "/loginfuncionario",
+    element: < LoginFuncionario />,
   },
   {
     path: "/perfil",
@@ -63,6 +69,10 @@ const router = createBrowserRouter([
   {
     path: "/telainicial",
     element: < TelaInicial />,
+  },
+  {
+    path: "*", 
+    element: < ErrorPage />,
   },
 ]);
 
