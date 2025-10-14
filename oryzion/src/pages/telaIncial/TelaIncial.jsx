@@ -15,7 +15,10 @@ const TelaInicial = () => {
         <>
             < Header />
             <div className=" centralizacao">
-                <div className="titulo"><h1>Olá, (Nome)</h1><p>Acesse as páginas de Chamados e Feedbacks clicando em um dos campos abaixo.</p></div>
+                <div className="titulo">
+                    <h1>Olá, (Nome)</h1>
+                    <p>Acesse as páginas de Chamados e Feedbacks clicando em um dos campos abaixo.</p>
+                </div>
 
                 <div className='fundo'>
                     <div className="campos">

@@ -10,7 +10,7 @@ const ListagemFeedback = () => {
         <>
             <Header/>
             <BarraPesquisa
-            botaoVoltar ="none"
+                botaoVoltar ="none"
             />
             <CardAvaliacao/>
             <main>

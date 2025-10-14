@@ -15,7 +15,7 @@ main{
 /*************** LISTAGEM FEEDBACKS ************/
 
 .listagem_feedbacks{
-    height: 150vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
 
@@ -38,7 +38,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 160vh;
+    height: 190vh;
 
 }
 
