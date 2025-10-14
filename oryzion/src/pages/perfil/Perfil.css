@@ -32,8 +32,9 @@
 
 .voltar {
   align-self: flex-start;
-  margin-bottom: 20px;
-  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .imagem-perfil {
@@ -85,15 +86,41 @@
   padding-left: 8px;
 }
 
-.entrada-upload {
+.upload-container{
+  background-color: white;
+  height: 40px;
+  border-radius: 10px;
+
   display: flex;
-  gap: 5%;
-  justify-content: space-between;
-  align-items: baseline
+  justify-content: flex-end;
+
+  margin-bottom: 30px;
 }
 
-.input-upload-imagem {
+.upload-label {
+  background-color: #040F1E;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-label:hover {
+  background-color: #313D65;
+  border-color: 10px white;
+}
+
+.preview {
   width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: none; /* Esconde até ter imagem */
+  object-fit: cover;
 }
 
 @media screen and (max-width: 600px) {

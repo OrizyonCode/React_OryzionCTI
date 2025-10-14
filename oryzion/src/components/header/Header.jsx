@@ -5,7 +5,7 @@ import Suporte from '../../assets/img/IconSuporte.svg'
 import { Link } from "react-router-dom";
 
 
-const Header = () => {
+const Header = (props) => {
 
   return (
     <header>
@@ -21,14 +21,15 @@ const Header = () => {
               <div></div>
           </div>
 
-            <ul>
+            <ul style={props.link_header}>
               <li><Link className='link_header' to="/telainicial">Tela Inicial</Link></li>
+              <li><Link className='link_header' to="/cadastroequipe">Cadastro Suporte</Link></li>
               <li><Link className='link_header' to="/listagemchamado">Lista de Chamados</Link></li>
             </ul>
 
           <div className='header_pefil'>
               <img src={Suporte} alt="" />
-              <h3>Suporte</h3>
+              <h3><Link className='usuario' to="/perfil">Suporte</Link></h3>
           </div>       
       </nav>
     </header>
