@@ -26,20 +26,20 @@ const Perfil = () => {
             <label htmlFor="imageUpload" className="upload-label">
               Escolher imagem
             </label>
-            <input type="file" id="imageUpload" accept="image/*" hidden />
+            <input className="input_perfil" type="file" id="imageUpload" accept="image/*" hidden />
           </div>
 
-          <input type="text" placeholder="Nome completo" name="usuario" />
-          <input type="text" placeholder="CPF (somente números)" name="cpf" />
-          <input type="tel" placeholder="Telefone com DDD" name="telefone" />
+          <input className="input_perfil" type="text" placeholder="Nome completo" name="usuario" />
+          <input className="input_perfil" type="text" placeholder="CPF (somente números)" name="cpf" />
+          <input className="input_perfil" type="tel" placeholder="Telefone com DDD" name="telefone" />
         </div>
 
         {/* Lado direito */}
         <div className="card lado-direito-perfil">
           <h2>Dados Adicionais</h2>
 
-          <input type="email" placeholder="Email" name="email" />
-          <input type="text" placeholder="Endereço completo" name="endereco" />
+          <input className="input_perfil" type="email" placeholder="Email" name="email" />
+          <input className="input_perfil" type="text" placeholder="Endereço completo" name="endereco" />
 
           <div className="centralizar">
             <Botao nomeBotao="Salvar" />

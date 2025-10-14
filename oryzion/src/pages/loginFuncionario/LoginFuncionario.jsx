@@ -58,11 +58,17 @@ const LoginFuncionario = () => {
                                     <h1>Login</h1>
                                 </div>
                                 <label htmlFor="">E-mail</label>
+<<<<<<< HEAD
                                 <input type="email" placeholder='Digite seu e-mail'
                                 value={email} onChange={(e) => setEmail(e.target.value)}/>
                                 <label htmlFor="">Senha</label>
                                 <input type="password" placeholder='Digite sua senha'
                                 value={senha} onChange={(e) => setSenha(e.target.value)}/>
+=======
+                                <input className='input_login_funcionario' type="email" placeholder='Digite seu e-mail'/>
+                                <label htmlFor="">Senha</label>
+                                <input className='input_login_funcionario' type="password" placeholder='Digite sua senha'/>
+>>>>>>> 48f808bb55bb4d83e835148bb98d17f0b75f7bea
                                 <div className="link">
                                     <a href="">Esqueceu a senha?</a>
                                 </div>
