@@ -1,17 +1,14 @@
-import React from 'react'
-import './LoginFuncionario.css'
-import Botao from '../../components/botao/Botao'
-import { useState } from 'react';
-import api from "../../Services/services"
-
+import React, { useState } from "react";
+import "./LoginFuncionario.css";
+import Botao from "../../components/botao/Botao";
+import api from "../../Services/services";
+import Swal from "sweetalert2";
 
 const LoginFuncionario = () => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-    
-
-    async function autenticacao(e) {
+  async function autenticacao(e) {
     e.preventDefault();
 
     if (email.trim() === "" || senha.trim() === "") {
@@ -21,16 +18,13 @@ const LoginFuncionario = () => {
 
     try {
       const usuario = { email, senha };
-
       const resposta = await api.post("Login", usuario);
 
       if (resposta.status === 200) {
         alertar("success", "Login realizado com sucesso!");
-        
       } else {
         alertar("error", "Email ou senha inválidos!");
       }
-
     } catch (error) {
       console.error("Erro no login:", error);
       alertar("error", "Erro ao fazer login. Verifique suas credenciais!");
@@ -45,44 +39,45 @@ const LoginFuncionario = () => {
     });
   }
 
-    return (
-        <>
-            <div className="todoOLoginFuncionario">
-                <div className="paraCentralizar">
-                    <div className="borda">
-                        <div className="borda_para_os_simbolos">
+  return (
+    <div className="todoOLoginFuncionario">
+      <div className="paraCentralizar">
+        <div className="borda">
+          <div className="borda_para_os_simbolos">
+            <form onSubmit={autenticacao}>
+              <div className="titulo">
+                <h1>Login</h1>
+              </div>
 
+              <label>E-mail</label>
+              <input
+                type="email"
+                placeholder="Digite seu e-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-                            <form action="" onSubmit={autenticacao}>
-                                <div className="titulo">
-                                    <h1>Login</h1>
-                                </div>
-                                <label htmlFor="">E-mail</label>
-<<<<<<< HEAD
-                                <input type="email" placeholder='Digite seu e-mail'
-                                value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                <label htmlFor="">Senha</label>
-                                <input type="password" placeholder='Digite sua senha'
-                                value={senha} onChange={(e) => setSenha(e.target.value)}/>
-=======
-                                <input className='input_login_funcionario' type="email" placeholder='Digite seu e-mail'/>
-                                <label htmlFor="">Senha</label>
-                                <input className='input_login_funcionario' type="password" placeholder='Digite sua senha'/>
->>>>>>> 48f808bb55bb4d83e835148bb98d17f0b75f7bea
-                                <div className="link">
-                                    <a href="">Esqueceu a senha?</a>
-                                </div>
-                                <div className="botao">
-                                    <Botao nomeBotao="Entrar" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
+              <label>Senha</label>
+              <input
+                type="password"
+                placeholder="Digite sua senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
 
-    )
-}
+              <div className="link">
+                <a href="#">Esqueceu a senha?</a>
+              </div>
 
-export default LoginFuncionario
+              <div className="botao">
+                <Botao nomeBotao="Entrar" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginFuncionario;
