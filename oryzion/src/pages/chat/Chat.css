@@ -22,7 +22,11 @@
   color: #fff;
 }
 
-/* TOPO (nome e ícone do usuário) */
+.perfil_icone img{
+  width: 50px;
+  height: 60px;
+}
+
 .chat-topo-info {
   display: flex;
   align-items: center;
@@ -52,16 +56,16 @@
 
 .chat-mensagens-area {
   flex: 1;
-  background: #DADDE9;
+  background: #DADDE9 url('../../assets/img/fundo_chat.png') no-repeat center ;
+  background-size: contain; 
   padding: 20px 100px;
-  overflow-y: auto;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
   width: 100%;
+  gap: 20px;
 }
-
 .mensagem {
   background: #3c4b70;
   color: #fff;
@@ -119,6 +123,10 @@
   align-items: center;
 }
 
+.audio_recebido{
+  
+}
+
 .botao-enviar:hover {
   background: #000000;
   color: #fff;
@@ -135,9 +143,8 @@
 
 @media (max-width: 768px) {
   .chat-principal {
-    width: 90%;
+    width: 100%;
     height: 90vh;
-    padding: 20px;
   }
 
   .chat-mensagens-area {

@@ -87,11 +87,15 @@ a {
 
 }
 
+<<<<<<< HEAD
 .para_o_voltar {
     width: 100%;
     display: flex;
     justify-content: flex-start;
 }
+=======
+
+>>>>>>> 500294c259b0f210d1829302a70b44809a4de4d1
 
 /* --- Media Query para Telas Pequenas (Mobile) --- */
 @media screen and (max-width: 600px) {
