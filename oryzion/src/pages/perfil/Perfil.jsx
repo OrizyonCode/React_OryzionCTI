@@ -7,39 +7,39 @@ import Footer from "../../components/footer/Footer";
 import Voltar from "../../components/voltar/Voltar";
 
 const Perfil = () => {
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div className="perfil-page">
       <Header />
 
-      <section className="container-perfil" style={{ flex: 1 }}>
-        <div className="lado-esquerdo-perfil">
+      <section className="container-perfil">
+        {/* Lado esquerdo */}
+        <div className="card lado-esquerdo-perfil">
           <div className="voltar">
-            <Voltar/>
+            <Voltar />
           </div>
 
           <div className="imagem-perfil">
             <img src={iconePerfil} alt="Foto de perfil" />
           </div>
 
-          <div class="upload-container">
-            <label for="imageUpload" class="upload-label">Escolher imagem</label>
-            <input type="file" id="imageUpload" accept="image/*" hidden></input>
-            <img id="previewImage" src="" alt="Prévia da imagem" class="preview"></img>
+          <div className="upload-container">
+            <label htmlFor="imageUpload" className="upload-label">
+              Escolher imagem
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" hidden />
           </div>
 
-          <input type="text" placeholder="Nome de usuário" name="usuario" />
-          <input type="text" placeholder="CPF do usuário" name="cpf" />
-          <input type="tel" placeholder="Telefone do usuário" name="telefone" />
+          <input type="text" placeholder="Nome completo" name="usuario" />
+          <input type="text" placeholder="CPF (somente números)" name="cpf" />
+          <input type="tel" placeholder="Telefone com DDD" name="telefone" />
         </div>
 
-        <div className="lado-direito-perfil">
-          <div className="centralizar">
-            <h2>Dados Adicionais:</h2>
-          </div>
+        {/* Lado direito */}
+        <div className="card lado-direito-perfil">
+          <h2>Dados Adicionais</h2>
 
           <input type="email" placeholder="Email" name="email" />
-          <input type="text" placeholder="Endereço" name="endereco" />
+          <input type="text" placeholder="Endereço completo" name="endereco" />
 
           <div className="centralizar">
             <Botao nomeBotao="Salvar" />
