@@ -66,7 +66,7 @@ h1 {
     align-items: center;
 }
 
-input {
+.input_cadastro_equipe {
     background-color: white;
     outline: none;
     border: none;
@@ -86,6 +86,8 @@ a {
     color: white;
 
 }
+
+
 
 /* --- Media Query para Telas Pequenas (Mobile) --- */
 @media screen and (max-width: 600px) {

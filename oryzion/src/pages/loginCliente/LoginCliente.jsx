@@ -16,9 +16,9 @@ const LoginCliente = () => {
                                     <h1>Login</h1>
                                 </div>
                                 <label htmlFor="" >Nome completo</label>
-                                <input type="text" placeholder='Digite seu nome completo'/>
+                                <input className='input_login_cliente' type="text" placeholder='Digite seu nome completo'/>
                                 <label htmlFor="">Telefone</label>
-                                <input type="tel" placeholder='Digite seu telefone'/>
+                                <input className='input_login_cliente' type="tel" placeholder='Digite seu telefone'/>
                                 <div className="espacamento"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Entrar" />

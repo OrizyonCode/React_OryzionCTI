@@ -7,6 +7,8 @@ const apiLocal = `http://localhost:${apiPorta}/api/`;
 
 const api = axios.create({
     
-    baseURL: apiAzure
+    baseURL: apiLocal
 
 }); 
+
+export default api;
