@@ -21,13 +21,25 @@ header {
 .header_pefil {
   display: flex;
   flex-direction: row-reverse;
-  align-items: center;
+  align-items: center;        /* ⬅️ Centraliza verticalmente */
+  justify-content: center;
   color: white;
 }
 
 .header_pefil h3 {
-  margin-left: 15px;
+  margin-left: 10px;
   font-weight: 300;
+  font-size: 16px;            /* ⬅️ Um pouco maior */
+  line-height: 1;             /* ⬅️ Remove altura extra */
+  display: flex;
+  align-items: center;        /* ⬅️ Centraliza verticalmente */
+  height: 32px;               /* ⬅️ Igual à imagem */
+}
+
+.header_pefil img {
+  height: 32px;               /* ⬅️ Um pouco maior */
+  width: 32px;
+  object-fit: contain;
 }
 
 .usuario {

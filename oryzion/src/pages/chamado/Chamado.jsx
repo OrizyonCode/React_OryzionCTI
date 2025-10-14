@@ -10,7 +10,9 @@ const Chamado = () => {
                 <div className="paraCentralizar">
                     <div className="borda">
                         <div className="borda_para_os_simbolos">
-                            <VoltarBranco/>
+                            <div className="voltar-branco-container">
+                                <VoltarBranco />
+                            </div>
                             <form action="">
                                 <div className="titulo_2">
                                     <h1>Chamado</h1>

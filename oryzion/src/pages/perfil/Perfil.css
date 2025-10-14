@@ -34,6 +34,11 @@
 .lado-direito-perfil {
   background-color: #040F1E;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Centraliza os itens horizontalmente */
+  justify-content: center;  /* Centraliza os itens verticalmente */
+  text-align: center;  /* Garante que o texto também fique centralizado */
 }
 
 .voltar {
@@ -52,7 +57,7 @@
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .upload-container {
