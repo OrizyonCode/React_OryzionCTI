@@ -1,37 +1,41 @@
+/* Dashboard container geral */
 .dashboard-main {
   flex: 1;
-  padding: 3rem 0 5rem;
+  padding: 2rem 0 4rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow: visible;
   background: #DADDE9;
+  height: 100%;
 }
 
+/* Grid de cards - largura aumentada e responsivo */
 .dashboard-grid {
-  width: 90%;
-  max-width: 1300px;
+  width: 100%;
+  max-width: 1600px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 2fr);
   gap: 2rem;
   justify-items: stretch;
-  align-items: start;
-  justify-content: center;
-
+  align-items: stretch; /* mantém todos os cards com mesma altura */
+  padding: 0 1rem;
 }
 
+/* ==== CARDS ==== */
 .dash-card {
-background: #ffffff;
-border-radius: 20px;
-padding: 1.5rem;
-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-text-align: center;
-overflow: visible;
-position: relative;
-transition: 0.3s ease;
-border: 4px solid #313D65;
-border-bottom: 13px solid #313D65;
-
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: 0.3s ease;
+  border: 4px solid #313D65;
+  border-bottom: 13px solid #313D65;
+  height: 340px; /* <-- todos os cards terão a mesma altura */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .dash-card:hover {
@@ -45,36 +49,14 @@ border-bottom: 13px solid #313D65;
   margin-bottom: 1rem;
 }
 
-.comentarios-content p {
-  margin: 0.4rem 0;
-  font-size: 0.95rem;
-  color: #333;
-}
-
-.apexcharts-toolbar {
-  right: 10px !important;
-  top: 10px !important;
-  z-index: 10 !important;
-}
-
-.apexcharts-menu {
-  z-index: 10000 !important;
-}
-
-.area-card .full-width-chart {
+.dash-card .apexcharts-canvas {
+  height: 80% !important;
+  max-height: 220px !important; 
   width: 100% !important;
+  margin: 0 auto;
 }
 
-.area-card .apexcharts-canvas {
-  width: 100% !important;
-}
-
-.area-card .apexcharts-inner {
-  width: 100% !important;
-}
-
-
-
+/* === MODAL === */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -99,7 +81,7 @@ border-bottom: 13px solid #313D65;
   position: relative;
   animation: zoomIn 0.3s ease;
   border: 4px solid #313D65;
-border-bottom: 13px solid #313D65;
+  border-bottom: 13px solid #313D65;
 }
 
 .fechar-modal {
@@ -121,26 +103,8 @@ border-bottom: 13px solid #313D65;
   background: #c0392b;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes zoomIn {
-  from { transform: scale(0.85); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-
-
 @media (max-width: 1200px) {
   .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
+   
   }
 }
