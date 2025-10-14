@@ -14,9 +14,9 @@ const Chamado = () => {
                                     <h1>Chamado</h1>
                                 </div>
                                 <label htmlFor="">Nome</label>
-                                <input type="text" placeholder='Digite seu nome ...'/>
+                                <input type="text" placeholder='Nome completo do cliente'/>
                                 <label htmlFor="">Telefone</label>
-                                <input type="tel" placeholder='(11) 91234-5678'/>
+                                <input type="tel" placeholder='(99) 9 9999-9999'/>
                                 <label htmlFor="">CPF</label>
                                 <input type="text" placeholder='000.000.000-00'/>
                                 <div className="espacamento"></div>
