@@ -21,7 +21,7 @@ const Chamado = () => {
                                 <input className='input_chamado' type="tel" placeholder='(99) 9 9999-9999' />
                                 <label htmlFor="">CPF</label>
                                 <input className='input_chamado' type="text" placeholder='000.000.000-00' />
-                                <div className="espacamento"></div>
+                                <div className="espacamento_chamado"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Cadastrar" />
                                 </div>

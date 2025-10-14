@@ -78,13 +78,19 @@ h1 {
     padding-left: 8px;
 }
 
-.espacamento {
-    height: 20px;
+.espacamento_cadastro_equipe {
+    height: 10px;
 }
 
 a {
     color: white;
 
+}
+
+.para_o_voltar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
 }
 
 /* --- Media Query para Telas Pequenas (Mobile) --- */
@@ -111,4 +117,8 @@ a {
     .titulo_2 {
         font-size: 22px;
     }
+
+    .titulo_2 h1 {
+    margin-top: 20px;
+}
 }
