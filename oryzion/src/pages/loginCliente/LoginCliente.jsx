@@ -12,7 +12,7 @@ const LoginCliente = () => {
 
 
                             <form action="">
-                                <div className="titulo">
+                                <div className="titulo_4">
                                     <h1>Login</h1>
                                 </div>
                                 <label htmlFor="" >Nome completo</label>
