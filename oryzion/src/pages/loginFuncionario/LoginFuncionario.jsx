@@ -51,6 +51,7 @@ const LoginFuncionario = () => {
 
               <label>E-mail</label>
               <input
+              className="input_login_funcionario"
                 type="email"
                 placeholder="Digite seu e-mail"
                 value={email}
@@ -59,6 +60,7 @@ const LoginFuncionario = () => {
 
               <label>Senha</label>
               <input
+              className="input_login_funcionario"
                 type="password"
                 placeholder="Digite sua senha"
                 value={senha}
