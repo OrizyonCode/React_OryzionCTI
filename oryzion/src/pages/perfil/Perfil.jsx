@@ -4,7 +4,7 @@ import iconePerfil from "../../assets/img/IconSuporte.svg";
 import Botao from "../../components/botao/Botao";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import Voltar from "../../components/voltar/Voltar";
+import VoltarBranco from "../../components/voltarBranco/voltarBranco";
 
 const Perfil = () => {
   return (
@@ -15,7 +15,7 @@ const Perfil = () => {
         {/* Lado esquerdo */}
         <div className="card lado-esquerdo-perfil">
           <div className="voltar">
-            <Voltar />
+            <VoltarBranco/>
           </div>
 
           <div className="imagem-perfil">
