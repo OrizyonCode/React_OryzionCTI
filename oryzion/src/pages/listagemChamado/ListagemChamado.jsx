@@ -12,7 +12,7 @@ const ListagemChamado = () => {
   return (
     <>
       <Header />
-      <BarraPesquisa
+      <BarraPesquisa className="barra"
         visiNega="none"
         visiPosi="none"
         visiNeut="none"
@@ -68,6 +68,7 @@ const ListagemChamado = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </>
   )
