@@ -1,76 +1,107 @@
-.barra{
-  height: 190px;
+.barra_pesquisa_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+
+  background-color: #313D65;
+  height: 160px;
 }
 
-.fundo_barra {
-  width: 100%;
-  height: 150px;
-
-  background-position: center;
+/* 🖥️ Links desktop */
+.links {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 700;
 }
 
-.pesquisas_link {
-  text-align: center;
+.links li {
+  cursor: pointer;
+}
+
+/* 📱 Ícone de filtro e menu */
+.filtro_container {
+  position: absolute;
+  top: 0;
+  left: 10px;
+}
+
+.filtro_icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.filtro_menu {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  background-color: #fff;
+  color: #000;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
   display: flex;
   flex-direction: column;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.filtro_item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.filtro_item:hover {
+  background-color: #f1f1f1;
+}
+
+/* 🔍 Barra de pesquisa */
+.search_box {
+  display: flex;
   align-items: center;
-  
-}
-
-.input_pesquisa {
-
-  position: relative;
-  width: 420px;
-  height: 40px;
-  margin-top: 50px;
-}
-
-.inpu_arrumando {
-  width: 100%;
-  height: 100%;
+  background-color: #fff;
   border-radius: 20px;
-  border: none;
-  padding: 0 20px 0 45px;
-  font-size: 16px;
-  outline: none;
+  padding: 5px 10px;
+  width: 540px;
+  margin-top: 40px;
+
+  height: 40px;
 }
 
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
+.lupa_icon {
   width: 20px;
   height: 20px;
+  margin-right: 8px;
 }
 
-.links_barrapesquisa {
-  margin-top: 30px;
-  font-size: 19px;
-  padding: 10px;
+.search_box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.9rem;
 }
 
-.links_barrapesquisa a {
-  color: white;
-  text-decoration: none;
-  margin: 0 20px;
-  font-family: sans-serif;
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .links {
+    display: none;
+  }
+
+  .barra_pesquisa_container {
+    align-items: flex-start;
+    padding-left: 10px;
+  }
+
+  .search_box {
+    align-self: center;
+    width: 85%;
+  }
 }
-
-
-@media screen and (max-width: 600px) {
-    .barra{
-      height: 100px;
-    }
-
-    .input_pesquisa{
-      width: 210px;
-      margin-top: -10px;
-    }
-
-}
-
