@@ -5,7 +5,7 @@
 .centralizacao {
     display: flex;
     justify-content: center;
-    height: calc(100% - 148.4px);
+    height: 595px;
     width: 100%;
     flex-direction: column;
 }
@@ -15,14 +15,30 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+
+    margin-top: 50px;
+
+    font-family: "Poppins", sans-serif;
 }
 
 .titulo p {
     font-size: 20px;
+
+    margin-top: 15px;
 }
 
 h2 {
     font-weight: 100;
+}
+
+.fundo{
+    background-color: #DADDE9;
+    height: 400px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    
 }
 
 .campos {
@@ -31,6 +47,7 @@ h2 {
     flex-direction: row;
     justify-content: space-around;
 }
+
 
 /* Base dos containers - Essencial: position: relative e overflow: hidden */
 .campo_um, .campo_dois {
