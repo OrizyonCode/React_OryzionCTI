@@ -1,100 +1,70 @@
+.perfil-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0f172a;
+}
+
 .container-perfil {
   display: flex;
   flex: 1;
-  max-width: 100%;
-  border-radius: 10px;
-  background-color: #0f172a;
-  width: 100%;
-  min-height: 0;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 10%;
+  flex-wrap: wrap;
 }
 
-.lado-esquerdo-perfil,
-.lado-direito-perfil {
+.card {
+  background-color: #1e2a47;
+  border-radius: 15px;
+  padding: 30px 20px;
   flex: 1;
-  padding: 40px;
+  min-width: 300px;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  padding: 20px 10% 20px 10%;
-  ;
-}
-
-.centralizar {
-  margin: 40px;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .lado-esquerdo-perfil {
   background-color: #313D65;
 }
 
+.lado-direito-perfil {
+  background-color: #040F1E;
+  color: white;
+}
+
 .voltar {
   align-self: flex-start;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .imagem-perfil {
-  display: flex;
-  margin-bottom: 100px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .imagem-perfil img {
-  width: 30%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-.lado-esquerdo-perfil input {
+.upload-container {
   background-color: white;
-  outline: none;
-  border: none;
-  color: black;
-  text-decoration: none;
-  height: 35px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  padding-left: 8px;
-
-}
-
-.lado-direito-perfil {
-  background-color: #040F1E;
-  display: flex;
-  flex-direction: column;
-  color: white;
-  justify-content: center;
-}
-
-.lado-direito-perfil h2 {
-  margin-bottom: 20px;
-}
-
-.lado-direito-perfil input {
-  background-color: white;
-  outline: none;
-  border: none;
-  color: black;
-  text-decoration: none;
-  height: 35px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  padding-left: 8px;
-}
-
-.upload-container{
-  background-color: white;
-  height: 40px;
   border-radius: 10px;
-
   display: flex;
   justify-content: flex-end;
-
-  margin-bottom: 30px;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 5px 10px;
+  box-sizing: border-box;
 }
 
 .upload-label {
@@ -104,57 +74,51 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .upload-label:hover {
   background-color: #313D65;
-  border-color: 10px white;
 }
 
-.preview {
+input {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  display: none; /* Esconde até ter imagem */
-  object-fit: cover;
+  max-width: 400px;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+  padding-left: 12px;
+  margin-bottom: 20px;
+  outline: none;
+  font-size: 14px;
 }
 
-@media screen and (max-width: 600px) {
+h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.centralizar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
   .container-perfil {
     flex-direction: column;
-    height: auto;
+    padding: 20px 5%;
   }
 
-  .lado-esquerdo-perfil,
-  .lado-direito-perfil {
-    padding: 30px;
-    flex: none;
-    width: 100%;
+  .card {
+    max-width: 100%;
+    padding: 20px;
   }
 
   .imagem-perfil img {
-    width: 50%;
-
-  }
-
-  .entrada-upload {
-    align-items: stretch;
-    flex-direction: row;
-    align-items: baseline;
-    display: flex;
-  }
-
-  .lado-direito-perfil h2 {
-    text-align: center;
-    margin-top: 20px;
-  }
-
-  input,
-  button {
-    width: 100%;
+    width: 160px;
+    height: 160px;
   }
 }
