@@ -2,7 +2,11 @@ import React from 'react';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import ModalSuporte from '../../components/modal/Modal'; 
+import audioMp3 from '../../assets/audio/audio.teste.mp3';
+
 import { useState } from 'react';
+import usuario from '../../assets/img/Usuario.svg'
+
 import "./Chat.css"
 
 const Chat = () => {
@@ -21,8 +25,8 @@ const Chat = () => {
         <div className="chat-principal">
           
           <div className="chat-topo-info">
-            <div className="perfil-icone">
-              <span className="icone">O</span>
+            <div className="perfil_icone">
+              <img src={usuario} alt="" />
             </div>
             <span className="nome-usuario">Usuário</span>
           </div>
@@ -36,12 +40,19 @@ const Chat = () => {
             <div className="mensagem recebida">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
               <div className="audio-player">
-                <span className="play-icone">▶</span>
                 <div className="audio-ondas"></div>
               </div>
             </div>
+            <div className='audio_recebido'>
+               
+            <audio controls>
+            <source src={audioMp3} type="audio/mpeg" />
+            </audio>
+
+            </div>  
           </div>
 
+            
           <div className="chat-area-input">
             <input 
               type="text" 

@@ -1,4 +1,4 @@
-/* Dashboard container geral */
+/* === DASHBOARD PRINCIPAL === */
 .dashboard-main {
   flex: 1;
   padding: 2rem 0 4rem;
@@ -6,33 +6,33 @@
   justify-content: center;
   align-items: flex-start;
   overflow: visible;
-  background: #DADDE9;
+  background: #dadde9;
   height: 100%;
 }
 
-/* Grid de cards - largura aumentada e responsivo */
+/* === GRID DE CARDS === */
 .dashboard-grid {
   width: 100%;
   max-width: 1600px;
   display: grid;
   grid-template-columns: repeat(3, 2fr);
-  gap: 2rem;
+  gap: 30px;
   justify-items: stretch;
-  align-items: stretch; /* mantém todos os cards com mesma altura */
-  padding: 0 1rem;
+  align-items: stretch;
+  padding: 0 2rem;
 }
 
-/* ==== CARDS ==== */
+/* === CARDS === */
 .dash-card {
   background: #ffffff;
   border-radius: 20px;
-  padding: 2rem;
+  padding: 20px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: 0.3s ease;
-  border: 4px solid #313D65;
-  border-bottom: 13px solid #313D65;
-  height: 340px; /* <-- todos os cards terão a mesma altura */
+  border: 4px solid #313d65;
+  border-bottom: 13px solid #313d65;
+  height: 360px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -51,7 +51,7 @@
 
 .dash-card .apexcharts-canvas {
   height: 80% !important;
-  max-height: 220px !important; 
+  max-height: 220px !important;
   width: 100% !important;
   margin: 0 auto;
 }
@@ -59,52 +59,131 @@
 /* === MODAL === */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 5000;
   animation: fadeIn 0.3s ease;
+  padding: 1rem;
 }
 
 .modal-content {
   background: #fff;
   border-radius: 18px;
-  padding: 2rem;
-  width: 80%;
+  padding: 2rem 1.8rem;
+  width: 85%;
   max-width: 900px;
+  max-height: calc(90vh - 2rem);
+  overflow-y: auto;
+  overflow-x: visible;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   position: relative;
   animation: zoomIn 0.3s ease;
-  border: 4px solid #313D65;
-  border-bottom: 13px solid #313D65;
+  border: 4px solid #313d65;
+  border-bottom: 13px solid #313d65;
 }
 
-.fechar-modal {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  transition: 0.3s;
+
+
+/* título do modal */
+.modal-content h2 {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.fechar-modal:hover {
-  background: #c0392b;
+/* gráfico no modal */
+.modal-content .apexcharts-canvas {
+  width: 100% !important;
+  max-height: 70vh !important;
+  margin: 0 auto;
 }
 
+/* === ANIMAÇÕES === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* === RESPONSIVIDADE === */
+
+/* telas médias */
 @media (max-width: 1200px) {
   .dashboard-grid {
-   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .dash-card {
+    width: 45%;
+    height: 340px;
+  }
+}
+
+/* tablets */
+@media (max-width: 992px) {
+  .modal-content {
+    width: 92%;
+    padding: 1.4rem;
+  }
+
+  .fechar-modal {
+    width: 34px;
+    height: 34px;
+    top: calc(10px + env(safe-area-inset-top, 0px));
+    right: calc(10px + env(safe-area-inset-right, 0px));
+  }
+}
+
+/* celulares */
+@media (max-width: 767px) {
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .dash-card {
+    width: 95%;
+    height: auto;
+  }
+
+  .modal-content {
+    width: 98%;
+    padding: 1rem;
+    border-radius: 14px;
+  }
+
+  .fechar-modal {
+    width: 30px;
+    height: 30px;
+    top: calc(8px + env(safe-area-inset-top, 0px));
+    right: calc(8px + env(safe-area-inset-right, 0px));
+  }
+
+  .modal-content h2 {
+    font-size: 1.1rem;
+  }
+
+  .modal-content .apexcharts-canvas {
+    max-height: 55vh !important;
   }
 }

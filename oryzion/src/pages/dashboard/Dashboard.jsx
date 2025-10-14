@@ -200,7 +200,7 @@
 
             {/* === NOVO GRÁFICO ADICIONADO === */}
             <div className="dash-card">
-              <h3>Desempenho Trimestral (Slope Chart)</h3>
+              <h3>Desempenho Trimestral</h3>
               <ApexChart />
             </div>
           </div>
@@ -210,7 +210,6 @@
         {isModalOpen && (
           <div className="modal-overlay" onClick={fecharModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="fechar-modal" onClick={fecharModal}>✖</button>
               <h2>Gráfico Detalhado</h2>
               {modalChart && (
                 <ReactApexChart

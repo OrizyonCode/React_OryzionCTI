@@ -10,3 +10,5 @@ const api = axios.create({
     baseURL: apiAzure
 
 }); 
+
+export default api;
