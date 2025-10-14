@@ -5,30 +5,28 @@ import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
 import CardHistorico from '../../components/cardHistorico/CardHistorico';
 import voltar from '../../assets/img/BotaoVoltar.svg'
 import Footer from '../../components/footer/Footer'
+import Voltar from '../../components/voltar/Voltar'
 
 
 const HistoricoFeedback = () => {
   return (
     <>
       <Header />
-      <BarraPesquisa 
-      botaoVoltar ="none"
+      <BarraPesquisa
+        botaoVoltar="none"
       />
 
       <section className='layout_grid   '>
-        <div className='voltaBotao'>
+        {/* <div className='voltaBotao'>
+          <img src={voltar} alt="" />
+        </div> */}
 
-            <img src={voltar} alt="" />
-        </div>
-        
         <div className='listagens_historico'>
-            <CardHistorico/>
-            <CardHistorico/>
-
+          <CardHistorico />
         </div>
 
       </section>
-        <Footer/>
+      <Footer />
     </>
   );
 };

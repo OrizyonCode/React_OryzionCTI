@@ -5,7 +5,7 @@ import Lupa from "../../assets/img/Search.svg"
 
 const BarraPesquisa = (props) => {
   return (
-    <section style={{ backgroundImage: `url(${FundoBarraPesquisa})` }}>
+    <section className='barra' style={{ backgroundImage: `url(${FundoBarraPesquisa})` }}>
        
       
         <div className='pesquisas_link'>

@@ -11,7 +11,6 @@
     width: 100%;
 }
 
-
 .borda {
     border: 2px solid white;
     height: 90vh;
@@ -20,19 +19,17 @@
     justify-content: center;
     align-items: center;
     border-radius: 15px;
+    position: relative; /* ← referência pro botão ficar dentro da borda */
 
     background-image:
         url('../../assets/img/direita.svg'),
         url('../../assets/img/esquerda.svg');
 
     background-repeat: no-repeat, no-repeat;
-
     background-position:
         top 20px right 20px,
         bottom 20px left 20px;
-
     background-size: 250px, 250px;
-
 }
 
 form {
@@ -49,6 +46,7 @@ form {
     align-items: center;
     margin-bottom: 20px;
     font-size: 30px;
+    flex-direction: column;
 }
 
 h1 {
@@ -73,13 +71,18 @@ h1 {
     padding-left: 8px;
 }
 
-.espacamento {
-    height: 20px;
+.espacamento_chamado {
+    height: 10px;
 }
 
 a {
     color: white;
+}
 
+.voltar-branco-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
 }
 
 /* --- Media Query para Telas Pequenas (Mobile) --- */
@@ -97,7 +100,7 @@ a {
     form {
         width: 270px;
     }
-           
+
     .titulo {
         margin-bottom: 40px;
         font-size: 25px;
@@ -105,5 +108,10 @@ a {
 
     .titulo_2 {
         font-size: 22px;
+    }
+
+    .voltar-branco-container {
+        top: 10px;
+        left: 10px;
     }
 }

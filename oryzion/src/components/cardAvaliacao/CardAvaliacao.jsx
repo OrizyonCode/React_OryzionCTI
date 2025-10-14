@@ -1,48 +1,128 @@
 import './CardAvaliacao.css'
-import Slider from 'react-slick'
 import Usuario from '../../assets/img/Usuario.svg'
 import botBanner from '../../assets/img/botBanner.svg'
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import Esquerda from '../../assets/img/setaEsquerda.svg'
+import Direita from '../../assets/img/setaDireita.svg'
 
-const CardAvaliacao = () => {    
-        return(
-            <section className='banner_listagem'>
-                    <div className="layout_grid banner_cards">
+const avaliacoes = [
+    { id: 1, texto: 'Gostei' },
+    { id: 2, texto: 'Não gostei' },
+    { id: 3, texto: 'Mais ou menos' },
+    { id: 4, texto: 'Excelente' },
+    { id: 5, texto: 'Poderia melhorar' },
+    { id: 6, texto: 'Muito bom!' },
+    { id: 7, texto: 'Regular' },
+    { id: 8, texto: 'Top demais!' },
+];
 
-                        <div className="titulo">
-                            <h2>Avaliações recentes</h2>
+const CardAvaliacao = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setVisibleCount(window.innerWidth <= 768 ? 1 : 3);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const intervalRef = useRef(null);
+    const timeoutRef = useRef(null);
+
+    const nextSlide = () => {
+        setCurrentIndex(prev => (prev + 1) % avaliacoes.length);
+        resetAutoPlay();
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex(prev => (prev - 1 + avaliacoes.length) % avaliacoes.length);
+        resetAutoPlay();
+    };
+
+    const getVisibleCards = () => {
+        const cards = [];
+        for (let i = 0; i < visibleCount; i++) {
+            cards.push(avaliacoes[(currentIndex + i) % avaliacoes.length]);
+        }
+        return cards;
+    };
+
+    const startAutoPlay = () => {
+        if (intervalRef.current) return;
+        intervalRef.current = setInterval(() => {
+            setCurrentIndex(prev => (prev + 1) % avaliacoes.length);
+        }, 4000); // rolagem lenta
+    };
+
+    const stopAutoPlay = () => {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+    };
+
+    // quando clicar manualmente, pausa 10s e depois volta automático
+    const resetAutoPlay = () => {
+        stopAutoPlay();
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            startAutoPlay();
+        }, 10000);
+    };
+
+    useEffect(() => {
+        startAutoPlay();
+        return () => {
+            stopAutoPlay();
+            clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
+    const visibleCards = getVisibleCards();
+
+    return (
+        <section className='banner_listagem'>
+            <div className="layout_grid banner_cards">
+                <div className="titulo">
+                    <h2>Avaliações recentes</h2>
+                </div>
+
+                <div className='botBanner'>
+                    <img src={botBanner} alt="" />
+                </div>
+
+                <div className="carousel_container">
+                    <button className="carousel_button prev" onClick={prevSlide}>
+                        <img src={Esquerda} alt="" />
+                    </button>
+
+                    <div className="carousel_wrapper">
+                        <div className="carousel_inner">
+                            {visibleCards.map((item, index) => (
+                                <div
+                                    key={item.id}
+                                    className="card_avaliacao"
+                                >
+                                    <article className="usuario">
+                                        <img src={Usuario} alt="Usuário" />
+                                    </article>
+                                    <h3>Usuário</h3>
+                                    <p>{item.texto}</p>
+                                    <Link className='link_responder' to="/chat" >Responder</Link>
+                                </div>
+                            ))}
                         </div>
-
-                        <div className='botBanner'>
-                            <img src={botBanner} ></img>
-                        </div>
-
-                            <div className="card_avaliacao"> 
-                                <article class="usuario">
-                                    <img src={Usuario} alt=""/>
-                                </article>
-                                <h3>Usuário</h3>
-                                <p>Gostei</p>
-                                <p className='link_responder'>Responder</p>
-                            </div>
-                            <div className="card_avaliacao"> 
-                                <article class="usuario">
-                                    <img src={Usuario} alt=""/>
-                                </article>
-                                <h3>Usuário</h3>
-                                <p>Não gostei</p>
-                                <p className='link_responder'>Responder</p>
-                            </div>
-                            <div className="card_avaliacao"> 
-                                <article class="usuario">
-                                    <img src={Usuario} alt=""/>
-                                </article>
-                                <h3>Usuário</h3>
-                                <p>Mais ou menos</p>
-                                <p className='link_responder'>Responder</p>
-                            </div>          
                     </div>
-                </section>
-    )
-}
 
-export default CardAvaliacao
+                    <button className="carousel_button next" onClick={nextSlide}>
+                        <img src={Direita} ></img>
+                    </button>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default CardAvaliacao;

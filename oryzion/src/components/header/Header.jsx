@@ -31,8 +31,10 @@ const Header = (props) => {
         </ul>
 
         <div className='header_pefil'>
-          <h3><Link className='usuario' to="/perfil">Suporte</Link></h3>
-          <img src={Suporte} alt="Ícone de suporte" />
+          <h3 className='usuario'>Suporte</h3>
+          <Link to="/perfil">
+            <img src={Suporte} alt="Ícone de suporte" />
+          </Link>
         </div>
       </nav>
     </header>

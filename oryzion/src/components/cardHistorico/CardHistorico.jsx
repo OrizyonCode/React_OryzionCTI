@@ -33,8 +33,8 @@ const CardHistorico = () => {
           </div>
 
           <div className="comportamento">
-            <h4>Ultimos comportamentos</h4>
-            <p><b>Simpatico</b></p>
+            <h4>Últimos comportamentos</h4>
+            <p><b>Simpático</b></p>
             <p><b>Calmo</b></p>
             <p><b>Atencioso</b></p>
 

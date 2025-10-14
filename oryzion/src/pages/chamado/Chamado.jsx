@@ -10,7 +10,9 @@ const Chamado = () => {
                 <div className="paraCentralizar">
                     <div className="borda">
                         <div className="borda_para_os_simbolos">
-                            <VoltarBranco/>
+                            <div className="voltar-branco-container">
+                                <VoltarBranco />
+                            </div>
                             <form action="">
                                 <div className="titulo_2">
                                     <h1>Chamado</h1>
@@ -21,7 +23,7 @@ const Chamado = () => {
                                 <input className='input_chamado' type="tel" placeholder='(99) 9 9999-9999' />
                                 <label htmlFor="">CPF</label>
                                 <input className='input_chamado' type="text" placeholder='000.000.000-00' />
-                                <div className="espacamento"></div>
+                                <div className="espacamento_chamado"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Cadastrar" />
                                 </div>

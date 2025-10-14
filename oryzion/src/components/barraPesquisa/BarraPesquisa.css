@@ -1,4 +1,4 @@
-section{
+.barra{
   height: 190px;
 }
 
@@ -60,3 +60,17 @@ section{
   margin: 0 20px;
   font-family: sans-serif;
 }
+
+
+@media screen and (max-width: 600px) {
+    .barra{
+      height: 100px;
+    }
+
+    .input_pesquisa{
+      width: 210px;
+      margin-top: -10px;
+    }
+
+}
+

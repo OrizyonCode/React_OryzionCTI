@@ -51,7 +51,11 @@ const LoginFuncionario = () => {
 
               <label>E-mail</label>
               <input
+<<<<<<< HEAD
               className="input_login_funcionario"
+=======
+                className="input_login_funcionario"
+>>>>>>> aebf34451a5e0ce3ecffc5c07bcbc5bd8cf3f626
                 type="email"
                 placeholder="Digite seu e-mail"
                 value={email}
@@ -60,7 +64,11 @@ const LoginFuncionario = () => {
 
               <label>Senha</label>
               <input
+<<<<<<< HEAD
               className="input_login_funcionario"
+=======
+                className="input_login_funcionario"
+>>>>>>> aebf34451a5e0ce3ecffc5c07bcbc5bd8cf3f626
                 type="password"
                 placeholder="Digite sua senha"
                 value={senha}

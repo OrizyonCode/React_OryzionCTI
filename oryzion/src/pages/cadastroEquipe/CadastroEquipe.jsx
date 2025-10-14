@@ -12,6 +12,7 @@ const CadastroEquipe = () => {
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
 
+
   async function cadastro(e) {
     e.preventDefault(); 
 
