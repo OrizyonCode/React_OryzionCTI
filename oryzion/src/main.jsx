@@ -12,7 +12,7 @@ import ListagemChamado from './pages/listagemChamado/ListagemChamado.jsx'
 import ListagemFeedback from './pages/listagemFeedback/listagemFeedback.jsx'
 import Perfil from './pages/perfil/Perfil.jsx'
 import Resumo from './pages/resumo/Resumo.jsx'
-import TelaInicial from './pages/telaIncial/TelaIncial.jsx'
+import TelaInicial from './pages/telaInicial/TelaInicial.jsx'
 import LoginFuncionario from './pages/loginFuncionario/LoginFuncionario.jsx'
 import LoginCliente from './pages/loginCliente/LoginCliente.jsx'
 import ErrorPage from './pages/error/ErrorPage.jsx';
