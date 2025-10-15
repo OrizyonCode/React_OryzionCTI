@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import "./dashboard.css";
+import "./Dashboard.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
@@ -103,6 +103,23 @@ const Dashboard = () => {
     },
   };
 
+  const desempenhoTrimestral = {
+    series: [
+      { name: "Satisfação", data: [75, 80] },
+      { name: "Engajamento", data: [65, 70] },
+    ],
+    options: {
+      chart: { type: "line", zoom: { enabled: false }, toolbar: { show: false } },
+      colors: ["#3B82F6", "#10B981"],
+      stroke: { curve: "smooth", width: 3 },
+      dataLabels: { enabled: false },
+      xaxis: { categories: ["Q1", "Q2"], title: { text: "Trimestre" } },
+      yaxis: { min: 0, max: 100, title: { text: "Valores" } },
+      legend: { position: "bottom" },
+      grid: { borderColor: "#e0e0e0" },
+    },
+  };
+
   return (
     <div className="dashboard-container">
       <Header />
@@ -132,10 +149,15 @@ const Dashboard = () => {
             <ReactApexChart options={radialFeedback.options} series={radialFeedback.series} type="radialBar" height={200} />
           </div>
 
-          <div className="dash-card">
+          <div className="dash-card" onClick={() => abrirModal(desempenhoTrimestral)}>
             <span className="badge badge-blue">Linha</span>
             <h3>Desempenho Trimestral</h3>
-            <DesempenhoTrimestral />
+            <ReactApexChart
+              options={desempenhoTrimestral.options}
+              series={desempenhoTrimestral.series}
+              type="line"
+              height={250}
+            />
           </div>
         </div>
       </main>
@@ -144,7 +166,7 @@ const Dashboard = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={fecharModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="fechar-modal" onClick={fecharModal}>×</button>
+            <button className="fechar-modal" onClick={fecharModal}>x</button>
             <h2>Gráfico Detalhado</h2>
             {modalChart && (
               <ReactApexChart
