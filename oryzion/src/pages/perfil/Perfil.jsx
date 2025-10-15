@@ -15,6 +15,7 @@ const Perfil = () => {
         {/* Lado esquerdo */}
         <div className="card lado-esquerdo-perfil">
           <div className="voltar">
+            {/* Voltar em cor branca, por causa do fundo escuro */}
             <VoltarBranco/>
           </div>
 
