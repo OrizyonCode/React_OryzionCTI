@@ -1,4 +1,4 @@
-.todoOCadastroEquipe {
+.todoOLoginCliente {
   background-color: #040F1E;
   color: white;
 }
@@ -32,23 +32,16 @@
   background-size: 250px, 250px;
 }
 
-/* 🔙 Posiciona a seta de voltar */
-.voltarBrancoContainer {
-  position: absolute;
-  top: 25px;
-  left: 25px;
-}
-
 /* --- Formulário --- */
 form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 400px;
-  gap: 14px;
+  gap: 14px; /* mesmo espaçamento suave entre os elementos */
 }
 
-.titulo_2 {
+.titulo_4 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,15 +50,16 @@ form {
   flex-direction: column;
 }
 
-.titulo_2 h5 {
-  font-weight: 100;
-}
-
 h1 {
   font-weight: 100;
 }
 
-.input_cadastro_equipe {
+/* --- Inputs e Labels --- */
+label {
+  font-size: 16px;
+}
+
+.input_login_cliente {
   background-color: white;
   border: none;
   outline: none;
@@ -75,6 +69,7 @@ h1 {
   padding-left: 10px;
 }
 
+/* --- Botão --- */
 .botao {
   display: flex;
   justify-content: center;
@@ -82,11 +77,23 @@ h1 {
   margin-top: 30px;
 }
 
+/* --- Espaçamento opcional --- */
 .espacamento {
   height: 10px;
 }
 
-/* --- Mobile --- */
+/* --- Link (se houver) --- */
+a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsividade --- */
 @media screen and (max-width: 600px) {
   .borda {
     width: 340px;
@@ -98,12 +105,20 @@ h1 {
     width: 245px;
   }
 
-  .titulo_2 {
+  .titulo_4 {
     font-size: 22px;
   }
 
+  label {
+    font-size: 14px;
+  }
+
+  .input_login_cliente {
+    height: 36px;
+    font-size: 14px;
+  }
+
   button {
-    /* width: 180px !important; */
     height: 50px;
   }
 }

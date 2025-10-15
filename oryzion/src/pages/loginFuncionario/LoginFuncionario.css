@@ -64,7 +64,7 @@ h1 {
 .link {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 80px;
+    /* margin-bottom: 80px; */
 }
 
 .input_login_funcionario {
