@@ -1,117 +1,111 @@
 .todoOChamado {
-    background-color: #040F1E;
-    color: white;
+  background-color: #040F1E;
+  color: white;
 }
 
 .paraCentralizar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 
 .borda {
-    border: 2px solid white;
-    height: 90vh;
-    width: 95%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    position: relative; /* ← referência pro botão ficar dentro da borda */
+  border: 2px solid white;
+  height: auto;
+  min-height: 70vh;
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  position: relative;
+  padding: 40px 0;
 
-    background-image:
-        url('../../assets/img/direita.svg'),
-        url('../../assets/img/esquerda.svg');
-
-    background-repeat: no-repeat, no-repeat;
-    background-position:
-        top 20px right 20px,
-        bottom 20px left 20px;
-    background-size: 250px, 250px;
+  background-image:
+    url('../../assets/img/direita.svg'),
+    url('../../assets/img/esquerda.svg');
+  background-repeat: no-repeat, no-repeat;
+  background-position:
+    top 20px right 20px,
+    bottom 20px left 20px;
+  background-size: 250px, 250px;
 }
 
+/* 🔙 Botão de voltar */
+.voltarBrancoContainer {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+
+/* --- Formulário --- */
 form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 500px;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  gap: 14px;
 }
 
 .titulo_2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 30px;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 35px;
+  font-size: 30px;
+  flex-direction: column;
 }
 
 h1 {
-    font-weight: 100;
-}
-
-.botao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-weight: 100;
 }
 
 .input_chamado {
-    background-color: white;
-    outline: none;
-    border: none;
-    color: black;
-    text-decoration: none;
-    height: 35px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding-left: 8px;
+  background-color: white;
+  outline: none;
+  border: none;
+  color: black;
+  height: 38px;
+  border-radius: 8px;
+  padding-left: 10px;
+}
+
+.botao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .espacamento_chamado {
-    height: 10px;
+  height: 10px;
 }
 
-a {
-    color: white;
-}
-
-.voltar-branco-container {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-}
-
-/* --- Media Query para Telas Pequenas (Mobile) --- */
+/* --- Mobile --- */
 @media screen and (max-width: 600px) {
-    button {
-        width: 180px !important;
-        height: 50px;
-    }
+  .borda {
+    width: 340px;
+    background-size: 100px, 100px;
+    padding: 20px 0;
+  }
 
-    .borda {
-        width: 340px;
-        background-size: 100px, 100px;
-    }
+  form {
+    width: 260px;
+  }
 
-    form {
-        width: 270px;
-    }
+  .titulo_2 {
+    font-size: 22px;
+  }
 
-    .titulo {
-        margin-bottom: 40px;
-        font-size: 25px;
-    }
+  .voltarBrancoContainer {
+    top: 10px;
+    left: 10px;
+  }
 
-    .titulo_2 {
-        font-size: 22px;
-    }
-
-    .voltar-branco-container {
-        top: 10px;
-        left: 10px;
-    }
+  button {
+    width: 180px !important;
+    height: 50px;
+  }
 }
