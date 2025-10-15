@@ -22,7 +22,7 @@ const TelaInicial = () => {
         <section className="fundo">
           <div className="campos">
             <div
-              className="card acesso"
+              className="card_telaInicial acesso"
               onClick={() => navigate("/listagemchamado")}
             >
               <img src={campo_um} alt="Lista de Chamados" />
@@ -32,7 +32,7 @@ const TelaInicial = () => {
             </div>
 
             <div
-              className="card acesso"
+              className="card_telaInicial acesso"
               onClick={() => navigate("/listagemfeedback")}
             >
               <img src={campo_dois} alt="Listagem de Feedbacks" />

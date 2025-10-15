@@ -1,124 +1,114 @@
-.todoOLoginCliente {
-  background-color: #040F1E;
-  color: white;
+.todoOCadastroEquipe {
+    background-color: #040F1E;
+    color: white;
 }
 
 .paraCentralizar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
 }
+
 
 .borda {
-  border: 2px solid white;
-  height: auto;
-  min-height: 70vh;
-  width: 95%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  position: relative;
-  padding: 40px 0;
-  background-image:
-    url('../../assets/img/direita.svg'),
-    url('../../assets/img/esquerda.svg');
-  background-repeat: no-repeat, no-repeat;
-  background-position:
-    top 20px right 20px,
-    bottom 20px left 20px;
-  background-size: 250px, 250px;
+    border: 2px solid white;
+    height: 90vh;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+
+    background-image:
+        url('../../assets/img/direita.svg'),
+        url('../../assets/img/esquerda.svg');
+
+    background-repeat: no-repeat, no-repeat;
+
+    background-position:
+        top 20px right 20px,
+        bottom 20px left 20px;
+
+    background-size: 250px, 250px;
+
 }
 
-/* --- Formulário --- */
 form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 400px;
-  gap: 14px; /* mesmo espaçamento suave entre os elementos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 500px;
+    gap: 5px;
 }
 
-.titulo_4 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 35px;
-  font-size: 30px;
-  flex-direction: column;
+.titulo_2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    flex-direction: column;
+}
+
+.titulo_2 h5 {
+    font-weight: 100;
 }
 
 h1 {
-  font-weight: 100;
+    font-weight: 100;
 }
 
-/* --- Inputs e Labels --- */
-label {
-  font-size: 16px;
-}
-
-.input_login_cliente {
-  background-color: white;
-  border: none;
-  outline: none;
-  color: black;
-  height: 38px;
-  border-radius: 8px;
-  padding-left: 10px;
-}
-
-/* --- Botão --- */
 .botao {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* --- Espaçamento opcional --- */
+input {
+    background-color: white;
+    outline: none;
+    border: none;
+    color: black;
+    text-decoration: none;
+    height: 35px;
+    border-radius: 8px;
+    /* margin-bottom: 20px; */
+    padding-left: 8px;
+}
+
 .espacamento {
-  height: 10px;
+    height: 20px;
 }
 
-/* --- Link (se houver) --- */
 a {
-  color: white;
-  text-decoration: none;
-  transition: 0.3s;
+    color: white;
+
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* --- Responsividade --- */
+/* --- Media Query para Telas Pequenas (Mobile) --- */
 @media screen and (max-width: 600px) {
-  .borda {
-    width: 340px;
-    background-size: 100px, 100px;
-    padding: 20px 0;
-  }
+    button {
+        width: 180px !important;
+        height: 50px;
+    }
 
-  form {
-    width: 245px;
-  }
+    .borda {
+        width: 340px;
+        background-size: 100px, 100px;
+    }
 
-  .titulo_4 {
-    font-size: 22px;
-  }
+    form {
+        width: 270px;
+    }
+           
+    .titulo {
+        margin-bottom: 40px;
+        font-size: 25px;
+    }
 
-  label {
-    font-size: 14px;
-  }
-
-  .input_login_cliente {
-    height: 36px;
-    font-size: 14px;
-  }
-
-  button {
-    height: 50px;
-  }
+    .titulo_2 {
+        font-size: 22px;
+    }
 }
