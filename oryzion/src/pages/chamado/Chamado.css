@@ -1,111 +1,135 @@
-.todoOChamado {
-  background-color: #040F1E;
-  color: white;
-}
-
-.paraCentralizar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.chat-principal {
+  background: #1f2a44;
   width: 100%;
-}
-
-.borda {
-  border: 2px solid white;
-  height: auto;
-  min-height: 70vh;
-  width: 95%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  position: relative;
-  padding: 40px 0;
-
-  background-image:
-    url('../../assets/img/direita.svg'),
-    url('../../assets/img/esquerda.svg');
-  background-repeat: no-repeat, no-repeat;
-  background-position:
-    top 20px right 20px,
-    bottom 20px left 20px;
-  background-size: 250px, 250px;
-}
-
-/* 🔙 Botão de voltar */
-.voltarBrancoContainer {
-  position: absolute;
-  top: 25px;
-  left: 25px;
-}
-
-/* --- Formulário --- */
-form {
+  height: calc(100vh - 150px); /* altura adaptada ao header/footer */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 400px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* --- Topo --- */
+.chat-topo-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 60px;
+  background-color: #1b2540; /* cor para destacar o topo */
+  border-bottom: none; /* 🔥 removido o traço inferior */
+}
+
+.perfil-icone img {
+  width: 50px;
+  height: 50px;
+}
+
+.nome-usuario {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* --- Área de mensagens --- */
+.chat-mensagens-area {
+  flex: 1;
+  background: #DADDE9 url('../../assets/img/fundo_chat.png') no-repeat center;
+  background-size: contain;
+  padding: 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.mensagem {
+  background: #3c4b70;
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 14px;
+  max-width: 55%;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease;
+}
+
+/* --- Área de input --- */
+.chat-area-input {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 🔥 centraliza o conteúdo horizontalmente */
   gap: 14px;
+  padding: 15px 60px;
+  background-color: #1b2540;
+  height: 85px;
+  border-top: none; /* 🔥 remove linha superior */
 }
 
-.titulo_2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 35px;
-  font-size: 30px;
-  flex-direction: column;
-}
-
-h1 {
-  font-weight: 100;
-}
-
-.input_chamado {
-  background-color: white;
-  outline: none;
+.input-mensagem {
+  flex: 1;
+  max-width: 900px; /* 🔥 limita pra não ficar esticado demais em telas largas */
+  padding: 14px 16px;
   border: none;
-  color: black;
-  height: 38px;
-  border-radius: 8px;
-  padding-left: 10px;
+  border-radius: 10px;
+  background: #fff;
+  color: #040F1E;
+  font-size: 0.95rem;
+  outline: none;
+  transition: box-shadow 0.2s ease;
 }
 
-.botao {
+.input-mensagem:focus {
+  box-shadow: 0 0 0 2px #5d78ff;
+}
+
+.botao-enviar {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  background: #ffffff;
+  border: none;
+  color: #000;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.espacamento_chamado {
-  height: 10px;
+.botao-enviar:hover {
+  background: #000;
+  color: #fff;
+  transform: scale(1.05);
 }
 
-/* --- Mobile --- */
-@media screen and (max-width: 600px) {
-  .borda {
-    width: 340px;
-    background-size: 100px, 100px;
-    padding: 20px 0;
+
+/* --- Animação --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .chat-topo-info,
+  .chat-mensagens-area,
+  .chat-area-input {
+    padding: 15px 20px;
   }
 
-  form {
-    width: 260px;
+  .mensagem {
+    max-width: 90%;
   }
 
-  .titulo_2 {
-    font-size: 22px;
+  .input-mensagem {
+    font-size: 0.9rem;
   }
 
-  .voltarBrancoContainer {
-    top: 10px;
-    left: 10px;
-  }
-
-  button {
-    width: 180px !important;
-    height: 50px;
+  .botao-enviar {
+    width: 42px;
+    height: 42px;
   }
 }
