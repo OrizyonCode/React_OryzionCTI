@@ -11,101 +11,141 @@
     width: 100%;
 }
 
-
 .borda {
     border: 2px solid white;
-    height: 90vh;
+    height: auto;
+    min-height: 70vh;
     width: 95%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 15px;
+    position: relative;
+    padding: 40px 0;
 
     background-image:
         url('../../assets/img/direita.svg'),
         url('../../assets/img/esquerda.svg');
 
     background-repeat: no-repeat, no-repeat;
-
     background-position:
         top 20px right 20px,
         bottom 20px left 20px;
 
     background-size: 250px, 250px;
-
 }
 
+/* --- Formulário --- */
 form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 500px;
-    gap: 5px;
+    width: 400px;
+    gap: 14px;
+    /* espaçamento suave entre todos os elementos */
 }
 
-.titulo {
+/* --- Título --- */
+.titulo_ {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 80px;
+    margin-bottom: 35px;
     font-size: 30px;
+    flex-direction: column;
 }
 
 h1 {
     font-weight: 100;
+    letter-spacing: 1px;
 }
 
-.botao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* --- Labels --- */
+label {
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
-.link {
-    display: flex;
-    justify-content: flex-end;
-    /* margin-bottom: 80px; */
-}
-
+/* --- Inputs --- */
 .input_login_funcionario {
     background-color: white;
     outline: none;
     border: none;
     color: black;
     text-decoration: none;
-    height: 35px;
+    height: 38px;
     border-radius: 8px;
-    margin-bottom: 20px;
-    padding-left: 8px;
+    padding-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.input_login_funcionario:focus {
+    box-shadow: 0 0 0 2px #1e90ff;
+}
+
+/* --- Link --- */
+.link {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
 }
 
 a {
     color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Botão --- */
+.botao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.link {
+    margin-bottom: 35px;
 
 }
 
-/* --- Media Query para Telas Pequenas (Mobile) --- */
+/* --- Responsividade --- */
 @media screen and (max-width: 600px) {
-    button {
-        /* width: 180px !important; */
-        height: 50px;
-    }
-
     .borda {
         width: 340px;
         background-size: 100px, 100px;
+        padding: 20px 0;
     }
 
     form {
-        width: 270px;
+        width: 260px;
+        gap: 12px;
     }
 
-    .titulo {
-        margin-bottom: 40px;
-        font-size: 25px;
+    .titulo_ {
+        margin-bottom: 30px;
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    .input_login_funcionario {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    button {
+        height: 50px;
     }
 
     .link {
-        margin-bottom: 40px;
+        margin-bottom: 35px;
+
     }
 }

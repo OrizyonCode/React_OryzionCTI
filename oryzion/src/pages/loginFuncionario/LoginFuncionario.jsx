@@ -45,7 +45,7 @@ const LoginFuncionario = () => {
         <div className="borda">
           <div className="borda_para_os_simbolos">
             <form onSubmit={autenticacao}>
-              <div className="titulo">
+              <div className="titulo_">
                 <h1>Login</h1>
               </div>
 
