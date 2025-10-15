@@ -8,7 +8,15 @@ const LoginFuncionario = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  async function autenticacao(e) {
+  const alertar = (icon, msg) => {
+    Swal.fire({
+      icon,
+      text: msg,
+      confirmButtonColor: "#3085d6",
+    });
+  };
+
+  const autenticacao = async (e) => {
     e.preventDefault();
 
     if (email.trim() === "" || senha.trim() === "") {
@@ -29,15 +37,7 @@ const LoginFuncionario = () => {
       console.error("Erro no login:", error);
       alertar("error", "Erro ao fazer login. Verifique suas credenciais!");
     }
-  }
-
-  function alertar(icon, msg) {
-    Swal.fire({
-      icon,
-      text: msg,
-      confirmButtonColor: "#3085d6",
-    });
-  }
+  };
 
   return (
     <div className="todoOLoginFuncionario">
@@ -51,11 +51,7 @@ const LoginFuncionario = () => {
 
               <label>E-mail</label>
               <input
-<<<<<<< HEAD
-              className="input_login_funcionario"
-=======
                 className="input_login_funcionario"
->>>>>>> aebf34451a5e0ce3ecffc5c07bcbc5bd8cf3f626
                 type="email"
                 placeholder="Digite seu e-mail"
                 value={email}
@@ -64,11 +60,7 @@ const LoginFuncionario = () => {
 
               <label>Senha</label>
               <input
-<<<<<<< HEAD
-              className="input_login_funcionario"
-=======
                 className="input_login_funcionario"
->>>>>>> aebf34451a5e0ce3ecffc5c07bcbc5bd8cf3f626
                 type="password"
                 placeholder="Digite sua senha"
                 value={senha}
