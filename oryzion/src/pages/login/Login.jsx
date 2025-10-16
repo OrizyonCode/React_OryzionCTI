@@ -1,10 +1,14 @@
 import React from 'react'
-import './LoginCliente.css'
+import './Login.css'
 import Botao from '../../components/botao/Botao'
 
+<<<<<<< HEAD:oryzion/src/pages/loginCliente/LoginCliente.jsx
 const LoginCliente = () => {
 
 
+=======
+const Login = () => {
+>>>>>>> a6b2bb6d3066d1cde66e10ff93f2b4ea61e34cc0:oryzion/src/pages/login/Login.jsx
     return (
         <>
             <div className="todoOLoginCliente">
@@ -17,10 +21,10 @@ const LoginCliente = () => {
                                 <div className="titulo_4">
                                     <h1>Login</h1>
                                 </div>
-                                <label htmlFor="" >Nome completo</label>
-                                <input className='input_login_cliente' type="text" placeholder='Digite seu nome completo'/>
-                                <label htmlFor="">Telefone</label>
-                                <input className='input_login_cliente' type="tel" placeholder='Digite seu telefone'/>
+                                <label htmlFor="">Email</label>
+                                <input className='input_login_cliente' type="email" placeholder='Digite seu email' />
+                                <label htmlFor="">Senha</label>
+                                <input className='input_login_cliente' type="password" placeholder='Digite sua senha' />
                                 <div className="espacamento"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Entrar" />
@@ -34,4 +38,4 @@ const LoginCliente = () => {
     )
 }
 
-export default LoginCliente
+export default Login
