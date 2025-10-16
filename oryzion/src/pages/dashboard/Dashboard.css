@@ -1,4 +1,3 @@
-/* === LAYOUT PRINCIPAL === */
 .dashboard-main {
   flex: 1;
   padding: 2rem;
@@ -9,15 +8,16 @@
   min-height: calc(100vh - 140px); /* considerando header + footer */
 }
 
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  width: 100%;
-  max-width: 1600px;
+.dashboard_grid {
+    width: 100%;
+    max-width: 85%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-/* === CARDS === */
 .dash-card {
   background: linear-gradient(145deg, #ffffff, #e6ebf7);
   border-radius: 20px;
@@ -29,6 +29,7 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  width: 45 0px;
 }
 
 .dash-card:hover {
@@ -49,7 +50,6 @@
   margin: 0 auto;
 }
 
-/* === BADGES === */
 .badge {
   position: absolute;
   top: 12px;
@@ -66,7 +66,6 @@
 .badge-red { background-color: #EF4444; }
 .badge-yellow { background-color: #F59E0B; }
 
-/* === MODAL === */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -104,7 +103,6 @@
   max-height: 70vh !important;
 }
 
-/* === BOTÃO DE FECHAR === */
 .fechar-modal {
   position: absolute;
   top: 16px;
@@ -127,11 +125,9 @@
   background: #b91c1c;
 }
 
-/* === ANIMAÇÕES === */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-/* === RESPONSIVIDADE === */
 @media (max-width: 767px) {
   .dashboard-grid { grid-template-columns: 1fr; gap: 20px; }
 }
