@@ -1,8 +1,8 @@
 import React from 'react'
-import './LoginCliente.css'
+import './Login.css'
 import Botao from '../../components/botao/Botao'
 
-const LoginCliente = () => {
+const Login = () => {
     return (
         <>
             <div className="todoOLoginCliente">
@@ -15,12 +15,10 @@ const LoginCliente = () => {
                                 <div className="titulo_4">
                                     <h1>Login</h1>
                                 </div>
-                                <label htmlFor="" >Nome completo</label>
-                                <input className='input_login_cliente' type="text" placeholder='Digite seu nome completo'/>
                                 <label htmlFor="">Email</label>
-                                <input className='input_login_cliente' type="email" placeholder='Digite seu email'/>
+                                <input className='input_login_cliente' type="email" placeholder='Digite seu email' />
                                 <label htmlFor="">Senha</label>
-                                <input className='input_login_cliente' type="password" placeholder='Digite sua senha'/>
+                                <input className='input_login_cliente' type="password" placeholder='Digite sua senha' />
                                 <div className="espacamento"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Entrar" />
@@ -34,4 +32,4 @@ const LoginCliente = () => {
     )
 }
 
-export default LoginCliente
+export default Login
