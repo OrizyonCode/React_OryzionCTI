@@ -17,8 +17,10 @@ const LoginCliente = () => {
                                 </div>
                                 <label htmlFor="" >Nome completo</label>
                                 <input className='input_login_cliente' type="text" placeholder='Digite seu nome completo'/>
-                                <label htmlFor="">Telefone</label>
-                                <input className='input_login_cliente' type="tel" placeholder='Digite seu telefone'/>
+                                <label htmlFor="">Email</label>
+                                <input className='input_login_cliente' type="email" placeholder='Digite seu email'/>
+                                <label htmlFor="">Senha</label>
+                                <input className='input_login_cliente' type="password" placeholder='Digite sua senha'/>
                                 <div className="espacamento"></div>
                                 <div className="botao">
                                     <Botao nomeBotao="Entrar" />
