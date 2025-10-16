@@ -90,7 +90,7 @@ a {
 /* --- Media Query para Telas Pequenas (Mobile) --- */
 @media screen and (max-width: 600px) {
     button {
-        width: 180px !important;
+        /* width: 180px !important; */
         height: 50px;
     }
 
