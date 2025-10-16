@@ -121,10 +121,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container ">
       <Header />
       <main className="dashboard-main">
-        <div className="dashboard-grid">
+        <div className="dashboard-grid ">
           <div className="dash-card" onClick={() => abrirModal(feedbackLinha)}>
             <span className="badge badge-blue">Linha</span>
             <h3>Média de Feedbacks</h3>

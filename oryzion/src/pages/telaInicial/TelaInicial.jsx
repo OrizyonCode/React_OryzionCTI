@@ -37,7 +37,7 @@ const TelaInicial = () => {
             >
               <img src={campo_dois} alt="Listagem de Feedbacks" />
               <div className="overlay">
-                <span>Listagem de Feedbacks</span>
+                <span>Lista de Feedbacks</span>
               </div>
             </div>
           </div>
