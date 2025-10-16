@@ -1,3 +1,7 @@
+.listagemChamado {
+  height: 85%;
+}
+
 .img_adiciona {
   width: 100%;
   display: flex;
@@ -78,6 +82,11 @@
 }
 
 @media (max-width: 900px) {
+
+  .listagemChamado {
+    height: 95%;
+  }
+
   .tabela_chamados {
     flex-direction: column;
     width: 95%;

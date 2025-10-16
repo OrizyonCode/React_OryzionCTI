@@ -20,7 +20,7 @@ const ListagemChamado = () => {
   return (
     <>
       <Header />
-      <section className='layout_grid'>
+      <section className='layout_grid listagemChamado'>
         <div className='img_adiciona'>
           <Link to="/chamado" className="botao_adicionar">
             <img src={mais} alt="Mais" />
