@@ -21,23 +21,18 @@ const ListagemFeedback = () => {
                     <div className='listagem_cards'>
 
                         <div className='qtd_feedback'>
-                            <h2>(4) Feedbacks</h2>
-                            <hr></hr>
+                            <h2>(3) Feedbacks</h2>
                         </div>
 
-                        <div className='card'>
+                        <div className='feedback'>
                             <Card/>
                         </div>
-                        <div className='card'>
+                        <div className='feedback'>
                             <Card/>
                         </div>
-                        <div className='card'>
+                        <div className='feedback'>
                             <Card/>
                         </div>
-                        <div className='card'>
-                            <Card/>
-                        </div>
-
             
                     </div>
                 </section>

@@ -22,6 +22,10 @@
 
 .links li {
   cursor: pointer;
+  color: white;
+  margin-top: 15px;
+
+  font-weight: 400;
 }
 
 /* 📱 Ícone de filtro e menu */
@@ -91,17 +95,30 @@
 
 /* 📱 Mobile */
 @media (max-width: 768px) {
-  .links {
-    display: none;
+  .barra_pesquisa_container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 80px;
+    gap: 10px;
   }
 
-  .barra_pesquisa_container {
-    align-items: flex-start;
-    padding-left: 10px;
+  .filtro_container {
+    position: static;
+  }
+
+  .filtro_icon {
+    width: 35px;
+    height: 35px;
   }
 
   .search_box {
-    align-self: center;
-    width: 85%;
+    width: 80%;
+    margin-top: 0; /* 🔽 remove o espaço extra */
+  }
+
+  .links {
+    display: none;
   }
 }

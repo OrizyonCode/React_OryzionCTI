@@ -9,7 +9,7 @@ const CadastroEquipe = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [idTipoUsuario, setIdTipoUsuario] = useState("501f4974-0473-4d39-9b9f-1e5be73f50ed");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("76fe3d4f-da37-4c8d-a1c5-62ad34c7c64d");
 
   async function cadastro(e) {
     e.preventDefault(); 
@@ -19,16 +19,22 @@ const CadastroEquipe = () => {
       const resposta = await api.post("Usuario", usuario);
 
       if (resposta.status === 200) {
-        alertar("success", "Cadastro realizado com sucesso!");
+        alertar("Desculpe", "Verifique os dados e tente novamente.");
         setNome("");
         setEmail("");
         setSenha("");
       } else {
-        alertar("warning", "Verifique os dados e tente novamente.");
+        alertar("success", "Cadastro realizado com sucesso!");
+
       }
     } catch (error) {
       console.error("Erro no cadastro:", error);
       alertar("error", "Erro ao fazer o cadastro. Verifique suas credenciais!");
+      console.log(usuario.nome);
+      console.log(usuario.email);
+      console.log(usuario.senha);
+      console.log(usuario.idTipoUsuario);
+      
     }
   }
 

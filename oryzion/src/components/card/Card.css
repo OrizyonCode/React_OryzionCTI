@@ -2,13 +2,16 @@
   background-color: #FFFFFF;
   display: flex;
   gap: 20px;
-  width: 750px;
+  width: 100%;
+  max-width: 750px;
   padding: 20px;
   border-radius: 12px;
   align-items: flex-start;
   justify-content: flex-end;
   flex-wrap: wrap;
   box-shadow: 4px 5px 15px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  
 }
 
 /* --- Usuário --- */
@@ -28,11 +31,6 @@
   border-radius: 50%;
 }
 
-.campo_usuario .avaliacao {
-  margin-top: 5px;
-  width: 70px;
-}
-
 /* --- Feedback --- */
 .campo_feedback {
   flex: 1;
@@ -41,7 +39,7 @@
   gap: 15px;
 }
 
-/* Caixa de comentário */
+/* Quadrante de comentário */
 .campo_comentario {
   background-color: #dadde9;
   border-radius: 20px;
@@ -50,28 +48,16 @@
   justify-content: space-between;
   align-items: center;
   height: 150px;
-  gap: 20px;
-}
-
-.campo_comentario button{
-  height: 40px;
-  width: 130px;
-  font-size: 15px;
-  background-color: #313D65;
-  border: none;
-  
-}
-
-.campo_comentario button:hover{
-  border: none;
 }
 
 .campo_comentario p {
   font-size: 16px;
   font-family: "Poppins", sans-serif;
   line-height: 22px;
-  flex: 1;
 }
+
+.campo_comentario button { height: 40px; width: 130px; font-size: 15px; background-color: #313D65; border: none; }
+
 
 /* --- Áudio --- */
 .campo_audio {
@@ -80,39 +66,97 @@
   gap: 20px;
 }
 
-.campo_audio img{
+.campo_audio img {
   background-color: #dadde9;
   border-radius: 20px;
   padding: 8px 15px;
   height: 65px;
 }
 
-.audio_player {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background-color: #dadde9;
-  border-radius: 20px;
-  padding: 8px 15px;
-}
-
-.audio_player img {
-  width: 120px;
-}
-
 .duracao {
-    text-align: center;
-    padding: 20px;
-    border-radius: 20px;
-    width: 140px;
-    background-color: #DADDE9;
-    font-weight: bold;
-    font-size: 15px;
-    height: 65px;
-}
-
-.campo_audio .duracao{
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
+  width: 140px;
+  background-color: #DADDE9;
+  font-weight: bold;
+  font-size: 15px;
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* ============================= */
+/* 📱 MOBILE */
+/* ============================= */
+@media (max-width: 768px) {
+  .divs_card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .campo_usuario p{
+    font-size: 19px;
+    font-weight: 530;
+  }
+
+  .campo_usuario {
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0;
+    gap: 15px;
+  }
+
+  .campo_usuario img {
+    width: 55px;
+  }
+
+  /* Quadrante de comentário */
+  .campo_comentario {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .campo_comentario p {
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .campo_comentario button {
+    width: 100%;
+    margin-top: 5px;
+  }
+
+  /* Áudio */
+  .campo_audio {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+  
+
+  .campo_audio img {
+    width: 220px;
+    height: 60px;
+    padding: 5px 10px;
+  }
+
+  .duracao {
+    width: 110px;
+    height: 60px;
+    font-size: 14px;
+  }
 }

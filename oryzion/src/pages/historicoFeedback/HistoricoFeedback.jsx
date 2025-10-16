@@ -16,11 +16,7 @@ const HistoricoFeedback = () => {
         botaoVoltar="none"
       />
 
-      <section className='layout_grid'>
-        {/* <div className='voltaBotao'>
-          <img src={voltar} alt="" />
-        </div> */}
-
+      <section className='layout_grid HistoricoFeedback'>
         <div className='listagens_historico'>
           <CardHistorico />
         </div>

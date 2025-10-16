@@ -13,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .banner_cards {
@@ -30,13 +31,17 @@ body {
 }
 
 .titulo h2 {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     color: white;
     font-size: 22px;
     font-weight: 600;
-    position: absolute;
 
-    margin-bottom: -80px;
+    margin-top: 22px;
 }
+
 
 .card_avaliacao img {
     margin-top: -20px;
@@ -54,9 +59,8 @@ body {
 }
 
 .botBanner img {
-    height: 550px;
+    height: 500px;
     object-fit: contain;
-    margin-top: -100px;
 }
 
 .link_responder {
