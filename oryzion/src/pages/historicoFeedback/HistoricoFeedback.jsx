@@ -16,7 +16,7 @@ const HistoricoFeedback = () => {
         botaoVoltar="none"
       />
 
-      <section className='layout_grid   '>
+      <section className='layout_grid'>
         {/* <div className='voltaBotao'>
           <img src={voltar} alt="" />
         </div> */}

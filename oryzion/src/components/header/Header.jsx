@@ -27,7 +27,6 @@ const Header = (props) => {
         <ul className={`nav_list ${menuAtivo ? 'active' : ''}`} style={props.link_header}>
           <li><Link className='link_header' to="/cadastroequipe">Cadastro da equipe</Link></li>
           <li><Link className='link_header' to="/listagemchamado">Lista de chamados</Link></li>
-          <li><Link className='link_header' to="/perfil">Perfil</Link></li>
           <li><Link className='link_header' to="/Listagemfeedback">Lista de feedbacks</Link></li>
         </ul>
 
