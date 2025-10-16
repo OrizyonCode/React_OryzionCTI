@@ -161,17 +161,31 @@ body {
 
 
 @media (max-width: 600px) {
-    .botBanner img {
-        height: 400px;
-        margin-top: 40px;
-    }
+  .botBanner img {
+    height: 400px;
+    margin-top: 40px;
+  }
 
-    .carousel_button {
-        background-color: #040f1e00;
-        width: 0%;
-    }
+  .carousel_button {
+    background-color: #313D65;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .carousel_button:hover {
-        background-color: #040f1e00;
-    }
+  .carousel_button img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .carousel_button.prev {
+    left: 10px;
+  }
+
+  .carousel_button.next {
+    right: 10px;
+  }
 }

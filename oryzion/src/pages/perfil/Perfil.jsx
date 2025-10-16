@@ -4,7 +4,7 @@ import iconePerfil from "../../assets/img/IconSuporte.svg";
 import Botao from "../../components/botao/Botao";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import VoltarBranco from "../../components/voltarBranco/voltarBranco";
+import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
 
 const Perfil = () => {
   return (
