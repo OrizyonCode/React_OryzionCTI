@@ -2,13 +2,9 @@ import React from 'react'
 import './Login.css'
 import Botao from '../../components/botao/Botao'
 
-<<<<<<< HEAD:oryzion/src/pages/loginCliente/LoginCliente.jsx
-const LoginCliente = () => {
-
-
-=======
 const Login = () => {
->>>>>>> a6b2bb6d3066d1cde66e10ff93f2b4ea61e34cc0:oryzion/src/pages/login/Login.jsx
+
+
     return (
         <>
             <div className="todoOLoginCliente">
