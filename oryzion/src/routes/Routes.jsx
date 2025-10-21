@@ -30,7 +30,7 @@ const Rotas = () => {
                 <Route path='/login' element={<Login/>} />
                 <Route path='/resumo' element={<Resumo/>} />
                 <Route path='/perfil' element={<Perfil/>} />
-                <Route path='/' element={<TelaInicial/>} />
+                <Route path='/telainicial' element={<TelaInicial/>} />
                 <Route path='*' element={<Error/>} />
 
             </Routes>
