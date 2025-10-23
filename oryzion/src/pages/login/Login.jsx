@@ -36,6 +36,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [cliente, setCliente] = useState("008bc867-176c-4c5f-9cae-384ccc3e35e9")
 
     const navigate = useNavigate();
 
@@ -66,11 +67,13 @@ const Login = () => {
                     setUsuario(tokenDecodificado);
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
-                    if (tokenDecodificado.tipoUsuario != "6c7ae75f-84fd-4d24-b539-af705a7a3057") {
+                    if (tokenDecodificado?.emailUsuario?.endsWith("@email.com")) {
                         navigate("/chat");
-                    } else {
-                        navigate("/");
+                    } else  {
+                        navigate("/telainicial");
                     }
+                } else {
+                    alertar("error", "Email ou senha invalidos")
                 }
 
             } catch (error) {

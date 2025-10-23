@@ -8,6 +8,5 @@ export const userDecodeToken = (token) => {
         token: token,
         tipoUsuario: decodificado,
         emailUsuario: decodificado.email
-        
     }
 }

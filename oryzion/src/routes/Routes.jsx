@@ -28,7 +28,7 @@ const Rotas = () => {
                 <Route path='/' element={<Login/>} />
                 <Route path='/resumo' element={<Resumo/>} />
                 <Route path='/perfil' element={<Perfil/>} />
-                <Route path='/a' element={<TelaInicial/>} />
+                <Route path='/telainicial' element={<TelaInicial/>} />
                 <Route path='*' element={<Error/>} />
 
             </Routes>
