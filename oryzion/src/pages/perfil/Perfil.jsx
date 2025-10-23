@@ -5,11 +5,8 @@ import Botao from "../../components/botao/Botao";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
-<<<<<<< HEAD
 import api from "../../Services/services";
 import Swal from "sweetalert2";
-=======
->>>>>>> 82158f803b64dd730f42c8c1c495031542708b40
 
 const Perfil = () => {
   const [nome, setNome] = useState("");
@@ -49,7 +46,6 @@ const Perfil = () => {
     }
   };
 
-  // 🟣 Enviar atualização do perfil
   async function atualizarPerfil(e) {
     e.preventDefault();
 
