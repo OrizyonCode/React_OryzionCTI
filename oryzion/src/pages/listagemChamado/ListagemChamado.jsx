@@ -82,6 +82,18 @@ const ListagemChamado = () => {
               <div key={index}><img src={edita} alt="Editar" /></div>
             ))}
           </div>
+
+          <div className='coluna tabela_header'>
+            <h3>Status</h3>
+            {chamados.map((c, index) => (
+          //     <div key={index}>{status === "Concluído" ? (
+          // <span>✅ Concluído</span>
+          //   ) : (
+          //   <span>⏳ Pendente</span>
+          //   )}</div>
+          <div key={index}><img src={edita} alt="Editar" /></div>
+            ))}
+          </div>
         </div>
       </section>
       <Footer />
