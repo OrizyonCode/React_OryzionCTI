@@ -5,11 +5,8 @@ import Botao from "../../components/botao/Botao";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
-<<<<<<< HEAD
-=======
 import api from "../../Services/services";
 import Swal from "sweetalert2";
->>>>>>> 33db693d76640c1511b9bd36e285d508333a9b92
 
 const Perfil = () => {
   const [nome, setNome] = useState("");
