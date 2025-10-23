@@ -1,6 +1,12 @@
 // aqui temos os imports
 import './Login.css'
 import Botao from '../../components/botao/Botao'
+<<<<<<< HEAD
+
+const Login = () => {
+
+
+=======
 import api from '../../Services/services'
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +17,7 @@ import secureLocalStorage from "react-secure-storage";
 
 
 const Login = () => {
+<<<<<<< HEAD
 
     //PARTE DO ALERTA
     function alertar(icone, mensagem) {
@@ -85,6 +92,9 @@ const Login = () => {
         }
     }
 
+=======
+>>>>>>> e12b6232bf0dc64deca3ed6277c5f2ca2fd9082e
+>>>>>>> 33db693d76640c1511b9bd36e285d508333a9b92
     return (
         <>
             <div className="todoOLoginCliente">
@@ -128,4 +138,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Login;

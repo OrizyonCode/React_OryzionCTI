@@ -1,28 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import "./HistoricoFeedback.css";
-import Header from '../../components/header/Header'
-import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
-import CardHistorico from '../../components/cardHistorico/CardHistorico';
-import voltar from '../../assets/img/BotaoVoltar.svg'
-import Footer from '../../components/footer/Footer'
-import Voltar from '../../components/voltar/Voltar'
-
-
+import Header from "../../components/header/Header";
+import BarraPesquisa from "../../components/barraPesquisa/BarraPesquisa";
+import CardHistorico from "../../components/cardHistorico/CardHistorico";
+import Footer from "../../components/footer/Footer";
+import api from "../../Services/services";
 
 const HistoricoFeedback = () => {
+  const [feedbacks, setFeedbacks] = useState([]);
+
+  useEffect(() => {
+    const carregarFeedbacks = async () => {
+      try {
+        const resposta = await api.get("/Feedback");
+        console.log("Feedbacks recebidos:", resposta.data);
+        setFeedbacks(resposta.data);
+      } catch (erro) {
+        console.error("Erro ao buscar feedbacks:", erro);
+      }
+    };
+
+    carregarFeedbacks();
+  }, []);
+
   return (
     <>
       <Header />
-      <BarraPesquisa
-        botaoVoltar="none"
-      />
-
-      <section className='layout_grid HistoricoFeedback'>
-        <div className='listagens_historico'>
-          <CardHistorico />
+      <BarraPesquisa botaoVoltar="none" />
+      <main className="layout_grid HistoricoFeedback">
+        <div className="listagens_historico">
+          {feedbacks.length === 0 ? (
+            <p style={{ textAlign: "center", marginTop: "2rem" }}>
+              Nenhum feedback encontrado 
+            </p>
+          ) : (
+            feedbacks.map((f) => (
+              <CardHistorico key={f.idFeedback} dados={f} />
+            ))
+          )}
         </div>
-
-      </section>
+      </main>
       <Footer />
     </>
   );
