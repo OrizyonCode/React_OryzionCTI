@@ -1,7 +1,7 @@
 import React from 'react';
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
-import VoltarBranco from "../../components/voltarBranco/voltarBranco";
+import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
 
 const Chamado = () => {
   return (
@@ -16,6 +16,7 @@ const Chamado = () => {
             <div className="titulo_2">
               <h1>Chamado</h1>
             </div>
+            
 
             <label>Nome</label>
             <input

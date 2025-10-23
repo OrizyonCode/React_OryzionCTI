@@ -7,12 +7,11 @@ import DashBoard from '../pages/dashboard/Dashboard.jsx'
 import HistoricoFeedback from '../pages/historicoFeedback/HistoricoFeedback.jsx'
 import ListagemChamado from '../pages/listagemChamado/ListagemChamado.jsx'
 import ListagemFeedback from '../pages/listagemFeedback/listagemFeedback.jsx';
-import LoginCliente from '../pages/loginCliente/LoginCliente.jsx'
-import LoginFuncionario from '../pages/loginFuncionario/LoginFuncionario.jsx'
 import Perfil from '../pages/perfil/Perfil.jsx'
 import Resumo from '../pages/resumo/Resumo.jsx'
 import Error from '../pages/error/ErrorPage.jsx'
 import TelaInicial from '../pages/telaInicial/TelaInicial.jsx'
+import Login from '../pages/login/Login.jsx'
 
 
 
@@ -29,8 +28,7 @@ const Rotas = () => {
                 <Route path='/historicofeedback' element={<HistoricoFeedback/>} />
                 <Route path='/chamado' element={<Chamado/>} />
                 <Route path='/cadastroequipe' element={<CadastroEquipe/>} />
-                <Route path='/logincliente' element={<LoginCliente/>} />
-                <Route path='/loginfuncionario' element={<LoginFuncionario/>} />
+                <Route path='/login' element={<Login/>} />
                 <Route path='/resumo' element={<Resumo/>} />
                 <Route path='/perfil' element={<Perfil/>} />
                 <Route path='/' element={<TelaInicial/>} />
