@@ -1,19 +1,34 @@
-import React from "react";
-// Importe o componente Voltar
-import Voltar from "../../components/voltar/Voltar"; // ATENÇÃO: Ajuste este caminho conforme necessário!
-
+import React, { useState, useEffect } from "react";
+import Voltar from "../../components/voltar/Voltar";
+import api from "../../Services/services";
+import Swal from "sweetalert2";
 import "./Resumo.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
 const Resumo = () => {
+  const [resumo, setResumo] = useState([]);
 
-  // 1. Defina a função que será passada para o componente Voltar
+  // Função de voltar
   const handleVoltar = () => {
-    // Exemplo: Usar a função nativa do navegador para voltar
     window.history.back(); 
-    // Se estiver usando React Router, você usaria: navigate(-1);
   };
+
+  // Função que busca o resumo na API
+  async function listarResumo() {
+    try {
+      const resposta = await api.get("Resumo");
+      setResumo(resposta.data);
+    } catch (error) {
+      console.log(error);
+      Swal.fire("Erro", "Não foi possível carregar o resumo.", "error");
+    }
+  }
+
+  // Chama a função ao carregar o componente
+  useEffect(() => {
+    listarResumo();
+  }, []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -22,22 +37,20 @@ const Resumo = () => {
       <section className="container-resumo" style={{ flex: 1 }}>
         <div className="modal-resumo">
           <div className="voltar">
-            {/* 2. Adicione o componente Voltar na div e passe a função */}
-            <Voltar acaoDeVoltar={handleVoltar} /> 
+            <Voltar acaoDeVoltar={handleVoltar} />
           </div>
 
           <h2 className="titulo-resumo">Resumo 0001</h2>
 
-          <div className="caixa-texto">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
+          {resumo && resumo.length > 0 ? (
+            resumo.map((item, index) => (
+              <div key={index} className="caixa-texto">
+                <p>{item.descricao}</p>
+              </div>
+            ))
+          ) : (
+            <p>Nada encontrado</p>
+          )}
         </div>
       </section>
 

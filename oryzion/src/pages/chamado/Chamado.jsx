@@ -1,9 +1,52 @@
-import React from 'react';
+
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
-import VoltarBranco from "../../components/voltarBranco/voltarBranco";
+import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
+import React, { useState } from 'react';
+import api from "../../Services/services";
+import Swal from "sweetalert2";
 
 const Chamado = () => {
+    
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  async function cadastro(e) {
+    e.preventDefault(); 
+    const usuario = { nome, email, senha };
+
+    try {
+      const resposta = await api.post("Usuario", usuario);
+
+      if (resposta.status === 200) {
+        alertar("Desculpe", "Verifique os dados e tente novamente.");
+        setNome("");
+        setEmail("");
+        setSenha("");
+      } else {
+        alertar("success", "Cadastro realizado com sucesso!");
+
+      }
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      alertar("error", "Erro ao fazer o cadastro. Verifique suas credenciais!");
+      console.log(usuario.nome);
+      console.log(usuario.email);
+      console.log(usuario.senha);
+      console.log(usuario.idTipoUsuario);
+    }
+  }
+
+  function alertar(icon, msg) {
+    Swal.fire({
+      icon,
+      text: msg,
+      confirmButtonColor: "#3085d6",
+    });
+  }
+
+
   return (
     <div className="todoOChamado">
       <div className="paraCentralizar">
@@ -12,7 +55,7 @@ const Chamado = () => {
             <VoltarBranco />
           </div>
 
-          <form>
+          <form onSubmit={cadastro}>
             <div className="titulo_2">
               <h1>Chamado</h1>
             </div>
@@ -22,22 +65,28 @@ const Chamado = () => {
               className='input_chamado'
               type="text"
               placeholder='Nome completo do cliente'
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
               required
             />
 
-            <label>Telefone</label>
+            <label>E-mail</label>
             <input
               className='input_chamado'
-              type="tel"
-              placeholder='(99) 9 9999-9999'
+              type="email"
+              placeholder='Digite seu e-mail'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
-            <label>CPF</label>
+            <label>Senha</label>
             <input
               className='input_chamado'
-              type="text"
-              placeholder='000.000.000-00'
+              type="password"
+              placeholder='Digite sua senha'
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               required
             />
 
