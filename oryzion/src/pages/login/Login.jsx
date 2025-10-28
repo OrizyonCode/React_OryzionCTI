@@ -66,10 +66,10 @@ const Login = () => {
                     setUsuario(tokenDecodificado);
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
-                    if (tokenDecodificado.tipoUsuario != "6c7ae75f-84fd-4d24-b539-af705a7a3057") {
-                        navigate("/chat");
-                    } else {
+                    if (tokenDecodificado === "fcdd7c4d-f4c9-4a60-bb27-150b82a9299c") {
                         navigate("/");
+                    } else {
+                        navigate("/historicofeedback");
                     }
                 }
 
