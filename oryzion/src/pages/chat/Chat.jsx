@@ -40,11 +40,11 @@ const Chat = () => {
           </div>
         </div>
 
-        <div className="chat-area-input">
+        <div className="chat-area-input"> 
           <input 
             type="text" 
             placeholder="Digite sua mensagem..." 
-            className="input-mensagem" 
+            className="input-mensagem"
           />
           <button className="botao-enviar">
             <span className="icone-enviar">➤</span>
