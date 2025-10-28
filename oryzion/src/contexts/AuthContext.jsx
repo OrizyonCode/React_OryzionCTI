@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+import React, { createContext, useState, useContext, Children } from "react";
+import secureLocalStorage from "react-secure-storage";
+=======
 // import React, { createContext, useState, useContext } from "react";
 // import secureLocalStorage from "react-secure-storage";
+>>>>>>> c68ee8608db1cdc5f127eb3030f76b42e910896d
 
 // // Cria o contexto
 // const AuthContext = createContext();
