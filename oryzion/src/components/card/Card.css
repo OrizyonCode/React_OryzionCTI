@@ -63,7 +63,7 @@
 .campo_audio {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 120px;
 }
 
 .campo_audio img {
@@ -81,7 +81,7 @@
   background-color: #DADDE9;
   font-weight: bold;
   font-size: 15px;
-  height: 65px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,6 +1,6 @@
 import React from 'react'
 import './Card.css'
-import audioDesktop from "../../assets/img/audio.svg"
+import audioMp3 from '../../assets/audio/audio.teste.mp3';
 import audioMobile from "../../assets/img/audioPlay.svg"  // imagem reduzida ou alternativa para mobile
 import imgUsuario from "../../assets/img/Usuario.svg"
 import Botao from '../botao/Botao'
@@ -27,8 +27,8 @@ const Card = () => {
             onClick={() => navigate("/chat")}
             style={{ cursor: "pointer", width: "100%" }}
           >
-            <Botao nomeBotao="Responder" />
           </div>
+            <Botao nomeBotao="Responder" />
         </div>
       </div>
 
@@ -36,7 +36,9 @@ const Card = () => {
       <div className='campo_audio'>
         <picture>
           <source media="(max-width: 768px)" srcSet={audioMobile} />
-          <img src={audioDesktop} alt="Botão de áudio" />
+          <audio controls>
+            <source src={audioMp3} type="audio/mpeg" />
+          </audio>
         </picture>
         <p className='duracao'>1:30</p>
       </div>

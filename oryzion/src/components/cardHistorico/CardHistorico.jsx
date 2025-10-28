@@ -1,49 +1,51 @@
-import React from 'react'
-import './CardHistorico.css'
+import React from "react";
+import "./CardHistorico.css";
 import imgUsuario from "../../assets/img/Usuario.svg";
-import Botao from '../../components/botao/Botao';
+import Botao from "../../components/botao/Botao";
 
-const CardHistorico = () => {
+const CardHistorico = ({ dados }) => {
   return (
-<div className="listagem_historico">
-          <div className="coluna_esquerda">
-            <div className="usuario_caracteristicas">
-              <img src={imgUsuario} alt="Usuario" />
-              <div className="icone_usuario">
-                <p className="">Nome</p>
-                <p className="">Simpático</p>
-              </div>
-            </div>
+    <div className="listagem_historico">
+      <div className="coluna_esquerda">
+        <div className="usuario_caracteristicas">
+          <img src={imgUsuario} alt="Usuario" />
+          <div className="icone_usuario">
+            <p className="">{dados.nomeUsuario || "Nome não informado"}</p>
+            <p className="">{dados.comportamento || "Sem comportamento"}</p>
           </div>
+        </div>
+      </div>
 
-          <div className="coluna_central">
-            <div className="info_bloco">
-              <p>Total de feedbacks: 16</p>
-              <p>Resolvidos: 68%</p>
-              <p>Pendentes: 32%</p>
-            </div>
+      <div className="coluna_central">
+        <div className="info_bloco">
+          <p>Total de feedbacks: {dados.totalFeedbacks || 0}</p>
+          <p>Resolvidos: {dados.percentualResolvidos || 0}%</p>
+          <p>Pendentes: {dados.percentualPendentes || 0}%</p>
+        </div>
 
-            <div className="info_bloco">
-              <p>Feedbacks negativos: 8</p>
-              <p>Feedbacks positivos: 5</p>
-              <p>Feedbacks neutros: 3</p>
-            </div>
+        <div className="info_bloco">
+          <p>Feedbacks negativos: {dados.negativos || 0}</p>
+          <p>Feedbacks positivos: {dados.positivos || 0}</p>
+          <p>Feedbacks neutros: {dados.neutros || 0}</p>
+        </div>
+      </div>
 
-            
-          </div>
+      <div className="comportamento">
+        <h4>Últimos comportamentos</h4>
+        {dados.ultimosComportamentos && dados.ultimosComportamentos.length > 0 ? (
+          dados.ultimosComportamentos.map((c, i) => (
+            <p key={i}><b>{c}</b></p>
+          ))
+        ) : (
+          <p>Nenhum comportamento recente</p>
+        )}
+      </div>
 
-          <div className="comportamento">
-            <h4>Últimos comportamentos</h4>
-            <p><b>Simpático</b></p>
-            <p><b>Calmo</b></p>
-            <p><b>Atencioso</b></p>
+      <div className="botao_responda">
+        <Botao nomeBotao="Responda aqui" />
+      </div>
+    </div>
+  );
+};
 
-          </div>
-          <div className='botao_responda'>
-        <Botao nomeBotao="Responda aqui" /> 
-          </div>
-        </div>  
-    )
-}
-
-export default CardHistorico
+export default CardHistorico;

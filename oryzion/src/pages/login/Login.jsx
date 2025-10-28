@@ -1,24 +1,18 @@
-import React from 'react'
+// aqui temos os imports
 import './Login.css'
 import Botao from '../../components/botao/Botao'
-import api from "../../Services/services";
+import api from '../../Services/services'
 import { useState } from "react";
-import Swal from 'sweetalert2';
-import { userDecodeToken } from "../../auth/Auth"
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../contexts/AuthContext"
+import { userDecodeToken } from "../../auth/Auth";
+import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
-import { useNavigate } from "react-router";
-import { useAuth } from "../../contexts/AuthContext";
-import { Link } from 'react-router-dom';
+
 
 const Login = () => {
 
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-
-    const naviGate = useNavigate();
-
-    const { setUsuario } = useAuth();
-
+    //PARTE DO ALERTA
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
             toast: true,
@@ -36,43 +30,61 @@ const Login = () => {
             title: mensagem
         });
     }
+    //FIM DA PARTE DO ALERTA
+
+    // aqui eu vou começar a fazer o funcionamento do login
+
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [cliente, setCliente] = useState("008bc867-176c-4c5f-9cae-384ccc3e35e9")
+
+    const navigate = useNavigate();
+
+    const { setUsuario } = useAuth();
 
     async function realizarAutenticacao(e) {
+
+        console.log("Executando login...");
+
         e.preventDefault();
-        try {
 
-            const usuario = {
-                email: email,
-                senha: senha
-            }
+        const usuario = {
+            email: email,
+            senha: senha
+        }
 
-            if (senha.trim() != "" || email.trim() != "") {
+        if (senha.trim() !== "" && email.trim() !== "") {
 
+            try {
+                const resposta = await api.post("Login", usuario); // chama a API primeiro
 
-                const resposta = await api.post("Login", usuario)
-
-                const token = resposta.data.token;
+                const token = resposta.data.token; // só aqui você usa 'resposta'
 
                 if (token) {
-                    const tokenDecodificado = userDecodeToken(token)
+                    const tokenDecodificado = userDecodeToken(token);
+                    console.log("Token decodificado:", tokenDecodificado);
+
                     setUsuario(tokenDecodificado);
-                    
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
-                    if (tokenDecodificado.tipoUsuario === "cliente") {
-                        //redirecionar a tela aluno(branco)
-                        naviGate("/chat")
-                    } else {
-                        naviGate("/telainicial")
+                    if (tokenDecodificado?.emailUsuario?.endsWith("@email.com")) {
+                        navigate("/chat");
+                    } else  {
+                        navigate("/telainicial");
                     }
                 } else {
-                    alertar("error", "Preencha os campos !")
+                    alertar("error", "Email ou senha invalidos")
                 }
+
+            } catch (error) {
+                console.log(error);
+                alertar("error", "EMAIL ou senha inválidos, para dúvidas entre em contato com o suporte. 🤖");
             }
 
-        } catch (error) {
-            console.log(error);
-            alertar("error", "Email ou senha invalidos !")
+
+        } else {
+            alertar("warning", "Preencha os campos vazios para realizar o login 🤖")
+
         }
     }
 
@@ -84,17 +96,31 @@ const Login = () => {
                         <div className="borda_para_os_simbolos">
 
 
-                            <form action="">
+                            <form action="" onSubmit={realizarAutenticacao}>
                                 <div className="titulo_4">
                                     <h1>Login</h1>
                                 </div>
                                 <label htmlFor="">Email</label>
-                                <input className='input_login_cliente' type="email" placeholder='Digite seu email' />
+                                <input
+                                    className='input_login_cliente'
+                                    type="email"
+                                    placeholder='Digite seu email'
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
                                 <label htmlFor="">Senha</label>
-                                <input className='input_login_cliente' type="password" placeholder='Digite sua senha' />
+                                <input
+                                    className='input_login_cliente'
+                                    type="password"
+                                    placeholder='Digite sua senha'
+                                    name="senha"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                />
                                 <div className="espacamento"></div>
                                 <div className="botao">
-                                    <Botao nomeBotao="Entrar" />
+                                    <Botao nomeBotao="Entrar" type="submit" />
                                 </div>
                             </form>
                         </div>
@@ -105,4 +131,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Login;

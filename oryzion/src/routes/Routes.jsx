@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import CadastroEquipe from '../pages/cadastroEquipe/CadastroEquipe.jsx';
 import Chamado from '../pages/chamado/Chamado.jsx'
 import Chat from '../pages/chat/Chat.jsx'
@@ -24,8 +24,16 @@ const Rotas = () => {
                 <Route path='/cadastroequipe' element={<CadastroEquipe/>} />
                 <Route path='/historicofeedback' element={<HistoricoFeedback/>} />
                 <Route path='/chamado' element={<Chamado/>} />
+<<<<<<< HEAD
                 <Route path='/resumo' element={<Resumo/>} />
                 <Route path='/perfil' element={<Perfil/>} />
+=======
+                <Route path='/cadastroequipe' element={<CadastroEquipe/>} />
+                <Route path='/' element={<Login/>} />
+                <Route path='/resumo' element={<Resumo/>} />
+                <Route path='/perfil' element={<Perfil/>} />
+                <Route path='/telainicial' element={<TelaInicial/>} />
+>>>>>>> c68ee8608db1cdc5f127eb3030f76b42e910896d
                 <Route path='*' element={<Error/>} />
         </Routes>
     )
