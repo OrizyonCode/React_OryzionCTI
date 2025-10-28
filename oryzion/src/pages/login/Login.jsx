@@ -1,18 +1,15 @@
-// aqui temos os imports
-import './Login.css'
-import Botao from '../../components/botao/Botao'
-import api from '../../Services/services'
+import './Login.css';
+import Botao from '../../components/botao/Botao';
+import api from '../../Services/services';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 
-
 const Login = () => {
 
-    //PARTE DO ALERTA
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
             toast: true,
@@ -25,52 +22,52 @@ const Login = () => {
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
-        Toast.fire({
-            icon: icone,
-            title: mensagem
-        });
+        Toast.fire({ icon: icone, title: mensagem });
     }
-    //FIM DA PARTE DO ALERTA
-
-    // aqui eu vou começar a fazer o funcionamento do login
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-
     const navigate = useNavigate();
-
     const { setUsuario } = useAuth();
 
     async function realizarAutenticacao(e) {
-
-        console.log("Executando login...");
-
         e.preventDefault();
 
-        const usuario = {
-            email: email,
-            senha: senha
-        }
+        const usuarioLogin = { email, senha };
 
-        if (senha.trim() !== "" && email.trim() !== "") {
-
+        if (senha.trim() && email.trim()) {
             try {
-                const resposta = await api.post("Login", usuario); // chama a API primeiro
-
-                const token = resposta.data.token; // só aqui você usa 'resposta'
+                const resposta = await api.post("Login", usuarioLogin);
+                const token = resposta.data.token;
 
                 if (token) {
                     const tokenDecodificado = userDecodeToken(token);
-                    console.log("Token decodificado:", tokenDecodificado);
 
-                    setUsuario(tokenDecodificado);
-                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+                    // ✅ Monta o objeto do usuário com fallback de nome
+                    const usuarioCompleto = {
+                        ...tokenDecodificado,
+                        nomeUsuario: tokenDecodificado.nomeUsuario || "Usuário"
+                    };
 
+<<<<<<< HEAD
                     if (tokenDecodificado === "fcdd7c4d-f4c9-4a60-bb27-150b82a9299c") {
                         navigate("/");
                     } else {
                         navigate("/historicofeedback");
+=======
+                    setUsuario(usuarioCompleto);
+                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioCompleto));
+
+                    // Redireciona conforme o tipo de usuário
+                    if (usuarioCompleto?.emailUsuario?.endsWith("@email.com")) {
+                        navigate("/chat");
+                    } else {
+                        navigate("/telainicial");
+>>>>>>> 35a186fab5f4dec35a52c41e54388b8b2e73c9c2
                     }
+
+                } else {
+                    alertar("error", "Email ou senha inválidos");
                 }
 
             } catch (error) {
@@ -78,54 +75,49 @@ const Login = () => {
                 alertar("error", "EMAIL ou senha inválidos, para dúvidas entre em contato com o suporte. 🤖");
             }
 
-
         } else {
-            alertar("warning", "Preencha os campos vazios para realizar o login 🤖")
-
+            alertar("warning", "Preencha os campos vazios para realizar o login 🤖");
         }
     }
 
     return (
-        <>
-            <div className="todoOLoginCliente">
-                <div className="paraCentralizar">
-                    <div className="borda">
-                        <div className="borda_para_os_simbolos">
+        <div className="todoOLoginCliente">
+            <div className="paraCentralizar">
+                <div className="borda">
+                    <div className="borda_para_os_simbolos">
+                        <form onSubmit={realizarAutenticacao}>
+                            <div className="titulo_4">
+                                <h1>Login</h1>
+                            </div>
 
+                            <label>Email</label>
+                            <input
+                                className='input_login_cliente'
+                                type="email"
+                                placeholder='Digite seu email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
 
-                            <form action="" onSubmit={realizarAutenticacao}>
-                                <div className="titulo_4">
-                                    <h1>Login</h1>
-                                </div>
-                                <label htmlFor="">Email</label>
-                                <input
-                                    className='input_login_cliente'
-                                    type="email"
-                                    placeholder='Digite seu email'
-                                    name="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <label htmlFor="">Senha</label>
-                                <input
-                                    className='input_login_cliente'
-                                    type="password"
-                                    placeholder='Digite sua senha'
-                                    name="senha"
-                                    value={senha}
-                                    onChange={(e) => setSenha(e.target.value)}
-                                />
-                                <div className="espacamento"></div>
-                                <div className="botao">
-                                    <Botao nomeBotao="Entrar" type="submit" />
-                                </div>
-                            </form>
-                        </div>
+                            <label>Senha</label>
+                            <input
+                                className='input_login_cliente'
+                                type="password"
+                                placeholder='Digite sua senha'
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                            />
+
+                            <div className="espacamento"></div>
+                            <div className="botao">
+                                <Botao nomeBotao="Entrar" type="submit" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
 export default Login;
