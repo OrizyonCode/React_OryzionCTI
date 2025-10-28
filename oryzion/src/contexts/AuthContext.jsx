@@ -13,7 +13,6 @@ import secureLocalStorage from "react-secure-storage";
 //       const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
 //       return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined;
 //     } catch (error) {
-//       console.error("Erro ao recuperar token:", error);
 //       return undefined;
 //     }
 //   });
