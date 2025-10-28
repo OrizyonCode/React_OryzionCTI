@@ -1,23 +1,10 @@
 // aqui temos os imports
 import './Login.css'
 import Botao from '../../components/botao/Botao'
-<<<<<<< HEAD
 
 const Login = () => {
 
 
-=======
-import api from '../../Services/services'
-import { useState } from "react";
-import { userDecodeToken } from "../../auth/Auth";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext"
-import Swal from "sweetalert2";
-import secureLocalStorage from "react-secure-storage";
-
-
-const Login = () => {
->>>>>>> e12b6232bf0dc64deca3ed6277c5f2ca2fd9082e
     return (
         <>
             <div className="todoOLoginCliente">

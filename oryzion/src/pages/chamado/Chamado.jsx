@@ -2,12 +2,6 @@
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
-<<<<<<< HEAD
-=======
-import React, { useState } from 'react';
-import api from "../../Services/services";
-import Swal from "sweetalert2";
->>>>>>> e12b6232bf0dc64deca3ed6277c5f2ca2fd9082e
 
 const Chamado = () => {
     

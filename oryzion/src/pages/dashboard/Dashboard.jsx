@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import "./Dashboard.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+
 
 const DesempenhoTrimestral = () => {
   const [state] = React.useState({
@@ -28,7 +29,20 @@ const DesempenhoTrimestral = () => {
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChart, setModalChart] = useState(null);
+  //ADICIONANDO PARA TESTE
+  const [qtdNegativo, setqtdNegativo] = useState("");
+  const [qtdPositivo, setqtdPositivo] = useState("");
 
+  
+  // Lista de feedback -> campo de classificacao
+  function somarClassificacoes() {
+
+    setqtdNegativo = 100;
+    setqtdPositivo = 100;
+
+  }
+  
+  
   const abrirModal = (chart) => {
     setModalChart(chart);
     setIsModalOpen(true);
@@ -38,6 +52,12 @@ const Dashboard = () => {
     setIsModalOpen(false);
     setModalChart(null);
   };
+  
+  useEffect(() => {
+    somarClassificacoes;
+  
+  }), [];
+
 
   const feedbackLinha = {
     series: [
@@ -88,7 +108,7 @@ const Dashboard = () => {
   };
 
   const radialFeedback = {
-    series: [75, 25],
+    series: [qtdNegativo, qtdPositivo],
     options: {
       chart: { type: "radialBar", toolbar: { show: false } },
       plotOptions: {
