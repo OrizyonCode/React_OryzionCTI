@@ -32,7 +32,6 @@ const Perfil = () => {
         setPreview(dados.imagemUrl);
       } catch (error) {
         console.error("Erro ao carregar perfil:", error);
-        Swal.fire("Erro", "Não foi possível carregar o perfil.", "error");
       }
     }
     carregarPerfil();
