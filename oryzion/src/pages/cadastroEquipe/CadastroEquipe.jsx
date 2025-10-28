@@ -34,10 +34,6 @@ const CadastroEquipe = () => {
       console.log(usuario.email);
       console.log(usuario.senha);
       console.log(usuario.idSetor);
-<<<<<<< HEAD
-=======
-      
->>>>>>> 1a74642bd43e7c6f72245e3a98169d1e7f942d40
     }
   }
 

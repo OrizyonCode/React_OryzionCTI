@@ -91,6 +91,7 @@ ul p{
 
 /* --- Responsividade --- */
 @media screen and (max-width: 999px) {
+  /* Esconde elementos do desktop */
   .header_header ul {
     display: none;
   }
@@ -121,6 +122,34 @@ ul p{
     transition: all 0.3s ease-in-out;
   }
 
+  /* Topo do menu mobile (ícone + nome) */
+  .menu_mobile_topo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .menu_mobile_topo img {
+    height: 50px;
+    width: 50px;
+    margin-bottom: 10px;
+  }
+
+  .menu_mobile_topo h3 {
+    color: white;
+    font-weight: 400;
+  }
+
+  .botao_sair_mobile {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
   /* Animação do hambúrguer */
   .mobile_menu.active .line1 {
     transform: rotate(-45deg) translate(-7px, 7px);
@@ -132,5 +161,13 @@ ul p{
 
   .mobile_menu.active .line3 {
     transform: rotate(45deg) translate(-6px, -6px);
+  }
+}
+
+/* --- Desktop: esconde o ícone do menu --- */
+@media screen and (min-width: 1000px) {
+  .nav_list img[alt="Ícone de perfil"],
+  .botao_sair_mobile {
+    display: none;
   }
 }
