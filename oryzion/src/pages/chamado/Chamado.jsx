@@ -1,7 +1,7 @@
 import React from 'react';
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
-import VoltarBranco from "../../components/voltarBranco/voltarBranco";
+import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
 
 const Chamado = () => {
   return (
