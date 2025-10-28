@@ -13,7 +13,7 @@ const ListagemFeedback = () => {
                 botaoVoltar ="none"
             />
             <CardAvaliacao/>
-            <main>
+            <main className='main_feedbacks'>
                 
 
                 <section className='layout_grid listagem_feedbacks'>
