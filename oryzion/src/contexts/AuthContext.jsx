@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import React, { createContext, useState, useContext, Children } from "react";
 import secureLocalStorage from "react-secure-storage";
-=======
 // import React, { createContext, useState, useContext } from "react";
 // import secureLocalStorage from "react-secure-storage";
->>>>>>> c68ee8608db1cdc5f127eb3030f76b42e910896d
 
 // // Cria o contexto
 // const AuthContext = createContext();
@@ -33,8 +29,6 @@ import secureLocalStorage from "react-secure-storage";
 
 // Importa funções do React necessárias para criar e usar contexto
 import { createContext, useState, useContext } from "react";
-import secureLocalStorage from "react-secure-storage";
-import React, { Children } from "react";
 
 // Cria o contexto de autenticação, que vai permitir compartilhar dados entre componentes
 const AuthContext = createContext();
