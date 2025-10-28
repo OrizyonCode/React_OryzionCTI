@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+import React, { createContext, useState, useContext, Children } from "react";
+import secureLocalStorage from "react-secure-storage";
+=======
 // import React, { createContext, useState, useContext } from "react";
 // import secureLocalStorage from "react-secure-storage";
+>>>>>>> c68ee8608db1cdc5f127eb3030f76b42e910896d
 
 // // Cria o contexto
 // const AuthContext = createContext();
@@ -28,6 +33,8 @@
 
 // Importa funções do React necessárias para criar e usar contexto
 import { createContext, useState, useContext } from "react";
+import secureLocalStorage from "react-secure-storage";
+import React, { Children } from "react";
 
 // Cria o contexto de autenticação, que vai permitir compartilhar dados entre componentes
 const AuthContext = createContext();
@@ -36,7 +43,10 @@ const AuthContext = createContext();
 //Provider = prover/dar
 export const AuthProvider = ({ children }) => {
     // Cria um estado que guarda os dados do usuário logado
-    const [usuario, setUsuario] = useState(null);
+    const [usuario, setUsuario] = useState(() => {
+        const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
+        return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined
+    });
 
     return (
         // O AuthContext.Provider permite que qualquer componente dentro dele acesse o `usuario` e `setUsuario`
