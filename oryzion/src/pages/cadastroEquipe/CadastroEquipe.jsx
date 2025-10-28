@@ -33,12 +33,7 @@ const CadastroEquipe = () => {
       console.log(usuario.nome);
       console.log(usuario.email);
       console.log(usuario.senha);
-<<<<<<< HEAD
       console.log(usuario.idSetor);
-      
-=======
-      console.log(usuario.idTipoUsuario);
->>>>>>> c68ee8608db1cdc5f127eb3030f76b42e910896d
     }
   }
 
