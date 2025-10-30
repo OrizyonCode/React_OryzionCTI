@@ -13,7 +13,7 @@ export const userDecodeToken = (token) => {
             idUsuario: decodificado.jti,
             token: token,
             Setor: decodificado["Setor do usuario"] || decodificado.setor || "suporte", // Fallback para 'aluno' se não encontrar
-            //emailUsuario: decodificado.email || decodificado.sub // Adicionado fallback para sub que é padrão JWT para email
+            emailUsuario: decodificado.email || decodificado.sub // Adicionado fallback para sub que é padrão JWT para email
         };
     } catch (error) {
         console.error("Erro ao decodificar token:", error);

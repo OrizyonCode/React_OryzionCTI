@@ -67,7 +67,7 @@ const Login = () => {
                     setUsuario(tokenDecodificado);
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
-                    if (tokenDecodificado?.emailUsuario?.endsWith("@email.com")) {
+                    if (tokenDecodificado.idUsuario === "7a570c54-2f66-4c35-b014-e8311506e680" ) {
                         navigate("/chat");
                     } else  {
                         navigate("/telainicial");

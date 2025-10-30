@@ -24,16 +24,8 @@ const Rotas = () => {
                 <Route path='/cadastroequipe' element={<CadastroEquipe/>} />
                 <Route path='/historicofeedback' element={<HistoricoFeedback/>} />
                 <Route path='/chamado' element={<Chamado/>} />
-<<<<<<< HEAD
                 <Route path='/resumo' element={<Resumo/>} />
                 <Route path='/perfil' element={<Perfil/>} />
-=======
-                <Route path='/cadastroequipe' element={<CadastroEquipe/>} />
-                <Route path='/' element={<Login/>} />
-                <Route path='/resumo' element={<Resumo/>} />
-                <Route path='/perfil' element={<Perfil/>} />
-                <Route path='/telainicial' element={<TelaInicial/>} />
->>>>>>> c68ee8608db1cdc5f127eb3030f76b42e910896d
                 <Route path='*' element={<Error/>} />
         </Routes>
     )
