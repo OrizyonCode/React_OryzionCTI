@@ -6,8 +6,11 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [usuario, setUsuario] = useState(() => {
-        const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
-        return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined;
+        const [usuario, setUsuario] = useState(() => {
+         const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
+  return usuarioSalvo || undefined;
+});
+
     });
 
     return (
