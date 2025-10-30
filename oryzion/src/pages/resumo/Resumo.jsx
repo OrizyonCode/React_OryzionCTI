@@ -8,6 +8,7 @@ import Footer from "../../components/footer/Footer";
 
 const Resumo = () => {
   const [resumo, setResumo] = useState([]);
+  const [paginaResumo, setpaginaResumo] = useEffect([]);
 
   // Função de voltar
   const handleVoltar = () => {
@@ -28,6 +29,10 @@ const Resumo = () => {
   // Chama a função ao carregar o componente
   useEffect(() => {
     listarResumo();
+  }, []);
+
+  useEffect(()=> {
+    paginaResumo();
   }, []);
 
   return (

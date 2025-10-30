@@ -1,7 +1,7 @@
 import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 
 const Login = () => {
+
+    const [login, setLogin] = useEffect([]);
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -72,6 +74,10 @@ const Login = () => {
             alertar("warning", "Preencha os campos vazios para realizar o login 🤖");
         }
     }
+
+    useEffect(() => {
+        login();
+    }, [])
 
     return (
         <div className="todoOLoginCliente">

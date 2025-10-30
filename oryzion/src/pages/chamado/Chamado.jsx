@@ -48,6 +48,9 @@ const Chamado = () => {
     });
   }
 
+  useEffect(()=>{
+    chamado();
+  },[])
 
   return (
     <div className="todoOChamado">

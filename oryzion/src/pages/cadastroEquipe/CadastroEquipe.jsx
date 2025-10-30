@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CadastroEquipe.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco'; // <-- Import adicionado
@@ -67,6 +67,10 @@ const CadastroEquipe = () => {
       confirmButtonColor: "#3085d6",
     });
   }
+  
+      useEffect(()=>{
+        cadastroEquipe();
+      }, [])
 
   return (
     <div className="todoOCadastroEquipe">
