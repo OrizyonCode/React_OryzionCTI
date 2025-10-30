@@ -34,6 +34,7 @@ const CadastroEquipe = () => {
       console.log(usuario.email);
       console.log(usuario.senha);
       console.log(usuario.idSetor);
+      
     }
   }
 
