@@ -4,25 +4,17 @@ import audioMp3 from '../../assets/audio/audio.teste.mp3';
 import audioMobile from "../../assets/img/audioPlay.svg";
 import imgUsuario from "../../assets/img/Usuario.svg";
 import Botao from '../botao/Botao';
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Card = ({ classificacao = "neutro" }) => {
-  const navigate = useNavigate();
+const Card = ({ classificacao = "neutro", texto, resumo }) => {
   const [expandir, setExpandir] = useState(false);
-
-  const texto = `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-  `;
 
   return (
     <div className={`divs_card ${classificacao}`}>
       <div className='card_header'>
         <div className='campo_usuario'>
           <img src={imgUsuario} alt="Foto do usuário" />
-          <p>Rikelme</p>
+          <p>Usuário</p>
         </div>
 
         <span className={`badge_sentimento ${classificacao}`}>
@@ -34,7 +26,7 @@ const Card = ({ classificacao = "neutro" }) => {
 
       <div className='campo_feedback'>
         <div className={`campo_comentario ${classificacao} ${expandir ? 'expandido' : ''}`}>
-          <p className={expandir ? 'mostrar' : 'ocultar'}>{texto}</p>
+          <p className={expandir ? 'mostrar' : 'ocultar'}>{resumo || texto}</p>
           <button 
             className="botao_leia_mais"
             onClick={() => setExpandir(!expandir)}

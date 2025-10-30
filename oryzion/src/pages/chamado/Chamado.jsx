@@ -1,13 +1,8 @@
 
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
-<<<<<<< HEAD
-import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
-import { useEffect, useState } from 'react';
-=======
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
 import { useState } from 'react';
->>>>>>> 19a6fecfb3e77632df611a20d7ac4e040be4f5f8
 
 const Chamado = () => {
     
@@ -53,8 +48,6 @@ const Chamado = () => {
   useEffect(()=>{
     chamado();
   },[])
-
-  
 
   return (
     <div className="todoOChamado">
