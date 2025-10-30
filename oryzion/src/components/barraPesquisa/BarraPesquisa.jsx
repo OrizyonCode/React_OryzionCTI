@@ -26,7 +26,7 @@ const BarraPesquisa = (props) => {
   return (
     <div className="barra_pesquisa_container">
       {/* 📱 MOBILE: Ícone de filtro + menu dropdown */}
-      {isMobile && (
+      {isMobile && props.visibilidade !== "none" && (
         <div className="filtro_container">
           <img
             src={Filtro}
@@ -52,8 +52,7 @@ const BarraPesquisa = (props) => {
         <input type="text" placeholder="Pesquise aqui" />
       </div>
 
-      {/* 🖥️ DESKTOP: Links horizontais */}
-      {!isMobile && (
+      {!isMobile && props.visibilidade !== "none" && (
         <ul className="links">
           <li>Positivos</li>
           <li>Negativos</li>

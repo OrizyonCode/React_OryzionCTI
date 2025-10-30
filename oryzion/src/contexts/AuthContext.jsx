@@ -1,28 +1,20 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import secureLocalStorage from "react-secure-storage";
+import React from "react";
 
-// Cria o contexto de autenticação
 const AuthContext = createContext();
 
-// Provider: envolve a aplicação e fornece os dados de autenticação
 export const AuthProvider = ({ children }) => {
-  // Estado que guarda o usuário logado
-  const [usuario, setUsuario] = useState(() => {
-    try {
-      const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
-      return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined;
-    } catch (error) {
-      console.error("Erro ao recuperar token:", error);
-      return undefined;
-    }
-  });
+    const [usuario, setUsuario] = useState(() => {
+        const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
+        return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined;
+    });
 
-  return (
-    <AuthContext.Provider value={{ usuario, setUsuario }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ usuario, setUsuario }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
-// Hook personalizado para acessar o contexto
 export const useAuth = () => useContext(AuthContext);

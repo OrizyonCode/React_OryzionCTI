@@ -14,7 +14,7 @@ const HistoricoFeedback = () => {
       try {
         const resposta = await api.get("/Feedback");
         console.log("Feedbacks recebidos:", resposta.data);
-        setFeedbacks(resposta.data);
+        setFeedbacks(resposta.data || []);
       } catch (erro) {
         console.error("Erro ao buscar feedbacks:", erro);
       }
@@ -31,7 +31,7 @@ const HistoricoFeedback = () => {
         <div className="listagens_historico">
           {feedbacks.length === 0 ? (
             <p style={{ textAlign: "center", marginTop: "2rem" }}>
-              Nenhum feedback encontrado 
+              Nenhum feedback encontrado
             </p>
           ) : (
             feedbacks.map((f) => (

@@ -2,6 +2,7 @@
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
+import { useState } from 'react';
 
 const Chamado = () => {
     

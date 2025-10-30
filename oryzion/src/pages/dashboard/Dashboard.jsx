@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import "./Dashboard.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+
 
 const DesempenhoTrimestral = () => {
   const [state] = React.useState({
@@ -29,6 +30,11 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChart, setModalChart] = useState(null);
 
+
+  
+
+  
+  
   const abrirModal = (chart) => {
     setModalChart(chart);
     setIsModalOpen(true);
@@ -38,6 +44,8 @@ const Dashboard = () => {
     setIsModalOpen(false);
     setModalChart(null);
   };
+ 
+
 
   const feedbackLinha = {
     series: [
@@ -88,7 +96,7 @@ const Dashboard = () => {
   };
 
   const radialFeedback = {
-    series: [75, 25],
+    series: [70, 30],
     options: {
       chart: { type: "radialBar", toolbar: { show: false } },
       plotOptions: {
@@ -124,7 +132,7 @@ const Dashboard = () => {
     <div className="dashboard-container ">
       <Header />
       <main className="dashboard-main">
-        <div className="dashboard-grid ">
+        <div className="layout_grid dashboard-grid ">
           <div className="dash-card" onClick={() => abrirModal(feedbackLinha)}>
             <span className="badge badge-blue">Linha</span>
             <h3>Média de Feedbacks</h3>
