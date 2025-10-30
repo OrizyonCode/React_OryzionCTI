@@ -1,11 +1,7 @@
 
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
-<<<<<<< HEAD
-import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
-=======
 import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
->>>>>>> 9f28cd42cbebe04635d7bd6142d0cbf2b2a2ca58
 
 const Chamado = () => {
     

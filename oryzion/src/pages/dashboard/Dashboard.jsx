@@ -29,18 +29,10 @@ const DesempenhoTrimestral = () => {
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChart, setModalChart] = useState(null);
-  //ADICIONANDO PARA TESTE
-  const [qtdNegativo, setqtdNegativo] = useState("");
-  const [qtdPositivo, setqtdPositivo] = useState("");
+
 
   
-  // Lista de feedback -> campo de classificacao
-  function somarClassificacoes() {
 
-    setqtdNegativo = 100;
-    setqtdPositivo = 100;
-
-  }
   
   
   const abrirModal = (chart) => {
@@ -52,11 +44,7 @@ const Dashboard = () => {
     setIsModalOpen(false);
     setModalChart(null);
   };
-  
-  useEffect(() => {
-    somarClassificacoes;
-  
-  }), [];
+ 
 
 
   const feedbackLinha = {
@@ -108,7 +96,7 @@ const Dashboard = () => {
   };
 
   const radialFeedback = {
-    series: [qtdNegativo, qtdPositivo],
+    series: [70, 30],
     options: {
       chart: { type: "radialBar", toolbar: { show: false } },
       plotOptions: {
@@ -144,7 +132,7 @@ const Dashboard = () => {
     <div className="dashboard-container ">
       <Header />
       <main className="dashboard-main">
-        <div className="dashboard-grid ">
+        <div className="layout_grid dashboard-grid ">
           <div className="dash-card" onClick={() => abrirModal(feedbackLinha)}>
             <span className="badge badge-blue">Linha</span>
             <h3>Média de Feedbacks</h3>
