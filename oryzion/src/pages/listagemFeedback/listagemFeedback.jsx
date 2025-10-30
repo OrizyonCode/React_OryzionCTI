@@ -35,7 +35,9 @@ const ListagemFeedback = () => {
 
   return (
     <>
-      <Header />
+      <Header 
+        visibilidade="none"
+      />
       <BarraPesquisa botaoVoltar="none" />
       <CardAvaliacao />
 
