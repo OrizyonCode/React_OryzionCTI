@@ -1,4 +1,13 @@
-/* === LAYOUT PRINCIPAL === */
+/* ======================= LAYOUT PRINCIPAL ======================= */
+.dashboard-container,
+body,
+html {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 .dashboard-main {
   flex: 1;
   padding: 2rem;
@@ -9,6 +18,7 @@
   min-height: calc(100vh - 140px); /* considerando header + footer */
 }
 
+/* ======================= GRID ======================= */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -17,7 +27,7 @@
   max-width: 1600px;
 }
 
-/* === CARDS === */
+/* ======================= CARDS ======================= */
 .dash-card {
   background: linear-gradient(145deg, #ffffff, #e6ebf7);
   border-radius: 20px;
@@ -29,6 +39,7 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  cursor: pointer;
 }
 
 .dash-card:hover {
@@ -39,7 +50,7 @@
 .dash-card h3 {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   color: #1f2937;
 }
 
@@ -49,7 +60,7 @@
   margin: 0 auto;
 }
 
-/* === BADGES === */
+/* ======================= BADGES ======================= */
 .badge {
   position: absolute;
   top: 12px;
@@ -66,7 +77,7 @@
 .badge-red { background-color: #EF4444; }
 .badge-yellow { background-color: #F59E0B; }
 
-/* === MODAL === */
+/* ======================= MODAL ======================= */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -104,7 +115,7 @@
   max-height: 70vh !important;
 }
 
-/* === BOTÃO DE FECHAR === */
+/* ======================= BOTÃO DE FECHAR ======================= */
 .fechar-modal {
   position: absolute;
   top: 16px;
@@ -127,11 +138,96 @@
   background: #b91c1c;
 }
 
-/* === ANIMAÇÕES === */
+/* ======================= ANIMAÇÕES ======================= */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-/* === RESPONSIVIDADE === */
+/* ======================= RESPONSIVIDADE ======================= */
+
+
+@media (max-width: 900px) {
+  .dashboard,
+  .container,
+  main,
+  .content {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+}
+
 @media (max-width: 767px) {
   .dashboard-grid { grid-template-columns: 1fr; gap: 20px; }
+
+  .dash-card {
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  .dash-card h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .dash-card .apexcharts-canvas {
+    height: 220px !important;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-main {
+    padding: 0.8rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .dash-card {
+    padding: 12px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .dash-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+
+  .dash-card .apexcharts-canvas {
+    width: 100% !important;
+    height: 200px !important;
+  }
+
+  .modal-content {
+    width: 96%;
+    max-height: 85vh;
+    padding: 1.2rem;
+  }
+
+  body, html, .dashboard-container {
+    overflow-x: hidden !important;
+  }
+}
+
+/* ======================= AJUSTE APEXCHARTS ======================= */
+.apexcharts-canvas,
+.apexcharts-svg {
+  max-width: 100% !important;
+  height: auto !important;
 }
