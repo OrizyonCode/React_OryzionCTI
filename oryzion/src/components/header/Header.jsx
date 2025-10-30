@@ -38,7 +38,7 @@ const Header = (props) => {
           <Link to="/perfil">
             <img src={Suporte} alt="Ícone de perfil" />
           </Link>
-          <li><Link className='link_header' to="/cadastroequipe">Cadastro da equipe</Link></li>
+          <li><Link className='link_header' to="/cadastroequipe" >Cadastro da equipe</Link></li>
           <li><Link className='link_header' to="/listagemchamado">Lista de chamados</Link></li>
           <li><Link className='link_header' to="/Listagemfeedback">Lista de feedbacks</Link></li>
         </ul>

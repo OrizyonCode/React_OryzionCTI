@@ -15,9 +15,11 @@ const avaliacoes = [
     { id: 6, texto: 'Muito bom!' },
     { id: 7, texto: 'Regular' },
     { id: 8, texto: 'Top demais!' },
+
+
 ];
 
-const CardAvaliacao = () => {
+const CardAvaliacao = ({ classificacao = "neutro" }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
 
@@ -98,10 +100,10 @@ const CardAvaliacao = () => {
                         <img src={Esquerda} alt="" />
                     </button>
 
-                    <div className="carousel_wrapper">
+                    <div className={`carousel_wrapper ${classificacao}`}>
                         <div className="carousel_inner">
                             {visibleCards.map((item, index) => (
-                                <div
+                                <div 
                                     key={item.id}
                                     className="card_avaliacao"
                                 >
@@ -109,6 +111,13 @@ const CardAvaliacao = () => {
                                         <img src={Usuario} alt="Usuário" />
                                     </article>
                                     <h3>Usuário</h3>
+
+                                    <span className={`badge_sentimento ${classificacao}`}>
+                                        {classificacao === "positivo" && "Positivo"}
+                                        {classificacao === "negativo" && "Negativo"}
+                                        {classificacao === "neutro" && "Neutro"}
+                                    </span>
+                                    
                                     <p>{item.texto}</p>
                                     <Link className='link_responder' to="/chat" >Responder</Link>
                                 </div>

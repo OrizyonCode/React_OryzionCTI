@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import CadastroEquipe from '../pages/cadastroEquipe/CadastroEquipe.jsx';
-import Chamado from '../pages/chamado/Chamado.jsx'
+import Chamado from '../pages/chamado/Chamado.jsx';
 import Chat from '../pages/chat/Chat.jsx'
 import DashBoard from '../pages/dashboard/Dashboard.jsx'
 import HistoricoFeedback from '../pages/historicoFeedback/HistoricoFeedback.jsx'

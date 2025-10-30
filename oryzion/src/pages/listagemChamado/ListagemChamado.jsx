@@ -7,6 +7,7 @@ import mais from '../../assets/img/MaisBotao.svg';
 import adiciona from '../../assets/img/adicionar.svg';
 import upload from '../../assets/img/Upload.svg';
 import edita from '../../assets/img/Editar.svg';
+import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa'
 
 const ListagemChamado = () => {
 const [listagemChamado, setListagemChamado] = useEffect([]);
@@ -26,6 +27,9 @@ const [listagemChamado, setListagemChamado] = useEffect([]);
   return (
     <>
       <Header />
+      <BarraPesquisa
+        visibilidade = "none"
+      />
       <section className='layout_grid listagemChamado'>
         <div className='img_adiciona'>
           <Link to="/chamado" className="botao_adicionar">
