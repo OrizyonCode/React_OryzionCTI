@@ -49,7 +49,6 @@ const Login = () => {
                         nomeUsuario: tokenDecodificado.nomeUsuario || "Usuário"
                     };
 
-<<<<<<< HEAD
                     setUsuario(usuarioCompleto);
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioCompleto));
 
@@ -58,12 +57,6 @@ const Login = () => {
                         navigate("/chat");
                     } else {
                         navigate("/telainicial");
-=======
-                    if (tokenDecodificado === "fcdd7c4d-f4c9-4a60-bb27-150b82a9299c") {
-                        navigate("/");
-                    } else {
-                        navigate("/historicofeedback");
->>>>>>> 281f1af08765551bcf63f522952199c11daa6cc2
                     }
 
                 } else {
