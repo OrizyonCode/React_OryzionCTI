@@ -10,21 +10,12 @@
   width: 100%;
 }
 
-/* Mantém o footer fixado no fim da página, mesmo se o conteúdo for curto */
-html, body {
-  height: 100%;
-}
 
-body {
-  display: flex;
-  flex-direction: column;
-}
 
-footer{
+footer {
   position: relative;
   width: 100%;
   margin-top: auto;
-  
 }
 
 main {
