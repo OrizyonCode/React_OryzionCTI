@@ -49,21 +49,10 @@ const Login = () => {
                         nomeUsuario: tokenDecodificado.nomeUsuario || "Usuário"
                     };
 
-<<<<<<< HEAD
                     if (tokenDecodificado === "fcdd7c4d-f4c9-4a60-bb27-150b82a9299c") {
                         navigate("/");
                     } else {
                         navigate("/historicofeedback");
-=======
-                    setUsuario(usuarioCompleto);
-                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioCompleto));
-
-                    // Redireciona conforme o tipo de usuário
-                    if (usuarioCompleto?.emailUsuario?.endsWith("@email.com")) {
-                        navigate("/chat");
-                    } else {
-                        navigate("/telainicial");
->>>>>>> 35a186fab5f4dec35a52c41e54388b8b2e73c9c2
                     }
 
                 } else {

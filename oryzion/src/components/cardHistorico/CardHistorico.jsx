@@ -10,8 +10,8 @@ const CardHistorico = ({ dados }) => {
         <div className="usuario_caracteristicas">
           <img src={imgUsuario} alt="Usuario" />
           <div className="icone_usuario">
-            <p className="">{dados.nomeUsuario || "Nome não informado"}</p>
-            <p className="">{dados.comportamento || "Sem comportamento"}</p>
+            <p>{dados.nomeUsuario || "Nome não informado"}</p>
+            <p>{dados.comportamento || "Sem comportamento"}</p>
           </div>
         </div>
       </div>
@@ -34,7 +34,9 @@ const CardHistorico = ({ dados }) => {
         <h4>Últimos comportamentos</h4>
         {dados.ultimosComportamentos && dados.ultimosComportamentos.length > 0 ? (
           dados.ultimosComportamentos.map((c, i) => (
-            <p key={i}><b>{c}</b></p>
+            <p key={i}>
+              <b>{c}</b>
+            </p>
           ))
         ) : (
           <p>Nenhum comportamento recente</p>
