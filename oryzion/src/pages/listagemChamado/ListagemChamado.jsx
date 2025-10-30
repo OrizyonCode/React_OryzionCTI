@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ListagemChamado.css';
 import Header from '../../components/header/Header';
@@ -9,6 +9,8 @@ import upload from '../../assets/img/Upload.svg';
 import edita from '../../assets/img/Editar.svg';
 
 const ListagemChamado = () => {
+const [listagemChamado, setListagemChamado] = useEffect([]);
+
   const chamados = [
     { protocolo: '0001', nome: 'Cti' },
     { protocolo: '0002', nome: 'Cti' },
@@ -16,6 +18,10 @@ const ListagemChamado = () => {
     { protocolo: '0004', nome: 'Cti' },
     { protocolo: '0005', nome: 'Cti' },
   ];
+
+       useEffect(()=>{
+        listagemChamado();
+      }, [])
 
   return (
     <>

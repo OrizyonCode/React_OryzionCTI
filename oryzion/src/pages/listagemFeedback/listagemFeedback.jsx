@@ -4,17 +4,24 @@ import Footer from '../../components/footer/Footer'
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa'
 import Card from '../../components/card/Card'
 import CardAvaliacao from '../../components/cardAvaliacao/cardAvaliacao'
+import { useEffect } from 'react'
 
 const ListagemFeedback = () => {
-    return(
+    const [listagemFeedback, setListagemFeedback] = useEffect([]);
+
+    useEffect(() => {
+        listagemFeedback();
+    }, []);
+
+    return (
         <>
-            <Header/>
+            <Header />
             <BarraPesquisa
-                botaoVoltar ="none"
+                botaoVoltar="none"
             />
-            <CardAvaliacao/>
+            <CardAvaliacao />
             <main className='main_feedbacks'>
-                
+
 
                 <section className='layout_grid listagem_feedbacks'>
 
@@ -25,19 +32,19 @@ const ListagemFeedback = () => {
                         </div>
 
                         <div className='feedback'>
-                            <Card/>
+                            <Card />
                         </div>
                         <div className='feedback'>
-                            <Card/>
+                            <Card />
                         </div>
                         <div className='feedback'>
-                            <Card/>
+                            <Card />
                         </div>
-            
+
                     </div>
                 </section>
             </main>
-            <Footer/>
+            <Footer />
         </>
     )
 }

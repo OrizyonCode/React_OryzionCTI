@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import ModalSuporte from '../../components/modal/Modal'; 
@@ -8,9 +8,14 @@ import "./Chat.css";
 
 const Chat = () => {
   const [modalAberto, setModalAberto] = useState(false);
+  const [chat, setChat] = useEffect([]);
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
+
+        useEffect(()=>{
+          chat();
+        }, []);
 
   return (
     <>

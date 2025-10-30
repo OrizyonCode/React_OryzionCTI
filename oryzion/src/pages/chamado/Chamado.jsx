@@ -2,12 +2,14 @@
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
+import { useEffect, useState } from 'react';
 
 const Chamado = () => {
     
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [chamado, setChamado] = useEffect([]);
 
   async function cadastro(e) {
     e.preventDefault(); 
@@ -43,6 +45,11 @@ const Chamado = () => {
     });
   }
 
+  useEffect(()=>{
+    chamado();
+  },[])
+
+  
 
   return (
     <div className="todoOChamado">

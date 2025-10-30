@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CadastroEquipe.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco'; // <-- Import adicionado
@@ -10,6 +10,7 @@ const CadastroEquipe = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [idSetor, setidSetor] = useState("4a79e05f-0d49-4712-9a22-c95bead78b57");
+  const [cadastroEquipe, setCadastroEquipe] = useEffect([]);
 
   async function cadastro(e) {
     e.preventDefault(); 
@@ -44,6 +45,10 @@ const CadastroEquipe = () => {
       confirmButtonColor: "#3085d6",
     });
   }
+  
+      useEffect(()=>{
+        cadastroEquipe();
+      }, [])
 
   return (
     <div className="todoOCadastroEquipe">
