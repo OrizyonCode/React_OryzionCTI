@@ -17,7 +17,6 @@ const CadastroEquipe = () => {
 
     try {
       const resposta = await api.post("Funcionario", funcionario);
-
       if (resposta.status === 200) {
         alertar("Desculpe", "Verifique os dados e tente novamente.");
         setNome("");

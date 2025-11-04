@@ -17,6 +17,8 @@ const Perfil = () => {
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
 
+  
+
   useEffect(() => {
     async function carregarPerfil() {
       try {
@@ -26,9 +28,6 @@ const Perfil = () => {
 
         setNome(dados.nome);
         setEmail(dados.email);
-        setTelefone(dados.telefone);
-        setEndereco(dados.endereco);
-        setCpf(dados.cpf);
         setPreview(dados.imagemUrl);
       } catch (error) {
         console.error("Erro ao carregar perfil:", error);
@@ -37,7 +36,7 @@ const Perfil = () => {
     carregarPerfil();
   }, []);
 
-  const handleImagemChange = (e) => {
+  const atualizarImg = (e) => {
     const file = e.target.files[0];
     setImagem(file);
     if (file) {
@@ -52,9 +51,6 @@ const Perfil = () => {
       const formData = new FormData();
       formData.append("nome", nome);
       formData.append("email", email);
-      formData.append("telefone", telefone);
-      formData.append("endereco", endereco);
-      formData.append("cpf", cpf);
       if (imagem) formData.append("imagem", imagem);
 
       const idUsuario = 1; 
@@ -73,13 +69,14 @@ const Perfil = () => {
     <div className="perfil-page">
       <Header />
 
-      <section className="container-perfil">
+      <section className="container-perfil"> 
         {/* Lado esquerdo */}
+        
         <div className="card lado-esquerdo-perfil">
           <div className="voltar">
             <VoltarBranco />
           </div>
-
+          
           <div className="imagem-perfil">
             <img src={preview || iconePerfil} alt="Foto de perfil" />
           </div>
@@ -93,7 +90,7 @@ const Perfil = () => {
               id="imageUpload"
               accept="image/*"
               hidden
-              onChange={handleImagemChange}
+              onChange={atualizarImg}
             />
           </div>
 
@@ -104,45 +101,19 @@ const Perfil = () => {
             value={nome}
             onChange={(e) => setNome(e.target.value)}
           />
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="CPF (somente números)"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-          />
-          <input
-            className="input_perfil"
-            type="tel"
-            placeholder="Telefone com DDD"
-            value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
-          />
+          
         </div>
 
+        <form onSubmit={atualizarPerfil}>
         {/* Lado direito */}
         <div className="card lado-direito-perfil">
-          <h2>Dados Adicionais</h2>
-
-          <input
-            className="input_perfil"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="Endereço completo"
-            value={endereco}
-            onChange={(e) => setEndereco(e.target.value)}
-          />
+          
 
           <div className="centralizar">
-            <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} />
+            <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} tipo="submit"/>
           </div>
         </div>
+        </form>
       </section>
 
       <Footer />
