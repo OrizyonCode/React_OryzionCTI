@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CadastroEquipe.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco'; // <-- Import adicionado
@@ -9,22 +9,44 @@ const CadastroEquipe = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [idSetor, setidSetor] = useState("4a79e05f-0d49-4712-9a22-c95bead78b57");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("69C9E15F-D3FD-4531-B50E-2505C964A607");
 
-  async function cadastro(e) {
+  async function cadastroEquipe(e) {
     e.preventDefault(); 
-    const funcionario = { nome, email, senha, idSetor };
+    const suporte = { nome, email, senha, idTipoUsuario};
+
+    function alertar(icone, mensagem) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({ icon: icone, title: mensagem });
+        }
 
     try {
-      const resposta = await api.post("Funcionario", funcionario);
+      const resposta = await api.post("Suporte", suporte);
 
-      if (resposta.status === 200) {
-        alertar("Desculpe", "Verifique os dados e tente novamente.");
+      if (resposta.status === 201) {
+        alertar("success", "Cadastro realizado com sucesso!");
         setNome("");
         setEmail("");
         setSenha("");
+        setIdTipoUsuario("69C9E15F-D3FD-4531-B50E-2505C964A607");
+        
+        console.log(nome);
+        console.log(email);
+        console.log(senha);
+        console.log(idTipoUsuario);
+        
       } else {
-        alertar("success", "Cadastro realizado com sucesso!");
+        alertar("Desculpe", "Verifique os dados e tente novamente.");
 
       }
     } catch (error) {
@@ -33,8 +55,8 @@ const CadastroEquipe = () => {
       console.log(usuario.nome);
       console.log(usuario.email);
       console.log(usuario.senha);
-      console.log(usuario.idSetor);
-      
+      console.log(usuario.idTipoUsuario);
+      alertar("error", "Email ou senha inválidos");
     }
   }
 
@@ -45,6 +67,10 @@ const CadastroEquipe = () => {
       confirmButtonColor: "#3085d6",
     });
   }
+  
+      useEffect(()=>{
+        cadastroEquipe();
+      }, [])
 
   return (
     <div className="todoOCadastroEquipe">
@@ -54,7 +80,7 @@ const CadastroEquipe = () => {
             <VoltarBranco />
           </div>
 
-          <form onSubmit={cadastro}>
+          <form onSubmit={cadastroEquipe}>
             <div className="titulo_2">
               <h1>Cadastro</h1>
               <h5>Equipe</h5>
@@ -67,7 +93,7 @@ const CadastroEquipe = () => {
               placeholder='Digite seu nome completo'
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              required
+              
             />
 
             <label>Email</label>
@@ -77,7 +103,7 @@ const CadastroEquipe = () => {
               placeholder='Digite seu e-mail'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              
             />
 
             <label>Senha</label>
@@ -87,13 +113,13 @@ const CadastroEquipe = () => {
               placeholder='Digite sua senha'
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              required
+              
             />
 
             <div className="espacamento"></div>
 
             <div className="botao">
-              <Botao nomeBotao="Cadastrar" tipo="submit" />
+              <Botao nomeBotao="Cadastrar" type="submit" />
             </div>
           </form>
         </div>

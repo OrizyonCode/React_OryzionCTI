@@ -1,7 +1,7 @@
 import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
@@ -10,12 +10,16 @@ import secureLocalStorage from "react-secure-storage";
 
 const Login = () => {
 
+<<<<<<< HEAD
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
     const navigate = useNavigate();
 
     const { setUsuario } = useAuth();
+=======
+    const [login, setLogin] = useEffect([]);
+>>>>>>> 9ecc3ce0ac54cc1938d37de6c51c90dcd5079639
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -71,6 +75,10 @@ const Login = () => {
             alertar("error", "Email ou senha inválidos!");
         }
     }
+
+    useEffect(() => {
+        login();
+    }, [])
 
     return (
         <div className="todoOLoginCliente">

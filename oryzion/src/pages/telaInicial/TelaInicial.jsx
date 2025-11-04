@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../components/header/Header'
 import campo_um from '../../assets/img/campo_um.svg'
 import campo_dois from '../../assets/img/campo_dois.svg'
@@ -8,7 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 const TelaInicial = () => {
   const navigate = useNavigate();
+  const [telaInicial, setTelaInicial] = useEffect ([]);
 
+  useEffect(()=> {
+    telaInicial();
+  }, []);
   return (
     <>
       <Header />

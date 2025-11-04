@@ -142,8 +142,7 @@ html {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-/* ======================= RESPONSIVIDADE ======================= */
-
+/* =======================RESPONSIVIDADE======================= */
 
 @media (max-width: 900px) {
   .dashboard,
