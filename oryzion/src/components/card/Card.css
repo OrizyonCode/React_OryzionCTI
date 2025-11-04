@@ -131,6 +131,7 @@
     max-width: 100%;
   }
 
+
   .campo_usuario p {
     font-size: 19px;
     font-weight: 530;
@@ -171,11 +172,8 @@
     margin-top: 5px;
   }
 
-  .card_header {
+  .card_header{
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
   }
 
   .badge_sentimento {

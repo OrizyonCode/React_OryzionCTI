@@ -4,7 +4,6 @@ import "./Dashboard.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
-
 const DesempenhoTrimestral = () => {
   const [state] = React.useState({
     series: [
@@ -29,11 +28,7 @@ const DesempenhoTrimestral = () => {
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChart, setModalChart] = useState(null);
-
-
-  
-
-  
+  const [ dashBoard, setDashBoard] = useEffect([]);
   
   const abrirModal = (chart) => {
     setModalChart(chart);
@@ -127,6 +122,10 @@ const Dashboard = () => {
       grid: { borderColor: "#e0e0e0" },
     },
   };
+
+  useEffect(() =>{
+    dashBoard();
+  }, [])
 
   return (
     <div className="dashboard-container ">

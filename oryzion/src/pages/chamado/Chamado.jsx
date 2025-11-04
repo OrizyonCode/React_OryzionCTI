@@ -3,27 +3,31 @@ import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
 import { useState } from 'react';
+import api from "../../Services/services";
+import Swal from "sweetalert2";
 
 const Chamado = () => {
     
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("8bd97890-2205-48a5-908d-968258f7b726");
 
   async function cadastro(e) {
     e.preventDefault(); 
-    const usuario = { nome, email, senha };
+    const cliente = { nome, email, senha, idTipoUsuario };
 
     try {
-      const resposta = await api.post("Usuario", usuario);
+      const resposta = await api.post("Cliente", cliente);
 
-      if (resposta.status === 200) {
-        alertar("Desculpe", "Verifique os dados e tente novamente.");
+      if (resposta.status === 201) {
+        alertar("success", "Cadastro realizado com sucesso!");
         setNome("");
         setEmail("");
         setSenha("");
+        setIdTipoUsuario("8bd97890-2205-48a5-908d-968258f7b726");
       } else {
-        alertar("success", "Cadastro realizado com sucesso!");
+        alertar("Desculpe", "Verifique os dados e tente novamente.");
 
       }
     } catch (error) {
@@ -44,6 +48,9 @@ const Chamado = () => {
     });
   }
 
+  useEffect(()=>{
+    chamado();
+  },[])
 
   return (
     <div className="todoOChamado">
@@ -59,10 +66,11 @@ const Chamado = () => {
             </div>
             
 
-            <label>Nome</label>
+            <label>Nome</label>                                                                                                                                                                    
             <input
               className='input_chamado'
               type="text"
+              id='nome'
               placeholder='Nome completo do cliente'
               value={nome}
               onChange={(e) => setNome(e.target.value)}
@@ -92,7 +100,7 @@ const Chamado = () => {
             <div className="espacamento_chamado"></div>
 
             <div className="botao">
-              <Botao nomeBotao="Cadastrar" tipo="submit" />
+              <Botao nomeBotao="Cadastrar" type="submit" />
             </div>
           </form>
         </div>
