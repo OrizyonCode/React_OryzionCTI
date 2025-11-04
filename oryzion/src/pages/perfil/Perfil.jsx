@@ -17,30 +17,36 @@ const Perfil = () => {
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  
+  // Constante do ID fixo para teste, alinhada com a função 'atualizarPerfil'
+  const ID_DO_USUARIO_FIXO = 1;
 
   useEffect(() => {
     async function carregarPerfil() {
       try {
-        const idUsuario = 1; 
+        // 💡 CORREÇÃO DO REFERENCE ERROR: Define idUsuario
+        const idUsuario = ID_DO_USUARIO_FIXO;
+        // Agora a requisição usa o ID
         const resposta = await api.get(`/usuarios/${idUsuario}`);
         const dados = resposta.data;
 
-        setNome(dados.nome);
-        setEmail(dados.email);
-        setPreview(dados.imagemUrl);
+        setNome(dados.nome || "");
+        setEmail(dados.email || "");
+        setPreview(dados.imagemUrl || null);
+
       } catch (error) {
         console.error("Erro ao carregar perfil:", error);
       }
     }
     carregarPerfil();
-  }, []);
+  }, [ID_DO_USUARIO_FIXO]);
 
   const atualizarImg = (e) => {
     const file = e.target.files[0];
     setImagem(file);
     if (file) {
       setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(null);
     }
   };
 
@@ -53,7 +59,8 @@ const Perfil = () => {
       formData.append("email", email);
       if (imagem) formData.append("imagem", imagem);
 
-      const idUsuario = 1; 
+      // Usa a constante já definida
+      const idUsuario = ID_DO_USUARIO_FIXO;
       await api.put(`/usuarios/${idUsuario}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -69,50 +76,52 @@ const Perfil = () => {
     <div className="perfil-page">
       <Header />
 
-      <section className="container-perfil"> 
-        {/* Lado esquerdo */}
-        
-        <div className="card lado-esquerdo-perfil">
-          <div className="voltar">
-            <VoltarBranco />
-          </div>
-          
-          <div className="imagem-perfil">
-            <img src={preview || iconePerfil} alt="Foto de perfil" />
-          </div>
+      <section className="container-perfil">
+        {/* O formulário agora envolve os dois "cards" */}
+        <form onSubmit={atualizarPerfil}>
 
-          <div className="upload-container">
-            <label htmlFor="imageUpload" className="upload-label">
-              Escolher imagem
-            </label>
+          {/* Lado esquerdo */}
+          <div className="card lado-esquerdo-perfil">
+            <div className="voltar">
+              <VoltarBranco />
+            </div>
+
+            <div className="imagem-perfil">
+              <img src={preview || iconePerfil} alt="Foto de perfil" />
+            </div>
+
+            <div className="upload-container">
+              <label htmlFor="imageUpload" className="upload-label">
+                Escolher imagem
+              </label>
+              <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                hidden
+                onChange={atualizarImg}
+              />
+            </div>
+
             <input
-              type="file"
-              id="imageUpload"
-              accept="image/*"
-              hidden
-              onChange={atualizarImg}
+              className="input_perfil"
+              type="text"
+              placeholder="Nome completo"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
             />
           </div>
 
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="Nome completo"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
-          
-        </div>
+          {/* Lado direito */}
+          <div className="card lado-direito-perfil">
 
-        <form onSubmit={atualizarPerfil}>
-        {/* Lado direito */}
-        <div className="card lado-direito-perfil">
-          
+            {/* Você deve ter inputs de email, telefone, etc. aqui, mas não estavam no código postado */}
 
-          <div className="centralizar">
-            <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} tipo="submit"/>
+            <div className="centralizar">
+              {/* Mantenho o aoClicar={atualizarPerfil} como no seu original, mas o type="submit" no Botao é o essencial */}
+              <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} tipo="submit" />
+            </div>
           </div>
-        </div>
         </form>
       </section>
 
