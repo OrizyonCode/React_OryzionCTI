@@ -1,22 +1,32 @@
-import React, { Children } from 'react'
+import React, { createContext, useState, useContext, useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
-import { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext();
+
 export const AuthProvider = ({ children }) => {
+  const [usuario, setUsuario] = useState(null);
 
-    const [usuario, setUsuario] = useState(() => {
-        const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
-        return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined
-    });
+  useEffect(() => {
+    const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
+    if (usuarioSalvo) {
+      try {
+        setUsuario(JSON.parse(usuarioSalvo));
+      } catch {
+        setUsuario(usuarioSalvo);
+      }
+    }
+  }, []);
 
-    return (
+  const logout = () => {
+    secureLocalStorage.removeItem("tokenLogin");
+    setUsuario(null);
+  };
 
-        <AuthContext.Provider value={{ usuario, setUsuario }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ usuario, setUsuario, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-//Esse hook personalizado facilita o acesso ao contexto dentro de qualquer componente 
 export const useAuth = () => useContext(AuthContext);

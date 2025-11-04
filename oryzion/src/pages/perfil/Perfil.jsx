@@ -17,31 +17,36 @@ const Perfil = () => {
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
 
+  // Constante do ID fixo para teste, alinhada com a função 'atualizarPerfil'
+  const ID_DO_USUARIO_FIXO = 1;
+
   useEffect(() => {
     async function carregarPerfil() {
       try {
-        const idUsuario = 1; 
+        // 💡 CORREÇÃO DO REFERENCE ERROR: Define idUsuario
+        const idUsuario = ID_DO_USUARIO_FIXO;
+        // Agora a requisição usa o ID
         const resposta = await api.get(`/usuarios/${idUsuario}`);
         const dados = resposta.data;
 
-        setNome(dados.nome);
-        setEmail(dados.email);
-        setTelefone(dados.telefone);
-        setEndereco(dados.endereco);
-        setCpf(dados.cpf);
-        setPreview(dados.imagemUrl);
+        setNome(dados.nome || "");
+        setEmail(dados.email || "");
+        setPreview(dados.imagemUrl || null);
+
       } catch (error) {
         console.error("Erro ao carregar perfil:", error);
       }
     }
     carregarPerfil();
-  }, []);
+  }, [ID_DO_USUARIO_FIXO]);
 
-  const handleImagemChange = (e) => {
+  const atualizarImg = (e) => {
     const file = e.target.files[0];
     setImagem(file);
     if (file) {
       setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(null);
     }
   };
 
@@ -52,12 +57,10 @@ const Perfil = () => {
       const formData = new FormData();
       formData.append("nome", nome);
       formData.append("email", email);
-      formData.append("telefone", telefone);
-      formData.append("endereco", endereco);
-      formData.append("cpf", cpf);
       if (imagem) formData.append("imagem", imagem);
 
-      const idUsuario = 1; 
+      // Usa a constante já definida
+      const idUsuario = ID_DO_USUARIO_FIXO;
       await api.put(`/usuarios/${idUsuario}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -74,75 +77,52 @@ const Perfil = () => {
       <Header />
 
       <section className="container-perfil">
-        {/* Lado esquerdo */}
-        <div className="card lado-esquerdo-perfil">
-          <div className="voltar">
-            <VoltarBranco />
-          </div>
+        {/* O formulário agora envolve os dois "cards" */}
+        <form onSubmit={atualizarPerfil}>
 
-          <div className="imagem-perfil">
-            <img src={preview || iconePerfil} alt="Foto de perfil" />
-          </div>
+          {/* Lado esquerdo */}
+          <div className="card lado-esquerdo-perfil">
+            <div className="voltar">
+              <VoltarBranco />
+            </div>
 
-          <div className="upload-container">
-            <label htmlFor="imageUpload" className="upload-label">
-              Escolher imagem
-            </label>
+            <div className="imagem-perfil">
+              <img src={preview || iconePerfil} alt="Foto de perfil" />
+            </div>
+
+            <div className="upload-container">
+              <label htmlFor="imageUpload" className="upload-label">
+                Escolher imagem
+              </label>
+              <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                hidden
+                onChange={atualizarImg}
+              />
+            </div>
+
             <input
-              type="file"
-              id="imageUpload"
-              accept="image/*"
-              hidden
-              onChange={handleImagemChange}
+              className="input_perfil"
+              type="text"
+              placeholder="Nome completo"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
             />
           </div>
 
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="Nome completo"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="CPF (somente números)"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-          />
-          <input
-            className="input_perfil"
-            type="tel"
-            placeholder="Telefone com DDD"
-            value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
-          />
-        </div>
+          {/* Lado direito */}
+          <div className="card lado-direito-perfil">
 
-        {/* Lado direito */}
-        <div className="card lado-direito-perfil">
-          <h2>Dados Adicionais</h2>
+            {/* Você deve ter inputs de email, telefone, etc. aqui, mas não estavam no código postado */}
 
-          <input
-            className="input_perfil"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="Endereço completo"
-            value={endereco}
-            onChange={(e) => setEndereco(e.target.value)}
-          />
-
-          <div className="centralizar">
-            <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} />
+            <div className="centralizar">
+              {/* Mantenho o aoClicar={atualizarPerfil} como no seu original, mas o type="submit" no Botao é o essencial */}
+              <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} tipo="submit" />
+            </div>
           </div>
-        </div>
+        </form>
       </section>
 
       <Footer />
