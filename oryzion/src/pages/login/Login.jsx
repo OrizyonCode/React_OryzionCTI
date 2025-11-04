@@ -10,6 +10,13 @@ import secureLocalStorage from "react-secure-storage";
 
 const Login = () => {
 
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
+    const navigate = useNavigate();
+
+    const { setUsuario } = useAuth();
+
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
             toast: true,
@@ -25,51 +32,43 @@ const Login = () => {
         Toast.fire({ icon: icone, title: mensagem });
     }
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const navigate = useNavigate();
-    const { setUsuario } = useAuth();
-
     async function realizarAutenticacao(e) {
         e.preventDefault();
 
-        const usuarioLogin = { email, senha };
-
-        if (senha.trim() && email.trim()) {
-            try {
-                const resposta = await api.post("Login", usuarioLogin);
-                const token = resposta.data.token;
-
-                if (token) {
-                    const tokenDecodificado = userDecodeToken(token);
-
-                    // ✅ Monta o objeto do usuário com fallback de nome
-                    const usuarioCompleto = {
-                        ...tokenDecodificado,
-                        nomeUsuario: tokenDecodificado.nomeUsuario || "Usuário"
-                    };
-
-                    setUsuario(usuarioCompleto);
-                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioCompleto));
-
-                    // Redireciona conforme o tipo de usuário
-                    if (usuarioCompleto?.emailUsuario?.endsWith("@email.com")) {
-                        navigate("/chat");
-                    } else {
-                        navigate("/telainicial");
-                    }
-
-                } else {
-                    alertar("error", "Email ou senha inválidos");
-                }
-
-            } catch (error) {
-                console.log(error);
-                alertar("error", "EMAIL ou senha inválidos, para dúvidas entre em contato com o suporte. 🤖");
+        try {
+            const usuario = { email, senha };
+            if (!email.trim() || !senha.trim()) {
+                alertar("error", "Preencha os campos!");
+                return;
             }
 
-        } else {
-            alertar("warning", "Preencha os campos vazios para realizar o login 🤖");
+            const resposta = await api.post("Login", usuario);
+            const token = resposta.data.token;
+
+            if (token) {
+                // cria tokenDecodificado aqui, dentro do escopo correto
+                const tokenDecodificado = userDecodeToken(token);
+                console.log(tokenDecodificado); // só pra conferir
+
+                // salva no AuthContext e no storage (aqui sim)
+                setUsuario(tokenDecodificado);
+                secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+
+                // redireciona baseado no tipo de usuário
+                if (tokenDecodificado.tipoUsuario === "cliente") {
+                    navigate("/chat");
+                } else if (tokenDecodificado.tipoUsuario === "equipe de suporte") {
+                    navigate("/telainicial");
+                } else if (tokenDecodificado.tipoUsuario === "superior") {
+                    navigate("/dashboard");
+                }
+
+            } else {
+                alertar("error", "Resposta inválida do servidor.");
+            }
+        } catch (error) {
+            console.log(error);
+            alertar("error", "Email ou senha inválidos!");
         }
     }
 
