@@ -10,6 +10,7 @@ import Perfil from '../pages/perfil/Perfil.jsx'
 import Resumo from '../pages/resumo/Resumo.jsx'
 import TelaInicial from '../pages/telaInicial/TelaInicial.jsx'
 import Login from '../pages/login/Login.jsx'
+import Error from '../pages/error/ErrorPage.jsx'
 
 
 const Rotas = () => {

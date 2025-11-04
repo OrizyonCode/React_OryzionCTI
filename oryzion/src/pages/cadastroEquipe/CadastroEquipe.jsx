@@ -31,7 +31,7 @@ const CadastroEquipe = () => {
         }
 
     try {
-      const resposta = await api.post("Suporte", suporte);
+      const resposta = await api.post("Usuario", suporte);
 
       if (resposta.status === 201) {
         alertar("success", "Cadastro realizado com sucesso!");

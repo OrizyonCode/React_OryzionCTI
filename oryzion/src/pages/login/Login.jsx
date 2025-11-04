@@ -1,16 +1,21 @@
 import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-    const [login, setLogin] = useEffect([]);
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+
+    const naviGate = useNavigate();
+    const { setUsuario } = useAuth();
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -24,61 +29,47 @@ const Login = () => {
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
-        Toast.fire({ icon: icone, title: mensagem });
+        Toast.fire({
+            icon: icone,
+            title: mensagem
+        });
     }
-
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const navigate = useNavigate();
-    const { setUsuario } = useAuth();
 
     async function realizarAutenticacao(e) {
         e.preventDefault();
-
-        const usuarioLogin = { email, senha };
-
-        if (senha.trim() && email.trim()) {
-            try {
-                const resposta = await api.post("Login", usuarioLogin);
-                const token = resposta.data.token;
-
-                if (token) {
-                    const tokenDecodificado = userDecodeToken(token);
-
-                    // ✅ Monta o objeto do usuário com fallback de nome
-                    const usuarioCompleto = {
-                        ...tokenDecodificado,
-                        nomeUsuario: tokenDecodificado.nomeUsuario || "Usuário"
-                    };
-
-                    setUsuario(usuarioCompleto);
-                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioCompleto));
-
-                    // Redireciona conforme o tipo de usuário
-                    if (usuarioCompleto?.emailUsuario?.endsWith("@email.com")) {
-                        navigate("/chat");
-                    } else {
-                        navigate("/telainicial");
-                    }
-
-                } else {
-                    alertar("error", "Email ou senha inválidos");
-                }
-
-            } catch (error) {
-                console.log(error);
-                alertar("error", "EMAIL ou senha inválidos, para dúvidas entre em contato com o suporte. 🤖");
+        try {
+            const usuario = {
+                email: email,
+                senha: senha
             }
 
-        } else {
-            alertar("warning", "Preencha os campos vazios para realizar o login 🤖");
+            if (senha.trim() !== "" && email.trim() !== "") {
+                const resposta = await api.post("Login", usuario)
+                const token = resposta.data.token;
+                console.log("RESPOSTA DA API ===>", resposta.data);
+
+                if (token) {
+                    const tokenDecodificado = userDecodeToken(token)
+                    console.log("TOKEN DECODIFICADO ===>", tokenDecodificado)
+                    setUsuario(tokenDecodificado);
+                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+
+                    if (tokenDecodificado.tipoUsuario === "cliente") {
+                        naviGate("/chat")
+                    } else {
+                        naviGate("/telainicial")
+                    }
+                } else {
+                    naviGate("/dashboard")
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            alertar("error", "Email ou senha invalidos !");
         }
     }
 
-    useEffect(() => {
-        login();
-    }, [])
-
+    // ✅ agora o return está DENTRO do componente
     return (
         <div className="todoOLoginCliente">
             <div className="paraCentralizar">
