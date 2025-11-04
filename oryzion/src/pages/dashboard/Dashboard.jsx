@@ -91,7 +91,7 @@ const Dashboard = () => {
   };
 
   const radialFeedback = {
-    series: [70, 30],
+    series: [80, 30],
     options: {
       chart: { type: "radialBar", toolbar: { show: false } },
       plotOptions: {

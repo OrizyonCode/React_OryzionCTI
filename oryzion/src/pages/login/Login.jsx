@@ -9,112 +9,127 @@ import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 
 const Login = () => {
+  const [login, setLogin] = useState(""); // ✅ corrigido: era useEffect
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
+<<<<<<< HEAD
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+=======
+  const navigate = useNavigate();
+  const { setUsuario } = useAuth();
+>>>>>>> 5d3a080c414edfd2a953d461e4e26f64cb3db6cb
 
-    const navigate = useNavigate();
+  // Função para exibir alertas com SweetAlert2
+  function alertar(icone, mensagem) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({ icon: icone, title: mensagem });
+  }
 
+<<<<<<< HEAD
     const { setUsuario } = useAuth();
     const [login, setLogin] = useEffect([]);
+=======
+  // Função principal de login
+  async function realizarAutenticacao(e) {
+    e.preventDefault();
+>>>>>>> 5d3a080c414edfd2a953d461e4e26f64cb3db6cb
 
-    function alertar(icone, mensagem) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-        Toast.fire({ icon: icone, title: mensagem });
-    }
+    try {
+      const usuario = { email, senha };
 
-    async function realizarAutenticacao(e) {
-        e.preventDefault();
+      if (!email.trim() || !senha.trim()) {
+        alertar("error", "Preencha todos os campos!");
+        return;
+      }
 
-        try {
-            const usuario = { email, senha };
-            if (!email.trim() || !senha.trim()) {
-                alertar("error", "Preencha os campos!");
-                return;
-            }
+      const resposta = await api.post("Login", usuario);
+      const token = resposta.data.token;
 
-            const resposta = await api.post("Login", usuario);
-            const token = resposta.data.token;
+      if (token) {
+        const tokenDecodificado = userDecodeToken(token);
+        console.log("Token decodificado:", tokenDecodificado);
 
-            if (token) {
-                // cria tokenDecodificado aqui, dentro do escopo correto
-                const tokenDecodificado = userDecodeToken(token);
-                console.log(tokenDecodificado); // só pra conferir
+        // Salva o usuário no contexto e no armazenamento local
+        setUsuario(tokenDecodificado);
+        secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
-                // salva no AuthContext e no storage (aqui sim)
-                setUsuario(tokenDecodificado);
-                secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
-
-                // redireciona baseado no tipo de usuário
-                if (tokenDecodificado.tipoUsuario === "cliente") {
-                    navigate("/chat");
-                } else if (tokenDecodificado.tipoUsuario === "equipe de suporte") {
-                    navigate("/telainicial");
-                } else if (tokenDecodificado.tipoUsuario === "superior") {
-                    navigate("/dashboard");
-                }
-
-            } else {
-                alertar("error", "Resposta inválida do servidor.");
-            }
-        } catch (error) {
-            console.log(error);
-            alertar("error", "Email ou senha inválidos!");
+        // Redireciona conforme o tipo de usuário
+        switch (tokenDecodificado.tipoUsuario) {
+          case "cliente":
+            navigate("/chat");
+            break;
+          case "equipe de suporte":
+            navigate("/telainicial");
+            break;
+          case "superior":
+            navigate("/dashboard");
+            break;
+          default:
+            navigate("/");
         }
+      } else {
+        alertar("error", "Resposta inválida do servidor.");
+      }
+    } catch (error) {
+      console.error("Erro no login:", error);
+      alertar("error", "Email ou senha inválidos!");
     }
+  }
 
-    useEffect(() => {
-        login();
-    }, [])
+  useEffect(() => {
+    
+  }, []);
 
-    return (
-        <div className="todoOLoginCliente">
-            <div className="paraCentralizar">
-                <div className="borda">
-                    <div className="borda_para_os_simbolos">
-                        <form onSubmit={realizarAutenticacao}>
-                            <div className="titulo_4">
-                                <h1>Login</h1>
-                            </div>
+  return (
+    <div className="todoOLoginCliente">
+      <div className="paraCentralizar">
+        <div className="borda">
+          <div className="borda_para_os_simbolos">
+            <form onSubmit={realizarAutenticacao}>
+              <div className="titulo_4">
+                <h1>Login</h1>
+              </div>
 
-                            <label>Email</label>
-                            <input
-                                className='input_login_cliente'
-                                type="email"
-                                placeholder='Digite seu email'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+              <label>Email</label>
+              <input
+                className="input_login_cliente"
+                type="email"
+                placeholder="Digite seu email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-                            <label>Senha</label>
-                            <input
-                                className='input_login_cliente'
-                                type="password"
-                                placeholder='Digite sua senha'
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                            />
+              <label>Senha</label>
+              <input
+                className="input_login_cliente"
+                type="password"
+                placeholder="Digite sua senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
 
-                            <div className="espacamento"></div>
-                            <div className="botao">
-                                <Botao nomeBotao="Entrar" type="submit" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+              <div className="espacamento"></div>
+              <div className="botao">
+                <Botao nomeBotao="Entrar" type="submit" />
+              </div>
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Login;
