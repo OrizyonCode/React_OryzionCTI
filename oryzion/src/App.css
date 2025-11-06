@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
   margin: 0;
   padding: 0;
@@ -10,10 +11,13 @@ body {
   min-height: 100vh;
 }
 
+=======
+>>>>>>> bcddd214cad0a19d2c8989d210f19e4b71ed25f1
 .layout_grid {
     width: 100%;
     max-width: 85%;
     margin: 0 auto;
+<<<<<<< HEAD
 }
 
 @media screen and (max-width: 600px) {
@@ -27,4 +31,6 @@ body {
         /* Opcional: Ajusta o espaçamento */
         gap: 10px;
     }
+=======
+>>>>>>> bcddd214cad0a19d2c8989d210f19e4b71ed25f1
 }

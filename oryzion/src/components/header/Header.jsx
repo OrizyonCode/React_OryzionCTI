@@ -9,7 +9,7 @@ import secureLocalStorage from "react-secure-storage";
 const Header = (props) => {
   const [menuAtivo, setMenuAtivo] = useState(false);
   const navigate = useNavigate();
-  const { usuario, setUsuario } = useAuth(); // ✅ usa o contexto
+
 
   const toggleMenu = () => setMenuAtivo(!menuAtivo);
 
