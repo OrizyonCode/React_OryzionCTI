@@ -11,10 +11,10 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
 
-    const naviGate = useNavigate();
+    const navigate = useNavigate();
 
     const { setUsuario } = useAuth();
 

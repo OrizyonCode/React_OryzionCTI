@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> cc377230643ea99be838aa63ca78ded4b8df5623
 import { Link } from 'react-router-dom';
 import './ListagemChamado.css';
 import Header from '../../components/header/Header';
@@ -11,15 +15,19 @@ import { useState, useEffect } from 'react';
 import ErrorPage from '../error/ErrorPage'; // 🔥 importa a página de erro
 
 const ListagemChamado = () => {
+<<<<<<< HEAD
   const [chamados, setChamados] = useState([]);
   const [erro, setErro] = useState(null);
   const [loading, setLoading] = useState(true);
+=======
+>>>>>>> cc377230643ea99be838aa63ca78ded4b8df5623
 
   useEffect(() => {
     async function buscarChamados() {
       try {
         const resposta = await fetch("http://localhost:5128/api/Chamado");
 
+<<<<<<< HEAD
         const contentType = resposta.headers.get("content-type") || "";
 
         if (!resposta.ok) {
@@ -47,6 +55,8 @@ const ListagemChamado = () => {
   if (erro) {
     return <ErrorPage />;
   }
+=======
+>>>>>>> cc377230643ea99be838aa63ca78ded4b8df5623
 
   return (
     <>
