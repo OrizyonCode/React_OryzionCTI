@@ -1,6 +1,7 @@
 .listagemChamado {
-  height: calc(100vh - 61.6px - 90px - 40px);
+  height: auto;
 }
+
 
 .img_adiciona {
   width: 100%;
