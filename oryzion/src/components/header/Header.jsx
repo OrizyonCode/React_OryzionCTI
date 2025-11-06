@@ -13,14 +13,6 @@ const Header = (props) => {
 
   const toggleMenu = () => setMenuAtivo(!menuAtivo);
 
-  // const nomeUsuario = usuario?.nomeUsuario || "Usuário";
-
-  // const handleLogout = () => {
-  //   secureLocalStorage.removeItem("tokenLogin");
-  //   setUsuario(undefined);
-  //   navigate("/");
-  // };
-
   return (
     <header>
       <nav className='layout_grid header_header'>

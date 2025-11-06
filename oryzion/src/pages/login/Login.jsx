@@ -1,20 +1,31 @@
 import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+
+    const naviGate = useNavigate();
+=======
+>>>>>>> b74de47c41b107a7c6e703fe485dfec9b0f6ede3
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
     const navigate = useNavigate();
 
+>>>>>>> 2c705c58567ab5d6265aa06751f85b5b8ec5de42
     const { setUsuario } = useAuth();
 
     function alertar(icone, mensagem) {
@@ -29,11 +40,49 @@ const Login = () => {
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
-        Toast.fire({ icon: icone, title: mensagem });
+        Toast.fire({
+            icon: icone,
+            title: mensagem
+        });
     }
 
     async function realizarAutenticacao(e) {
         e.preventDefault();
+<<<<<<< HEAD
+        try {
+            const usuario = {
+                email: email,
+                senha: senha
+            }
+
+            if (senha.trim() !== "" && email.trim() !== "") {
+                const resposta = await api.post("Login", usuario)
+                const token = resposta.data.token;
+                console.log("RESPOSTA DA API ===>", resposta.data);
+
+                if (token) {
+                    const tokenDecodificado = userDecodeToken(token)
+                    console.log("TOKEN DECODIFICADO ===>", tokenDecodificado)
+                    setUsuario(tokenDecodificado);
+                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+
+                    if (tokenDecodificado.tipoUsuario === "cliente") {
+                        naviGate("/chat")
+                    } else {
+                        naviGate("/telainicial")
+                    }
+                } else {
+                    naviGate("/dashboard")
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            alertar("error", "Email ou senha invalidos !");
+        }
+    }
+
+    // ✅ agora o return está DENTRO do componente
+=======
 
         try {
             const usuario = { email, senha };
@@ -74,6 +123,7 @@ const Login = () => {
 
    
 
+>>>>>>> 2c705c58567ab5d6265aa06751f85b5b8ec5de42
     return (
         <div className="todoOLoginCliente">
             <div className="paraCentralizar">
