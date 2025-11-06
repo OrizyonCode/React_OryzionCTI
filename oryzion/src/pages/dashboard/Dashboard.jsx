@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import "./Dashboard.css";
 import Header from "../../components/header/Header";
@@ -28,7 +28,6 @@ const DesempenhoTrimestral = () => {
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChart, setModalChart] = useState(null);
-  const [ dashBoard, setDashBoard] = useEffect([]);
   
   const abrirModal = (chart) => {
     setModalChart(chart);
@@ -123,9 +122,6 @@ const Dashboard = () => {
     },
   };
 
-  useEffect(() =>{
-    dashBoard();
-  }, [])
 
   return (
     <div className="dashboard-container ">

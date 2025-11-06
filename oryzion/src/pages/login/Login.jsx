@@ -56,12 +56,14 @@ const Login = () => {
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
                     if (tokenDecodificado.tipoUsuario === "cliente") {
-                        naviGate("/chat")
+                        navigate("/chat")
+                    } else if (tokenDecodificado.tipoUsuario === "equipedesuporte") {
+                        navigate("/telainicial")
                     } else {
-                        naviGate("/telainicial")
+                        navigate("/dashboard")
                     }
                 } else {
-                    naviGate("/dashboard")
+                    alertar("error", "Email ou senha invalidos !");
                 }
             }
         } catch (error) {
@@ -69,6 +71,8 @@ const Login = () => {
             alertar("error", "Email ou senha invalidos !");
         }
     }
+
+    
 
     // ✅ agora o return está DENTRO do componente
     return (
