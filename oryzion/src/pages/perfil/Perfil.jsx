@@ -17,29 +17,33 @@ const Perfil = () => {
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  // Constante do ID fixo para teste, alinhada com a função 'atualizarPerfil'
+  // 🔧 ID fixo temporário (depois substitua pelo ID do usuário logado)
   const ID_DO_USUARIO_FIXO = 1;
 
+  // 🔹 Carrega o perfil ao montar o componente
   useEffect(() => {
     async function carregarPerfil() {
       try {
-        // 💡 CORREÇÃO DO REFERENCE ERROR: Define idUsuario
         const idUsuario = ID_DO_USUARIO_FIXO;
-        // Agora a requisição usa o ID
         const resposta = await api.get(`/usuarios/${idUsuario}`);
         const dados = resposta.data;
 
         setNome(dados.nome || "");
         setEmail(dados.email || "");
+        setTelefone(dados.telefone || "");
+        setEndereco(dados.endereco || "");
+        setCpf(dados.cpf || "");
         setPreview(dados.imagemUrl || null);
-
       } catch (error) {
         console.error("Erro ao carregar perfil:", error);
+        Swal.fire("Erro", "Não foi possível carregar o perfil.", "error");
       }
     }
+
     carregarPerfil();
   }, [ID_DO_USUARIO_FIXO]);
 
+  // 🔹 Atualiza o preview da imagem escolhida
   const atualizarImg = (e) => {
     const file = e.target.files[0];
     setImagem(file);
@@ -50,6 +54,7 @@ const Perfil = () => {
     }
   };
 
+  // 🔹 Atualiza perfil no backend
   async function atualizarPerfil(e) {
     e.preventDefault();
 
@@ -57,10 +62,13 @@ const Perfil = () => {
       const formData = new FormData();
       formData.append("nome", nome);
       formData.append("email", email);
+      formData.append("telefone", telefone);
+      formData.append("endereco", endereco);
+      formData.append("cpf", cpf);
       if (imagem) formData.append("imagem", imagem);
 
-      // Usa a constante já definida
       const idUsuario = ID_DO_USUARIO_FIXO;
+
       await api.put(`/usuarios/${idUsuario}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -76,10 +84,8 @@ const Perfil = () => {
     <div className="perfil-page">
       <Header />
 
-      <section className="container-perfil">
-        {/* O formulário agora envolve os dois "cards" */}
-        <form onSubmit={atualizarPerfil}>
-
+      <section className="perfil-page">
+        <div className="container-perfil">
           {/* Lado esquerdo */}
           <div className="card lado-esquerdo-perfil">
             <div className="voltar">
@@ -114,16 +120,47 @@ const Perfil = () => {
 
           {/* Lado direito */}
           <div className="card lado-direito-perfil">
+            <form onSubmit={atualizarPerfil} className="form-perfil">
+              <input
+                className="input_perfil"
+                type="email"
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-            {/* Você deve ter inputs de email, telefone, etc. aqui, mas não estavam no código postado */}
+              <input
+                className="input_perfil"
+                type="tel"
+                placeholder="Telefone"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+              />
 
-            <div className="centralizar">
-              {/* Mantenho o aoClicar={atualizarPerfil} como no seu original, mas o type="submit" no Botao é o essencial */}
-              <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} tipo="submit" />
-            </div>
+              <input
+                className="input_perfil"
+                type="text"
+                placeholder="Endereço"
+                value={endereco}
+                onChange={(e) => setEndereco(e.target.value)}
+              />
+
+              <input
+                className="input_perfil"
+                type="text"
+                placeholder="CPF"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+              />
+
+              <div className="centralizar">
+                <Botao nomeBotao="Salvar" tipo="submit" />
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </section>
+
 
       <Footer />
     </div>
