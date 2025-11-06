@@ -12,44 +12,44 @@ const CadastroEquipe = () => {
   const [idTipoUsuario, setIdTipoUsuario] = useState("69C9E15F-D3FD-4531-B50E-2505C964A607");
 
   async function cadastroEquipe(e) {
-    e.preventDefault(); 
-    const suporte = { nome, email, senha, idTipoUsuario};
+    e.preventDefault();
+    const suporte = { nome, email, senha, idTipoUsuario };
 
     function alertar(icone, mensagem) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({ icon: icone, title: mensagem });
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
         }
+      });
+      Toast.fire({ icon: icone, title: mensagem });
+    }
 
     try {
       if (resposta.status === 200) {
         alertar("Desculpe", "Verifique os dados e tente novamente.");
-      const resposta = await api.post("Suporte", suporte);
+        const resposta = await api.post("Suporte", suporte);
 
-      if (resposta.status === 201) {
-        alertar("success", "Cadastro realizado com sucesso!");
-        setNome("");
-        setEmail("");
-        setSenha("");
-        setIdTipoUsuario("69C9E15F-D3FD-4531-B50E-2505C964A607");
-        
-        console.log(nome);
-        console.log(email);
-        console.log(senha);
-        console.log(idTipoUsuario);
-        
-      } else {
-        alertar("Desculpe", "Verifique os dados e tente novamente.");
-}
+        if (resposta.status === 201) {
+          alertar("success", "Cadastro realizado com sucesso!");
+          setNome("");
+          setEmail("");
+          setSenha("");
+          setIdTipoUsuario("69C9E15F-D3FD-4531-B50E-2505C964A607");
+
+          console.log(nome);
+          console.log(email);
+          console.log(senha);
+          console.log(idTipoUsuario);
+
+        } else {
+          alertar("Desculpe", "Verifique os dados e tente novamente.");
+        }
       }
     } catch (error) {
       console.error("Erro no cadastro:", error);
@@ -61,7 +61,7 @@ const CadastroEquipe = () => {
       alertar("error", "Email ou senha inválidos");
     }
   }
-  
+
 
   function alertar(icon, msg) {
     Swal.fire({
@@ -70,10 +70,10 @@ const CadastroEquipe = () => {
       confirmButtonColor: "#3085d6",
     });
   }
-  
-      useEffect(()=>{
-        cadastroEquipe();
-      }, [])
+
+  useEffect(() => {
+    cadastroEquipe();
+  }, [])
 
   return (
     <div className="todoOCadastroEquipe">
@@ -96,7 +96,7 @@ const CadastroEquipe = () => {
               placeholder='Digite seu nome completo'
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              
+
             />
 
             <label>Email</label>
@@ -106,7 +106,7 @@ const CadastroEquipe = () => {
               placeholder='Digite seu e-mail'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              
+
             />
 
             <label>Senha</label>
@@ -116,7 +116,7 @@ const CadastroEquipe = () => {
               placeholder='Digite sua senha'
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              
+
             />
 
             <div className="espacamento"></div>
