@@ -11,18 +11,10 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-<<<<<<< HEAD
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
 
     const naviGate = useNavigate();
-=======
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-
-    const navigate = useNavigate();
-
->>>>>>> 2c705c58567ab5d6265aa06751f85b5b8ec5de42
     const { setUsuario } = useAuth();
 
     function alertar(icone, mensagem) {
@@ -45,7 +37,6 @@ const Login = () => {
 
     async function realizarAutenticacao(e) {
         e.preventDefault();
-<<<<<<< HEAD
         try {
             const usuario = {
                 email: email,
@@ -79,48 +70,6 @@ const Login = () => {
     }
 
     // ✅ agora o return está DENTRO do componente
-=======
-
-        try {
-            const usuario = { email, senha };
-            if (!email.trim() || !senha.trim()) {
-                alertar("error", "Preencha os campos!");
-                return;
-            }
-
-            const resposta = await api.post("Login", usuario);
-            const token = resposta.data.token;
-
-            if (token) {
-                // cria tokenDecodificado aqui, dentro do escopo correto
-                const tokenDecodificado = userDecodeToken(token);
-                console.log(tokenDecodificado); // só pra conferir
-
-                // salva no AuthContext e no storage (aqui sim)
-                setUsuario(tokenDecodificado);
-                secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
-
-                // redireciona baseado no tipo de usuário
-                if (tokenDecodificado.tipoUsuario === "cliente") {
-                    navigate("/chat");
-                } else if (tokenDecodificado.tipoUsuario === "equipe de suporte") {
-                    navigate("/telainicial");
-                } else if (tokenDecodificado.tipoUsuario === "superior") {
-                    navigate("/dashboard");
-                }
-
-            } else {
-                alertar("error", "Resposta inválida do servidor.");
-            }
-        } catch (error) {
-            console.log(error);
-            alertar("error", "Email ou senha inválidos!");
-        }
-    }
-
-   
-
->>>>>>> 2c705c58567ab5d6265aa06751f85b5b8ec5de42
     return (
         <div className="todoOLoginCliente">
             <div className="paraCentralizar">

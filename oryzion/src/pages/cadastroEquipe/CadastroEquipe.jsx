@@ -31,14 +31,9 @@ const CadastroEquipe = () => {
         }
 
     try {
-<<<<<<< HEAD
-      const resposta = await api.post("Usuario", suporte);
-=======
-      const resposta = await api.post("Funcionario", funcionario);
       if (resposta.status === 200) {
         alertar("Desculpe", "Verifique os dados e tente novamente.");
       const resposta = await api.post("Suporte", suporte);
->>>>>>> 2c705c58567ab5d6265aa06751f85b5b8ec5de42
 
       if (resposta.status === 201) {
         alertar("success", "Cadastro realizado com sucesso!");
