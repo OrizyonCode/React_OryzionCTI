@@ -6,7 +6,7 @@ import imgUsuario from "../../assets/img/Usuario.svg";
 import Botao from '../botao/Botao';
 import { Link } from "react-router-dom";
 
-const Card = ({ classificacao = "neutro", texto, resumo }) => {
+const Card = ({ classificacao = "neutro", positivo, negativo }) => {
   const [expandir, setExpandir] = useState(false);
 
   return (

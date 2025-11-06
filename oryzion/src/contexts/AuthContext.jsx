@@ -1,32 +1,22 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { Children } from 'react'
 import secureLocalStorage from "react-secure-storage";
 
+import { createContext, useState, useContext } from 'react';
+
 const AuthContext = createContext();
+ 
+export const AuthProvider = ({children}) => {
 
-export const AuthProvider = ({ children }) => {
-  const [usuario, setUsuario] = useState(null);
-
-  useEffect(() => {
-    const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
-    if (usuarioSalvo) {
-      try {
-        setUsuario(JSON.parse(usuarioSalvo));
-      } catch {
-        setUsuario(usuarioSalvo);
-      }
-    }
-  }, []);
-
-  const logout = () => {
-    secureLocalStorage.removeItem("tokenLogin");
-    setUsuario(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ usuario, setUsuario, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    const [usuario, setUsuario] = useState(() => {
+        const usuarioSalvo = secureLocalStorage.getItem("tokenLogin");
+        return usuarioSalvo ? JSON.parse(usuarioSalvo) : undefined
+    });
+    
+    return(
+        <AuthContext.Provider value={{usuario,setUsuario}}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => useContext(AuthContext);

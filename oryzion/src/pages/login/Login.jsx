@@ -2,7 +2,7 @@ import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
@@ -14,7 +14,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
-    const navigate = useNavigate();
+    const naviGate = useNavigate();
 
     const { setUsuario } = useAuth();
 
@@ -41,13 +41,13 @@ const Login = () => {
         try {
             const usuario = {
                 email: email,
-                senha: senha
+                senha: senha,
             }
 
             if (senha.trim() !== "" && email.trim() !== "") {
+
                 const resposta = await api.post("Login", usuario)
                 const token = resposta.data.token;
-                console.log("RESPOSTA DA API ===>", resposta.data);
 
                 if (token) {
                     const tokenDecodificado = userDecodeToken(token)
@@ -59,9 +59,9 @@ const Login = () => {
                         naviGate("/chat")
                     } else {
                         naviGate("/telainicial")
-                    }
+                    } 
                 } else {
-                    naviGate("/dashboard")
+                    alertar("error", "Preencha os campos !")
                 }
             }
         } catch (error) {
@@ -70,7 +70,6 @@ const Login = () => {
         }
     }
 
-    // ✅ agora o return está DENTRO do componente
     return (
         <div className="todoOLoginCliente">
             <div className="paraCentralizar">
