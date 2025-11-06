@@ -5,6 +5,7 @@ import VoltarBranco from '../../components/voltarBranco/VoltarBranco'; // <-- Im
 import api from "../../Services/services";
 import Swal from "sweetalert2";
 
+
 const CadastroEquipe = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -33,13 +34,12 @@ const CadastroEquipe = () => {
     try {
       const resposta = await api.post("Usuario", suporte);
 
-
       if (resposta.status === 201) {
         alertar("success", "Cadastro realizado com sucesso!");
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("69C9E15F-D3FD-4531-B50E-2505C964A607");
+        setIdTipoUsuario("EEE5F555-1778-421C-8D56-4C661227A3F7");
 
         console.log(nome);
         console.log(email);
@@ -68,6 +68,7 @@ function alertar(icon, msg) {
     confirmButtonColor: "#3085d6",
   });
 }
+
 
 return (
   <div className="todoOCadastroEquipe">

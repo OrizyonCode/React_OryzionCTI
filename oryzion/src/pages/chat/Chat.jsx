@@ -3,7 +3,8 @@ import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import ModalSuporte from '../../components/modal/Modal'; 
 import audioMp3 from '../../assets/audio/audio.teste.mp3';
-import usuario from '../../assets/img/Usuario.svg';
+import Usuario from '../../assets/img/Usuario.svg';
+import { Link } from 'react-router-dom';
 import "./Chat.css";
 
 const Chat = () => {
@@ -22,7 +23,9 @@ const Chat = () => {
       <div className="chat-principal">
         <div className="chat-topo-info">
           <div className="perfil-icone">
-            <img src={usuario} alt="Ícone do usuário" />
+            <Link to="/historicofeedback">
+              <img src={Usuario} alt="Ícone de perfil" />
+            </Link>
           </div>
           <span className="nome-usuario">Usuário</span>
         </div>

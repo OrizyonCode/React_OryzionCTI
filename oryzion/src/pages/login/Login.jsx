@@ -56,10 +56,12 @@ const Login = () => {
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
                     if (tokenDecodificado.tipoUsuario === "cliente") {
-                        naviGate("/chat")
+                        naviGate("/chat");
+                    } else if (tokenDecodificado.tipoUsuario === "suporte") {
+                        naviGate("/telainicial");
                     } else {
-                        naviGate("/telainicial")
-                    } 
+                        naviGate("/dashboard");
+                    }
                 } else {
                     alertar("error", "Preencha os campos !")
                 }

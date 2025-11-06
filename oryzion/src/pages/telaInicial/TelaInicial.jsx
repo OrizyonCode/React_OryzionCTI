@@ -4,7 +4,7 @@ import campo_um from '../../assets/img/campo_um.svg'
 import campo_dois from '../../assets/img/campo_dois.svg'
 import './TelaInicial.css'
 import Footer from '../../components/footer/Footer'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useState } from 'react'
 
 const TelaInicial = () => {

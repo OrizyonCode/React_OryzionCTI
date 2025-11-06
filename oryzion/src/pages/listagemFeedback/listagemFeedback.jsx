@@ -4,13 +4,16 @@ import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
 import Card from '../../components/card/Card';
-import CardAvaliacao from '../../components/cardAvaliacao/cardAvaliacao';
+import CardAvaliacao from '../../components/cardAvaliacao/CardAvaliacao';
 import api from '../../Services/services';
+import { useNavigate } from 'react-router-dom';
 
 const ListagemFeedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const feedbacksPorPagina = 3;
+
+  const naviGate = useNavigate();
 
   useEffect(() => {
     async function buscarFeedbacks() {

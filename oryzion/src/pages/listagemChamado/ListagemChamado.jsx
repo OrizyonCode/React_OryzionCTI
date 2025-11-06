@@ -8,6 +8,7 @@ import adiciona from '../../assets/img/adicionar.svg';
 import upload from '../../assets/img/Upload.svg';
 import edita from '../../assets/img/Editar.svg';
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa'
+import { useNavigate } from "react-router";
 
 const ListagemChamado = () => {
 
@@ -18,6 +19,8 @@ const ListagemChamado = () => {
     { protocolo: '0004', nome: 'Cti' },
     { protocolo: '0005', nome: 'Cti' },
   ];
+
+  const naviGate = useNavigate();
 
 
   return (

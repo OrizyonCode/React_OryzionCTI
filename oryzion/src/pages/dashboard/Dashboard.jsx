@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import "./Dashboard.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import { useNavigate } from "react-router";
 
 const DesempenhoTrimestral = () => {
   const [state] = React.useState({
@@ -22,13 +23,14 @@ const DesempenhoTrimestral = () => {
     },
   });
 
+  const naviGate = useNavigate();
+
   return <ReactApexChart options={state.options} series={state.series} type="line" height={250} />;
 };
 
 const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalChart, setModalChart] = useState(null);
-  const [ dashBoard, setDashBoard] = useEffect([]);
   
   const abrirModal = (chart) => {
     setModalChart(chart);
@@ -123,9 +125,6 @@ const Dashboard = () => {
     },
   };
 
-  useEffect(() =>{
-    dashBoard();
-  }, [])
 
   return (
     <div className="dashboard-container ">
