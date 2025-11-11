@@ -1,4 +1,3 @@
-
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
@@ -10,66 +9,59 @@ const Chamado = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [idTipoUsuario, setIdTipoUsuario] = useState("EA52A51E-253E-4ACD-8B2A-CE51B5AA8CE8");
+
+  const [idTipoUsuario, setIdTipoUsuario] = useState("02BDD0FF-6FD3-466C-B64B-14C6595B98B8");
+
+  function alertar(icone, mensagem) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({ icon: icone, title: mensagem });
+  }
 
   async function cadastro(e) {
     e.preventDefault();
-    const cliente = { nome, email, senha, idTipoUsuario };
 
-
-    function alertar(icone, mensagem) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({ icon: icone, title: mensagem });
-    }
+    const usuario = { nome, email, senha, idTipoUsuario };
 
     try {
-      const resposta = await api.post("Usuario", cliente);
+      const respostaUsuario = await api.post("Usuario", usuario);
 
-      if (resposta.status === 201) {
-        alertar("success", "Cadastro realizado com sucesso!");
+      if (respostaUsuario.status === 201) {
+        const usuarioCriado = respostaUsuario.data;
+        const idUsuario = usuarioCriado.idUsuario || usuarioCriado.id;
+
+        const cliente = { idUsuario };
+        const respostaCliente = await api.post("Cliente", cliente);
+
+        if (respostaCliente.status === 201 || respostaCliente.status === 200) {
+          alertar("success", "Cliente cadastrado com sucesso!");
+        } else {
+          alertar("warning", "Usuário criado, mas houve problema ao registrar o cliente.");
+        }
+
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("EA52A51E-253E-4ACD-8B2A-CE51B5AA8CE8");
-
-        console.log(nome);
-        console.log(email);
-        console.log(senha);
-        console.log(idTipoUsuario);
+        setIdTipoUsuario("02BDD0FF-6FD3-466C-B64B-14C6595B98B8");
 
       } else {
-        alertar("Desculpe", "Verifique os dados e tente novamente.");
+        alertar("warning", "Verifique os dados e tente novamente.");
       }
+
     } catch (error) {
       console.error("Erro no cadastro:", error);
       alertar("error", "Erro ao fazer o cadastro. Verifique suas credenciais!");
-      console.log(usuario.nome);
-      console.log(usuario.email);
-      console.log(usuario.senha);
-      console.log(usuario.idTipoUsuario);
-      alertar("error", "Email ou senha inválidos");
     }
   }
-
-
-  function alertar(icon, msg) {
-    Swal.fire({
-      icon,
-      text: msg,
-      confirmButtonColor: "#3085d6",
-    });
-  }
-
 
   return (
     <div className="todoOChamado">
@@ -83,7 +75,6 @@ const Chamado = () => {
             <div className="titulo_2">
               <h1>Chamado</h1>
             </div>
-
 
             <label>Nome</label>
             <input

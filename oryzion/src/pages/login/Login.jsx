@@ -50,9 +50,11 @@ const Login = () => {
                 const token = resposta.data.token;
 
                 if (token) {
-                    const tokenDecodificado = userDecodeToken(token)
-                    console.log("TOKEN DECODIFICADO ===>", tokenDecodificado)
+                    const tokenDecodificado = userDecodeToken(token);
+                    console.log("TOKEN DECODIFICADO ===>", tokenDecodificado);
                     setUsuario(tokenDecodificado);
+
+                    localStorage.setItem("token", token); 
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
                     if (tokenDecodificado.tipoUsuario === "cliente") {
@@ -63,8 +65,9 @@ const Login = () => {
                         naviGate("/dashboard");
                     }
                 } else {
-                    alertar("error", "Preencha os campos !")
+                    alertar("error", "Preencha os campos!");
                 }
+
             }
         } catch (error) {
             console.log(error);
