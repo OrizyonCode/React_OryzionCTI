@@ -9,17 +9,9 @@ import secureLocalStorage from "react-secure-storage";
 const Header = (props) => {
   const [menuAtivo, setMenuAtivo] = useState(false);
   const navigate = useNavigate();
-  const { usuario, setUsuario } = useAuth(); // ✅ usa o contexto
+
 
   const toggleMenu = () => setMenuAtivo(!menuAtivo);
-
-  // const nomeUsuario = usuario?.nomeUsuario || "Usuário";
-
-  // const handleLogout = () => {
-  //   secureLocalStorage.removeItem("tokenLogin");
-  //   setUsuario(undefined);
-  //   navigate("/");
-  // };
 
   return (
     <header>

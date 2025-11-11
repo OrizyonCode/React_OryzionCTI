@@ -1,13 +1,14 @@
 import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 import logo from "../../assets/img/LogoOryzion.svg"
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -30,7 +31,11 @@ const Login = () => {
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
-        Toast.fire({ icon: icone, title: mensagem });
+        
+        Toast.fire({
+            icon: icone,
+            title: mensagem
+        });
     }
 
     async function realizarAutenticacao(e) {
@@ -42,41 +47,33 @@ const Login = () => {
                 senha: senha
             }
 
-            if (senha.trim() != "" || email.trim() != "") {
-
-
+            if (senha.trim() !== "" && email.trim() !== "") {
                 const resposta = await api.post("Login", usuario)
-
                 const token = resposta.data.token;
+                console.log("RESPOSTA DA API ===>", resposta.data);
 
                 if (token) {
                     const tokenDecodificado = userDecodeToken(token)
-                    // console.log(tokenDecodificado);
-                    // console.log(tokenDecodificado.tipoUsuario);
+                    console.log("TOKEN DECODIFICADO ===>", tokenDecodificado)
                     setUsuario(tokenDecodificado);
-                    
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
-                    if (tokenDecodificado.tipoUsuario === "suporte") {
-                        //redirecionar a tela aluno(branco)
-                        navigate("/Home")
-                        console.log(tokenDecodificado);
-                        
+                    if (tokenDecodificado.tipoUsuario === "cliente") {
+                        naviGate("/chat")
                     } else {
-                        navigate("/CadastroEvento")
-                        console.log(tokenDecodificado);
+                        naviGate("/telainicial")
                     }
                 } else {
-                    alertar("error", "Preencha os campos !")
+                    naviGate("/dashboard")
                 }
             }
-
         } catch (error) {
             console.log(error);
-            alertar("error", "Email ou senha invalidos !")
+            alertar("error", "Email ou senha invalidos !");
         }
     }
 
+    // ✅ agora o return está DENTRO do componente
     return (
         <div className="todoOLoginCliente">
             <div className="paraCentralizar">
@@ -85,6 +82,7 @@ const Login = () => {
                         <form onSubmit={realizarAutenticacao}>
                             <div className="titulo_4">
                                 <img src={logo} alt="" />
+                                <h1>Login</h1>
                             </div>
 
                             <label>Email</label>

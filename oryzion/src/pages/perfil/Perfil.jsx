@@ -17,33 +17,44 @@ const Perfil = () => {
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  
+  // 🔧 ID fixo temporário (depois substitua pelo ID do usuário logado)
+  const ID_DO_USUARIO_FIXO = 1;
 
+  // 🔹 Carrega o perfil ao montar o componente
   useEffect(() => {
     async function carregarPerfil() {
       try {
-        const idUsuario = 1; 
+        const idUsuario = ID_DO_USUARIO_FIXO;
         const resposta = await api.get(`/usuarios/${idUsuario}`);
         const dados = resposta.data;
 
-        setNome(dados.nome);
-        setEmail(dados.email);
-        setPreview(dados.imagemUrl);
+        setNome(dados.nome || "");
+        setEmail(dados.email || "");
+        setTelefone(dados.telefone || "");
+        setEndereco(dados.endereco || "");
+        setCpf(dados.cpf || "");
+        setPreview(dados.imagemUrl || null);
       } catch (error) {
         console.error("Erro ao carregar perfil:", error);
+        Swal.fire("Erro", "Não foi possível carregar o perfil.", "error");
       }
     }
-    carregarPerfil();
-  }, []);
 
+    carregarPerfil();
+  }, [ID_DO_USUARIO_FIXO]);
+
+  // 🔹 Atualiza o preview da imagem escolhida
   const atualizarImg = (e) => {
     const file = e.target.files[0];
     setImagem(file);
     if (file) {
       setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(null);
     }
   };
 
+  // 🔹 Atualiza perfil no backend
   async function atualizarPerfil(e) {
     e.preventDefault();
 
@@ -51,9 +62,13 @@ const Perfil = () => {
       const formData = new FormData();
       formData.append("nome", nome);
       formData.append("email", email);
+      formData.append("telefone", telefone);
+      formData.append("endereco", endereco);
+      formData.append("cpf", cpf);
       if (imagem) formData.append("imagem", imagem);
 
-      const idUsuario = 1; 
+      const idUsuario = ID_DO_USUARIO_FIXO;
+
       await api.put(`/usuarios/${idUsuario}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -69,52 +84,83 @@ const Perfil = () => {
     <div className="perfil-page">
       <Header />
 
-      <section className="container-perfil"> 
-        {/* Lado esquerdo */}
-        
-        <div className="card lado-esquerdo-perfil">
-          <div className="voltar">
-            <VoltarBranco />
-          </div>
-          
-          <div className="imagem-perfil">
-            <img src={preview || iconePerfil} alt="Foto de perfil" />
-          </div>
+      <section className="perfil-page">
+        <div className="container-perfil">
+          {/* Lado esquerdo */}
+          <div className="card lado-esquerdo-perfil">
+            <div className="voltar">
+              <VoltarBranco />
+            </div>
 
-          <div className="upload-container">
-            <label htmlFor="imageUpload" className="upload-label">
-              Escolher imagem
-            </label>
+            <div className="imagem-perfil">
+              <img src={preview || iconePerfil} alt="Foto de perfil" />
+            </div>
+
+            <div className="upload-container">
+              <label htmlFor="imageUpload" className="upload-label">
+                Escolher imagem
+              </label>
+              <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                hidden
+                onChange={atualizarImg}
+              />
+            </div>
+
             <input
-              type="file"
-              id="imageUpload"
-              accept="image/*"
-              hidden
-              onChange={atualizarImg}
+              className="input_perfil"
+              type="text"
+              placeholder="Nome completo"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
             />
           </div>
 
-          <input
-            className="input_perfil"
-            type="text"
-            placeholder="Nome completo"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
-          
-        </div>
+          {/* Lado direito */}
+          <div className="card lado-direito-perfil">
+            <form onSubmit={atualizarPerfil} className="form-perfil">
+              <input
+                className="input_perfil"
+                type="email"
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-        <form onSubmit={atualizarPerfil}>
-        {/* Lado direito */}
-        <div className="card lado-direito-perfil">
-          
+              <input
+                className="input_perfil"
+                type="tel"
+                placeholder="Telefone"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+              />
 
-          <div className="centralizar">
-            <Botao nomeBotao="Salvar" aoClicar={atualizarPerfil} tipo="submit"/>
+              <input
+                className="input_perfil"
+                type="text"
+                placeholder="Endereço"
+                value={endereco}
+                onChange={(e) => setEndereco(e.target.value)}
+              />
+
+              <input
+                className="input_perfil"
+                type="text"
+                placeholder="CPF"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+              />
+
+              <div className="centralizar">
+                <Botao nomeBotao="Salvar" tipo="submit" />
+              </div>
+            </form>
           </div>
         </div>
-        </form>
       </section>
+
 
       <Footer />
     </div>
