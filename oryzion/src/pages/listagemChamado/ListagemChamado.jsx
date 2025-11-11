@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ListagemChamado.css';
 import Header from '../../components/header/Header';
@@ -6,8 +7,8 @@ import mais from '../../assets/img/MaisBotao.svg';
 import adiciona from '../../assets/img/adicionar.svg';
 import upload from '../../assets/img/Upload.svg';
 import edita from '../../assets/img/Editar.svg';
-import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa'
-import { useNavigate } from "react-router";
+import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
+// import ErrorPage from '../error/ErrorPage'; // descomenta se tiver esse componente
 
 const ListagemChamado = () => {
   const [chamados, setChamados] = useState([]);
@@ -43,7 +44,7 @@ const ListagemChamado = () => {
   }, []);
 
   if (erro) {
-    return <ErrorPage />;
+    return <p style={{ color: 'red', textAlign: 'center' }}>Erro ao carregar chamados: {erro}</p>;
   }
 
   return (
@@ -97,24 +98,12 @@ const ListagemChamado = () => {
                   <label htmlFor={`uploadItem-${index}`}>
                     <img src={upload} alt="Upload" style={{ cursor: 'pointer' }} />
                   </label>
-                  <input
-                    type="file"
-                    id={`uploadItem-${index}`}
-                    accept="*"
-                    hidden
-                  />
+                  <input type="file" id={`uploadItem-${index}`} accept="*" hidden />
                 </div>
               ))}
             </div>
 
-            <div className='coluna tabela_header'>
-              <h3>Editar</h3>
-              {chamados.map((c, index) => (
-                <div key={index}>
-                  <img src={edita} alt="Editar" />
-                </div>
-              ))}
-            </div>
+        
 
             <div className='coluna tabela_header'>
               <h3>Status</h3>
