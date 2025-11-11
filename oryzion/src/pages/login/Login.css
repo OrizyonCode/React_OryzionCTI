@@ -13,7 +13,7 @@
 
 .borda {
     border: 2px solid white;
-    height: 90vh;
+    height: 80vh;
     width: 95%;
     display: flex;
     justify-content: center;
@@ -48,6 +48,10 @@ form {
     align-items: center;
     margin-bottom: 40px;
     font-size: 30px;
+}
+
+.titulo_4 img{
+    height: 120px;
 }
 
 h1 {

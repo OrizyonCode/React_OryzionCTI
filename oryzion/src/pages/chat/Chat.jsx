@@ -9,18 +9,19 @@ import "./Chat.css";
 
 const Chat = () => {
   const [modalAberto, setModalAberto] = useState(false);
-  // const [chat, setChat] = useEffect([]);
+  const [chat, setChat] = useState([]);
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
+        
 
   return (
     <>
       <Header onSuporteClick={abrirModal} />
       {modalAberto && <ModalSuporte onClose={fecharModal} />}
 
-      <div className="chat-principal">
+      <div className="chat-principal ">
         <div className="chat-topo-info">
           <div className="perfil-icone">
             <Link to="/historicofeedback">
@@ -30,8 +31,8 @@ const Chat = () => {
           <span className="nome-usuario">Usuário</span>
         </div>
 
-        <div className="chat-mensagens-area">
-          <div className="mensagem recebida">
+        <div className="chat-mensagens-area ">
+          <div className="mensagem recebida ">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
               Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

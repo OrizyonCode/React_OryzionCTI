@@ -63,6 +63,7 @@ const Header = (props) => {
             <img src={Suporte} alt="Ícone de perfil" />
           </Link>
         </div>
+        
       </nav>
     </header>
   );
