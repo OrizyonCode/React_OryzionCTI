@@ -50,6 +50,10 @@ form {
     font-size: 30px;
 }
 
+.titulo_4 img{
+    height: 120px;
+}
+
 h1 {
     font-weight: 300;
     letter-spacing: 1px;

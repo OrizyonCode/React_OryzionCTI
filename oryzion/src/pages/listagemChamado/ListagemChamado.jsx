@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import './ListagemChamado.css';
 import Header from '../../components/header/Header';
@@ -8,24 +7,50 @@ import adiciona from '../../assets/img/adicionar.svg';
 import upload from '../../assets/img/Upload.svg';
 import edita from '../../assets/img/Editar.svg';
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa'
+import { useNavigate } from "react-router";
 
 const ListagemChamado = () => {
+  const [chamados, setChamados] = useState([]);
+  const [erro, setErro] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const chamados = [
-    { protocolo: '0001', nome: 'Cti' },
-    { protocolo: '0002', nome: 'Cti' },
-    { protocolo: '0003', nome: 'Cti' },
-    { protocolo: '0004', nome: 'Cti' },
-    { protocolo: '0005', nome: 'Cti' },
-  ];
+  useEffect(() => {
+    async function buscarChamados() {
+      try {
+        const resposta = await fetch("http://localhost:5128/api/Chamado");
 
+        const contentType = resposta.headers.get("content-type") || "";
+
+        if (!resposta.ok) {
+          throw new Error(`Erro HTTP ${resposta.status}: ${resposta.statusText}`);
+        }
+
+        if (!contentType.includes("application/json")) {
+          throw new Error(`⚠️ Resposta da API não é JSON. content-type: ${contentType}`);
+        }
+
+        const dados = await resposta.json();
+        setChamados(dados);
+      } catch (error) {
+        console.error("Erro ao buscar chamados:", error);
+        setErro(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    buscarChamados();
+  }, []);
+
+  if (erro) {
+    return <ErrorPage />;
+  }
 
   return (
     <>
       <Header />
-      <BarraPesquisa
-        visibilidade = "none"
-      />
+      <BarraPesquisa visibilidade="none" />
+
       <section className='layout_grid listagemChamado'>
         <div className='img_adiciona'>
           <Link to="/chamado" className="botao_adicionar">
@@ -34,77 +59,76 @@ const ListagemChamado = () => {
           </Link>
         </div>
 
-        <div className='tabela_chamados'>
-          <div className='coluna tabela_header'>
-            <h3>Protocolo</h3>
-            {chamados.map((c) => <p key={c.protocolo}>{c.protocolo}</p>)}
-          </div>
-          <div className='coluna tabela_header'>
-            <h3>Nome</h3>
-            {chamados.map((c, index) => <p key={index}>{c.nome}</p>)}
-          </div>
-          <div className='coluna tabela_header'>
-            <h3>Resumo</h3>
-            {chamados.map((c, index) => (
-              <div key={index}><Link to="/resumo"><img src={mais} alt="Ver resumo" /></Link></div>
-            ))}
-          </div>
+        {loading ? (
+          <p>🔄 Carregando chamados...</p>
+        ) : (
+          <div className='tabela_chamados'>
+            <div className='coluna tabela_header'>
+              <h3>Protocolo</h3>
+              {chamados.map((c, index) => (
+                <p key={c.idChamado || c.id}>
+                  {String(index + 1).padStart(5, '0')}
+                </p>
+              ))}
+            </div>
 
-          {/* foi o anterior */}
+            <div className='coluna tabela_header'>
+              <h3>Nome</h3>
+              {chamados.map((c, index) => (
+                <p key={index}>{c.nome || "—"}</p>
+              ))}
+            </div>
 
-          {/* <div className='coluna tabela_header'>
-            <h3>Upload</h3>
-            {chamados.map((c, index) => (
-              <div key={index}><img src={upload} alt="Upload" /></div>
-            ))}
-          </div> */}
+            <div className='coluna tabela_header'>
+              <h3>Resumo</h3>
+              {chamados.map((c, index) => (
+                <div key={index}>
+                  <Link to="/resumo">
+                    <img src={mais} alt="Ver resumo" />
+                  </Link>
+                </div>
+              ))}
+            </div>
 
-          {/* aqui eu tenho apenas um provisório, para uma melhor apresentação, mas depois com o consumo da API, nós vamos alterar */}
-
-          <div className='coluna tabela_header'>
-            <h3>Upload</h3>
-            {chamados.map((c, index) => (
-              <div key={index}>
-                <label htmlFor={`uploadItem-${index}`}>
-                  <img
-                    src={upload}
-                    alt="Upload"
-                    style={{ cursor: 'pointer' }}
+            <div className='coluna tabela_header'>
+              <h3>Upload</h3>
+              {chamados.map((c, index) => (
+                <div key={index}>
+                  <label htmlFor={`uploadItem-${index}`}>
+                    <img src={upload} alt="Upload" style={{ cursor: 'pointer' }} />
+                  </label>
+                  <input
+                    type="file"
+                    id={`uploadItem-${index}`}
+                    accept="*"
+                    hidden
                   />
-                </label>
-                <input
-                  type="file"
-                  id={`uploadItem-${index}`}
-                  accept="*"
-                  hidden
-                />
-              </div>
-            ))}
-          </div>
+                </div>
+              ))}
+            </div>
 
-          <div className='coluna tabela_header'>
-            <h3>Editar</h3>
-            {chamados.map((c, index) => (
-              <div key={index}><img src={edita} alt="Editar" /></div>
-            ))}
-          </div>
+            <div className='coluna tabela_header'>
+              <h3>Editar</h3>
+              {chamados.map((c, index) => (
+                <div key={index}>
+                  <img src={edita} alt="Editar" />
+                </div>
+              ))}
+            </div>
 
-          <div className='coluna tabela_header'>
-            <h3>Status</h3>
-            {chamados.map((c, index) => (
-          //     <div key={index}>{status === "Concluído" ? (
-          // <span>✅ Concluído</span>
-          //   ) : (
-          //   <span>⏳ Pendente</span>
-          //   )}</div>
-          <div key={index}><img src={edita} alt="Editar" /></div>
-            ))}
+            <div className='coluna tabela_header'>
+              <h3>Status</h3>
+              {chamados.map((c, index) => (
+                <p key={index}>{c.status ? "✅ Ativo" : "⏳ Pendente"}</p>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
+
       <Footer />
     </>
   );
-}
+};
 
 export default ListagemChamado;

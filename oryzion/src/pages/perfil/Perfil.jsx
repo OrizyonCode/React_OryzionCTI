@@ -7,6 +7,7 @@ import Footer from "../../components/footer/Footer";
 import VoltarBranco from "../../components/voltarBranco/VoltarBranco";
 import api from "../../Services/services";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const Perfil = () => {
   const [nome, setNome] = useState("");
@@ -16,6 +17,8 @@ const Perfil = () => {
   const [cpf, setCpf] = useState("");
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
+
+  const naviGate = useNavigate();
 
   // 🔧 ID fixo temporário (depois substitua pelo ID do usuário logado)
   const ID_DO_USUARIO_FIXO = 1;

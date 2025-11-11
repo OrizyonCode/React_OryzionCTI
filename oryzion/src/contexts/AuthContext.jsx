@@ -1,12 +1,10 @@
 import React, { Children } from 'react'
 import secureLocalStorage from "react-secure-storage";
-
-//Importa funcoes do react para usar o Context
+//Cria o contesto de autenticacao, que permite compartilhar dados entre os componentes
 import { createContext, useState, useContext } from 'react';
 
-//Cria o contesto de autenticacao, que permite compartilhar dados entre os componentes
 const AuthContext = createContext();
-
+ 
 //Esse componente vai envolver a aplicacao(ou parte dela) e fornecer os dados de autenticacao para os filhos dele 
 export const AuthProvider = ({children}) => {
 

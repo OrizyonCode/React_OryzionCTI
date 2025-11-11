@@ -1,193 +1,248 @@
-import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
-import "./Dashboard.css";
+import React, { useState } from "react";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  BarChart,
+  Bar,
+  Legend,
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
+import "./Dashboard.css";
 
-const DesempenhoTrimestral = () => {
-  const [state] = React.useState({
-    series: [
-      { name: "Satisfação", data: [75, 80] },
-      { name: "Engajamento", data: [65, 70] },
-    ],
-    options: {
-      chart: { type: "line", zoom: { enabled: false }, toolbar: { show: false } },
-      colors: ["#3B82F6", "#10B981"],
-      stroke: { curve: "smooth", width: 3 },
-      dataLabels: { enabled: false },
-      xaxis: { categories: ["Q1", "Q2"], title: { text: "Trimestre" } },
-      yaxis: { min: 0, max: 100, title: { text: "Valores" } },
-      legend: { position: "bottom" },
-      grid: { borderColor: "#e0e0e0" },
-    },
-  });
+export default function Dashboard() {
+  const [modalAberto, setModalAberto] = useState(false);
+  const [cardSelecionado, setCardSelecionado] = useState(null);
 
-  return <ReactApexChart options={state.options} series={state.series} type="line" height={250} />;
-};
-
-const Dashboard = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalChart, setModalChart] = useState(null);
-  const [ dashBoard, setDashBoard] = useEffect([]);
-  
-  const abrirModal = (chart) => {
-    setModalChart(chart);
-    setIsModalOpen(true);
+  const abrirModal = (tipo) => {
+    setCardSelecionado(tipo);
+    setModalAberto(true);
   };
 
   const fecharModal = () => {
-    setIsModalOpen(false);
-    setModalChart(null);
-  };
- 
-
-
-  const feedbackLinha = {
-    series: [
-      { name: "Positivos", data: [28, 35, 33, 40, 38, 42, 45] },
-      { name: "Negativos", data: [12, 10, 14, 8, 15, 11, 9] },
-    ],
-    options: {
-      chart: { type: "line", zoom: { enabled: false }, toolbar: { show: false } },
-      colors: ["#3B82F6", "#EF4444"],
-      stroke: { curve: "smooth", width: 3 },
-      markers: { size: 4 },
-      xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"], title: { text: "Meses" } },
-      yaxis: { min: 0 },
-      legend: { position: "top" },
-      grid: { borderColor: "#e0e0e0" },
-    },
+    setModalAberto(false);
+    setCardSelecionado(null);
   };
 
-  const comparativoDepartamentos = {
-    series: [
-      { name: "Atendimento", data: [64, 22, 43, 21] },
-      { name: "Suporte", data: [52, 13, 44, 32] },
-    ],
-    options: {
-      chart: { type: "bar", toolbar: { show: false } },
-      plotOptions: { bar: { horizontal: true, borderRadius: 6, barHeight: "65%" } },
-      colors: ["#10B981", "#3B82F6"],
-      dataLabels: { enabled: true, style: { colors: ["#000"], fontWeight: "bold" } },
-      xaxis: { categories: ["Vendas", "TI", "RH", "Financeiro"] },
-      legend: { position: "bottom" },
-    },
+  // === Dados ===
+  const feedbackMensal = [
+    { mes: "Jan", bom: 40, ruim: 15 },
+    { mes: "Feb", bom: 60, ruim: 25 },
+    { mes: "Mar", bom: 85, ruim: 35 },
+    { mes: "Apr", bom: 70, ruim: 30 },
+    { mes: "May", bom: 100, ruim: 45 },
+    { mes: "Jun", bom: 95, ruim: 50 },
+  ];
+
+  const avaliacaoFeedbackAnual = [
+    { ano: "2022", positivos: 10738, neutros: 9738, negativos: 10738 },
+    { ano: "2023", positivos: 10738, neutros: 10738, negativos: 9738 },
+    { ano: "2024", positivos: 10738, neutros: 10738, negativos: 10738 },
+  ];
+
+  const avaliacaoMensal = [
+    { mes: "Jan", positivos: 80, neutros: 50, negativos: 35 },
+    { mes: "Feb", positivos: 90, neutros: 45, negativos: 40 },
+    { mes: "Mar", positivos: 85, neutros: 50, negativos: 35 },
+    { mes: "Apr", positivos: 95, neutros: 55, negativos: 30 },
+    { mes: "May", positivos: 100, neutros: 60, negativos: 40 },
+  ];
+
+  const feedbackRespondido = [
+    { name: "Respondidos", value: 70 },
+    { name: "Não Respondidos", value: 30 },
+  ];
+
+  const comentarios = [
+    "O atendimento demorou demais e ninguém resolveu meu problema.",
+    "O suporte foi muito atencioso e resolveu rápido.",
+    "Achei o sistema fácil de usar!",
+  ];
+
+  const COLORS = ["#1e293b", "#7f1d1d"];
+
+  // === Conteúdo Dinâmico do Modal ===
+  const renderConteudoModal = () => {
+    switch (cardSelecionado) {
+      case "feedbackMensal":
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={feedbackMensal}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="mes" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="bom" stroke="#1e293b" strokeWidth={3} />
+              <Line type="monotone" dataKey="ruim" stroke="#64748b" strokeWidth={3} />
+            </LineChart>
+          </ResponsiveContainer>
+        );
+
+      case "avaliacaoFeedback":
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={avaliacaoFeedbackAnual} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" />
+              <YAxis dataKey="ano" type="category" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="negativos" fill="#7f1d1d" />
+              <Bar dataKey="positivos" fill="#1e293b" />
+              <Bar dataKey="neutros" fill="#94a3b8" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+
+      case "feedbackRespondido":
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                data={feedbackRespondido}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={150}
+                label
+              >
+                {feedbackRespondido.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Legend />
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+
+      case "avaliacaoMensal":
+        return (
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={avaliacaoMensal}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="mes" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="neutros" fill="#94a3b8" />
+              <Bar dataKey="positivos" fill="#1e293b" />
+              <Bar dataKey="negativos" fill="#7f1d1d" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+
+      default:
+        return <p>Nenhum dado disponível</p>;
+    }
   };
 
-  const indicadoresGerais = {
-    series: [
-      { name: "Satisfação", data: [57, 56, 61, 58] },
-      { name: "Engajamento", data: [101, 98, 87, 105] },
-      { name: "Retenção", data: [36, 26, 45, 48] },
-    ],
-    options: {
-      chart: { type: "bar", toolbar: { show: false } },
-      plotOptions: { bar: { borderRadius: 5, columnWidth: "55%" } },
-      colors: ["#F59E0B", "#3B82F6", "#EF4444"],
-      dataLabels: { enabled: true },
-      xaxis: { categories: ["Abr", "Mai", "Jun", "Jul"] },
-      legend: { position: "bottom" },
-    },
-  };
-
-  const radialFeedback = {
-    series: [80, 30],
-    options: {
-      chart: { type: "radialBar", toolbar: { show: false } },
-      plotOptions: {
-        radialBar: {
-          hollow: { size: "35%" },
-          dataLabels: { name: { fontSize: "14px" }, value: { fontSize: "16px", formatter: (val) => val + "%" } },
-        },
-      },
-      colors: ["#3B82F6", "#EF4444"],
-      labels: ["Positivos", "Negativos"],
-      legend: { show: true, position: "bottom" },
-    },
-  };
-
-  const desempenhoTrimestral = {
-    series: [
-      { name: "Satisfação", data: [75, 80] },
-      { name: "Engajamento", data: [65, 70] },
-    ],
-    options: {
-      chart: { type: "line", zoom: { enabled: false }, toolbar: { show: false } },
-      colors: ["#3B82F6", "#10B981"],
-      stroke: { curve: "smooth", width: 3 },
-      dataLabels: { enabled: false },
-      xaxis: { categories: ["Q1", "Q2"], title: { text: "Trimestre" } },
-      yaxis: { min: 0, max: 100, title: { text: "Valores" } },
-      legend: { position: "bottom" },
-      grid: { borderColor: "#e0e0e0" },
-    },
-  };
-
-  useEffect(() =>{
-    dashBoard();
-  }, [])
-
-  return (
-    <div className="dashboard-container ">
+  return (<>
+  
+    <div className="dashboard-container">
       <Header />
-      <main className="dashboard-main">
-        <div className="layout_grid dashboard-grid ">
-          <div className="dash-card" onClick={() => abrirModal(feedbackLinha)}>
-            <span className="badge badge-blue">Linha</span>
-            <h3>Média de Feedbacks</h3>
-            <ReactApexChart options={feedbackLinha.options} series={feedbackLinha.series} type="line" height={250} />
-          </div>
+      <main className="dashboard-graphs ">
 
-          <div className="dash-card" onClick={() => abrirModal(indicadoresGerais)}>
-            <span className="badge badge-yellow">Barra</span>
-            <h3>Indicadores Gerais</h3>
-            <ReactApexChart options={indicadoresGerais.options} series={indicadoresGerais.series} type="bar" height={250} />
-          </div>
-
-          <div className="dash-card" onClick={() => abrirModal(comparativoDepartamentos)}>
-            <span className="badge badge-green">Barra</span>
-            <h3>Comparativo de Departamentos</h3>
-            <ReactApexChart options={comparativoDepartamentos.options} series={comparativoDepartamentos.series} type="bar" height={200} />
-          </div>
-
-          <div className="dash-card" onClick={() => abrirModal(radialFeedback)}>
-            <span className="badge badge-red">Radial</span>
-            <h3>Feedbacks Positivos x Negativos</h3>
-            <ReactApexChart options={radialFeedback.options} series={radialFeedback.series} type="radialBar" height={200} />
-          </div>
-
-          <div className="dash-card" onClick={() => abrirModal(desempenhoTrimestral)}>
-            <span className="badge badge-blue">Linha</span>
-            <h3>Desempenho Trimestral</h3>
-            <ReactApexChart
-              options={desempenhoTrimestral.options}
-              series={desempenhoTrimestral.series}
-              type="line"
-              height={250}
-            />
-          </div>
+       {/* === AVALIAÇÃO MENSAL === */}
+        <div className="dash-card " onClick={() => abrirModal("avaliacaoMensal")}>
+          <h3>AVALIAÇÃO MENSAL</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={avaliacaoMensal}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="mes" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="neutros" fill="#94a3b8" />
+              <Bar dataKey="positivos" fill="#1e293b" />
+              <Bar dataKey="negativos" fill="#7f1d1d" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
-      </main>
-      <Footer />
 
-      {isModalOpen && (
+        {/* === FEEDBACK MENSAL === */}
+        <div className="dash-card" onClick={() => abrirModal("feedbackMensal")}>
+          <h3>FEEDBACKS MENSAL</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={feedbackMensal}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="mes" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="bom" stroke="#1e293b" strokeWidth={3} />
+              <Line type="monotone" dataKey="ruim" stroke="#64748b" strokeWidth={3} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+
+
+        {/* === FEEDBACK RESPONDIDO === */}
+        <div className="dash-card" onClick={() => abrirModal("feedbackRespondido")}>
+          <h3>FEEDBACK RESPONDIDO</h3>
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart>
+              <Pie
+                data={feedbackRespondido}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={70}
+                label
+              >
+                {feedbackRespondido.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Legend />
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+                {/* === AVALIAÇÃO FEEDBACK (ANUAL) === */}
+        <div className="dash-card" onClick={() => abrirModal("avaliacaoFeedback")}>
+          <h3>AVALIAÇÃO FEEDBACK</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={avaliacaoFeedbackAnual} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" />
+              <YAxis dataKey="ano" type="category" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="negativos" fill="#7f1d1d" />
+              <Bar dataKey="positivos" fill="#1e293b" />
+              <Bar dataKey="neutros" fill="#94a3b8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+       
+      </main>
+
+      {/* === MODAL === */}
+      {modalAberto && (
         <div className="modal-overlay" onClick={fecharModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="fechar-modal" onClick={fecharModal}>x</button>
-            <h2>Gráfico Detalhado</h2>
-            {modalChart && (
-              <ReactApexChart
-                options={modalChart.options}
-                series={modalChart.series}
-                type={modalChart.options.chart.type}
-                height={400}
-              />
-            )}
+            <button className="fechar-modal" onClick={fecharModal}>
+              ✕
+            </button>
+            {renderConteudoModal()}
           </div>
         </div>
       )}
-    </div>
-  );
-};
 
-export default Dashboard;
+    </div>
+      <Footer />
+    
+      </>
+  );
+}

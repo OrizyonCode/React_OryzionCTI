@@ -1,40 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Voltar from "../../components/voltar/Voltar";
 import api from "../../Services/services";
 import Swal from "sweetalert2";
 import "./Resumo.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import { useNavigate } from "react-router";
 
 const Resumo = () => {
-  const [resumo, setResumo] = useState([]);
-  const [paginaResumo, setpaginaResumo] = useEffect([]);
+  const [resumo, setResumo] = useState("");
+
+  const naviGate = useNavigate();
 
   // Função de voltar
   const handleVoltar = () => {
     window.history.back(); 
   };
 
-  // Função que busca o resumo na API
-  async function listarResumo() {
-    try {
-      const resposta = await api.get("Resumo");
-      setResumo(resposta.data);
-    } catch (error) {
-      console.log(error);
-      Swal.fire("Erro", "Não foi possível carregar o resumo.", "error");
-    }
-  }
 
-  // Chama a função ao carregar o componente
-  useEffect(() => {
-    listarResumo();
-  }, []);
-
-  useEffect(()=> {
-    paginaResumo();
-  }, []);
-
+ 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />

@@ -5,9 +5,12 @@ import BarraPesquisa from "../../components/barraPesquisa/BarraPesquisa";
 import CardHistorico from "../../components/cardHistorico/CardHistorico";
 import Footer from "../../components/footer/Footer";
 import api from "../../Services/services";
+import { useNavigate } from "react-router";
 
 const HistoricoFeedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
+
+  const naviGate = useNavigate();
 
   useEffect(() => {
     const carregarFeedbacks = async () => {

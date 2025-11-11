@@ -2,7 +2,7 @@ import './Login.css';
 import Botao from '../../components/botao/Botao';
 import api from '../../Services/services';
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
@@ -15,7 +15,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
-    const navigate = useNavigate();
+    const naviGate = useNavigate();
 
     const { setUsuario } = useAuth();
 
@@ -44,13 +44,13 @@ const Login = () => {
 
             const usuario = {
                 email: email,
-                senha: senha
+                senha: senha,
             }
 
             if (senha.trim() !== "" && email.trim() !== "") {
+
                 const resposta = await api.post("Login", usuario)
                 const token = resposta.data.token;
-                console.log("RESPOSTA DA API ===>", resposta.data);
 
                 if (token) {
                     const tokenDecodificado = userDecodeToken(token)
@@ -59,12 +59,84 @@ const Login = () => {
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
 
                     if (tokenDecodificado.tipoUsuario === "cliente") {
-                        naviGate("/chat")
+        let timerInterval;
+        Swal.fire({
+          title: "Usuário encontrado!",
+          html: "Redirecionando para o chat... <b></b> ms",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          }
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+
+             setTimeout(() => {
+             naviGate('/chat'); 
+            }, 500);
+          }
+        });
+                        
+                    } else if (tokenDecodificado.tipoUsuario === "suporte") {
+                        let timerInterval;
+        Swal.fire({
+          title: "Suporte encontrado!",
+          html: "Redirecionando para o Tela Inicial... <b></b> ms",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          }
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+
+             setTimeout(() => {
+             naviGate('/telainicial'); 
+            }, 500);
+          }
+        });
                     } else {
-                        naviGate("/telainicial")
+                        let timerInterval;
+        Swal.fire({
+          title: "Superior encontrado!",
+          html: "Redirecionando para o Dashboard... <b></b> ms",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          }
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+
+             setTimeout(() => {
+             naviGate('/dashboard'); 
+            }, 500);
+          }
+        });
                     }
                 } else {
-                    naviGate("/dashboard")
+                    alertar("error", "Preencha os campos !")
                 }
             }
         } catch (error) {
@@ -73,7 +145,6 @@ const Login = () => {
         }
     }
 
-    // ✅ agora o return está DENTRO do componente
     return (
         <div className="todoOLoginCliente">
             <div className="paraCentralizar">
@@ -82,7 +153,6 @@ const Login = () => {
                         <form onSubmit={realizarAutenticacao}>
                             <div className="titulo_4">
                                 <img src={logo} alt="" />
-                                <h1>Login</h1>
                             </div>
 
                             <label>Email</label>

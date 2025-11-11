@@ -2,33 +2,53 @@
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import api from "../../Services/services";
 import Swal from "sweetalert2";
 
 const Chamado = () => {
-    
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [idTipoUsuario, setIdTipoUsuario] = useState("8bd97890-2205-48a5-908d-968258f7b726");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("EA52A51E-253E-4ACD-8B2A-CE51B5AA8CE8");
 
   async function cadastro(e) {
-    e.preventDefault(); 
+    e.preventDefault();
     const cliente = { nome, email, senha, idTipoUsuario };
 
+
+    function alertar(icone, mensagem) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({ icon: icone, title: mensagem });
+    }
+
     try {
-      const resposta = await api.post("Cliente", cliente);
+      const resposta = await api.post("Usuario", cliente);
 
       if (resposta.status === 201) {
         alertar("success", "Cadastro realizado com sucesso!");
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("8bd97890-2205-48a5-908d-968258f7b726");
+        setIdTipoUsuario("EA52A51E-253E-4ACD-8B2A-CE51B5AA8CE8");
+
+        console.log(nome);
+        console.log(email);
+        console.log(senha);
+        console.log(idTipoUsuario);
+
       } else {
         alertar("Desculpe", "Verifique os dados e tente novamente.");
-
       }
     } catch (error) {
       console.error("Erro no cadastro:", error);
@@ -37,8 +57,10 @@ const Chamado = () => {
       console.log(usuario.email);
       console.log(usuario.senha);
       console.log(usuario.idTipoUsuario);
+      alertar("error", "Email ou senha inválidos");
     }
   }
+
 
   function alertar(icon, msg) {
     Swal.fire({
@@ -48,9 +70,6 @@ const Chamado = () => {
     });
   }
 
-  useEffect(()=>{
-    chamado();
-  },[])
 
   return (
     <div className="todoOChamado">
@@ -64,9 +83,9 @@ const Chamado = () => {
             <div className="titulo_2">
               <h1>Chamado</h1>
             </div>
-            
 
-            <label>Nome</label>                                                                                                                                                                    
+
+            <label>Nome</label>
             <input
               className='input_chamado'
               type="text"
