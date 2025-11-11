@@ -1,67 +1,83 @@
+import React, { useState } from "react";
 import './Chamado.css';
 import Botao from '../../components/botao/Botao';
 import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
-import React, { useState } from 'react';
 import api from "../../Services/services";
 import Swal from "sweetalert2";
+import 'animate.css';
 
 const Chamado = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const [idTipoUsuario, setIdTipoUsuario] = useState("02BDD0FF-6FD3-466C-B64B-14C6595B98B8");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
 
   function alertar(icone, mensagem) {
-    const Toast = Swal.mixin({
+    Swal.fire({
       toast: true,
       position: "top-end",
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
+      icon: icone,
+      title: mensagem,
     });
-    Toast.fire({ icon: icone, title: mensagem });
   }
 
-  async function cadastro(e) {
-    e.preventDefault();
+async function cadastroCompleto(e) {
+  e.preventDefault();
 
-    const usuario = { nome, email, senha, idTipoUsuario };
+  const usuario = { nome, email, senha, idTipoUsuario };
 
-    try {
-      const respostaUsuario = await api.post("Usuario", usuario);
+  try {
+    // 1️⃣ Criar Usuário
+    const respostaUsuario = await api.post("Usuario", usuario);
+    const idUsuario = respostaUsuario.data.idUsuario || respostaUsuario.data.id;
 
-      if (respostaUsuario.status === 201) {
-        const usuarioCriado = respostaUsuario.data;
-        const idUsuario = usuarioCriado.idUsuario || usuarioCriado.id;
+    // 2️⃣ Criar Cliente
+    const cliente = { idUsuario };
+    const respostaCliente = await api.post("Cliente", cliente);
+    const idCliente = respostaCliente.data.idCliente || respostaCliente.data.id;
 
-        const cliente = { idUsuario };
-        const respostaCliente = await api.post("Cliente", cliente);
+    // 3️⃣ Criar Classificação (chama IA no backend)
+    const classificacao = { 
+      nome, 
+      comentario: "Comentário inicial" // ou algum texto que a IA precise
+    };
+    const respostaClassificacao = await api.post("Classificacao", classificacao);
+    const idClassificacao = respostaClassificacao.data.idClassificacao || respostaClassificacao.data.id;
 
-        if (respostaCliente.status === 201 || respostaCliente.status === 200) {
-          alertar("success", "Cliente cadastrado com sucesso!");
-        } else {
-          alertar("warning", "Usuário criado, mas houve problema ao registrar o cliente.");
-        }
+    // 4️⃣ Criar Chamado com ID da classificação gerada pela IA
+    const chamado = {
+      idCliente,
+      idClassificacao,
+      status: true,
+      data: new Date().toISOString(),
+      audio: "",
+      idSuporte: null
+    };
 
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("02BDD0FF-6FD3-466C-B64B-14C6595B98B8");
+        setIdTipoUsuario("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
 
-      } else {
-        alertar("warning", "Verifique os dados e tente novamente.");
-      }
-
-    } catch (error) {
-      console.error("Erro no cadastro:", error);
-      alertar("error", "Erro ao fazer o cadastro. Verifique suas credenciais!");
+    if (respostaChamado.status === 201 || respostaChamado.status === 200) {
+      Swal.fire({
+        title: "Tudo criado com sucesso!",
+        text: "Usuário, cliente e chamado foram registrados.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     }
+
+  } catch (error) {
+    console.error("Erro no cadastro completo:", error);
+    alertar("error", "Erro ao cadastrar usuário, cliente ou chamado.");
+    console.log({ nome, email, senha, idTipoUsuario });
   }
+}
 
   return (
     <div className="todoOChamado">
@@ -71,7 +87,7 @@ const Chamado = () => {
             <VoltarBranco />
           </div>
 
-          <form onSubmit={cadastro}>
+          <form onSubmit={cadastroCompleto}>
             <div className="titulo_2">
               <h1>Chamado</h1>
             </div>
@@ -80,7 +96,6 @@ const Chamado = () => {
             <input
               className='input_chamado'
               type="text"
-              id='nome'
               placeholder='Nome completo do cliente'
               value={nome}
               onChange={(e) => setNome(e.target.value)}

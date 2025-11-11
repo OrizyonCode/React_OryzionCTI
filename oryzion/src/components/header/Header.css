@@ -1,6 +1,5 @@
 header {
   background-color: #040F1E;
-  height: 90px;
   box-shadow: 4px 3px 10px rgb(0, 0, 0);
   width: 100%;
 }
@@ -9,7 +8,6 @@ header {
   display: flex;
   padding: 20px;
   color: white;
-  height: 85px;
   align-items: center;
   justify-content: space-between;
 }
