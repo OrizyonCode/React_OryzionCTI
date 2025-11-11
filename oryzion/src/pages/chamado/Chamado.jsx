@@ -10,7 +10,7 @@ const Chamado = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const [idTipoUsuario, setIdTipoUsuario] = useState("02BDD0FF-6FD3-466C-B64B-14C6595B98B8");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
 
   function alertar(icone, mensagem) {
     const Toast = Swal.mixin({
@@ -51,7 +51,7 @@ const Chamado = () => {
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("02BDD0FF-6FD3-466C-B64B-14C6595B98B8");
+        setIdTipoUsuario("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
 
       } else {
         alertar("warning", "Verifique os dados e tente novamente.");
