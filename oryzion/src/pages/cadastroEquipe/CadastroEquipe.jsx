@@ -1,129 +1,122 @@
 import React, { useState } from 'react';
 import './CadastroEquipe.css';
 import Botao from '../../components/botao/Botao';
-import VoltarBranco from '../../components/voltarBranco/VoltarBranco'; // <-- Import adicionado
+import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
 import api from "../../Services/services";
 import Swal from "sweetalert2";
-
 
 const CadastroEquipe = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [idTipoUsuario, setIdTipoUsuario] = useState("EEE5F555-1778-421C-8D56-4C661227A3F7");
+  const [idTipoUsuario, setIdTipoUsuario] = useState("BF823066-2D74-4CF2-ADB6-9A07FA3C0FFA");
+
+  function alertar(icone, mensagem) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({ icon: icone, title: mensagem });
+  }
 
   async function cadastroEquipe(e) {
     e.preventDefault();
-    const suporte = { nome, email, senha, idTipoUsuario };
 
-    function alertar(icone, mensagem) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({ icon: icone, title: mensagem });
-    }
+    const usuario = { nome, email, senha, idTipoUsuario };
 
     try {
-      const resposta = await api.post("Usuario", suporte);
+      const respostaUsuario = await api.post("Usuario", usuario);
 
-      if (resposta.status === 201) {
-        alertar("success", "Cadastro realizado com sucesso!");
+      if (respostaUsuario.status === 201) {
+
+        const usuarioCriado = respostaUsuario.data;
+        const idUsuario = usuarioCriado.idUsuario || usuarioCriado.id;
+
+        const suporte = { idUsuario };
+        const respostaSuporte = await api.post("Suporte", suporte);
+
+        if (respostaSuporte.status === 201 || respostaSuporte.status === 200) {
+          alertar("success", "Suporte cadastrado com sucesso!");
+        } else {
+          alertar("warning", "Usuário criado, mas houve um problema ao registrar o suporte.");
+        }
+
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("EEE5F555-1778-421C-8D56-4C661227A3F7");
-
-        console.log(nome);
-        console.log(email);
-        console.log(senha);
-        console.log(idTipoUsuario);
+        setIdTipoUsuario("BF823066-2D74-4CF2-ADB6-9A07FA3C0FFA");
 
       } else {
-        alertar("Desculpe", "Verifique os dados e tente novamente.");
+        alertar("warning", "Verifique os dados e tente novamente.");
       }
+
     } catch (error) {
-    console.error("Erro no cadastro:", error);
-    alertar("error", "Erro ao fazer o cadastro. Verifique suas credenciais!");
-    console.log(usuario.nome);
-    console.log(usuario.email);
-    console.log(usuario.senha);
-    console.log(usuario.idTipoUsuario);
-    alertar("error", "Email ou senha inválidos");
+      console.error("Erro no cadastro:", error);
+      alertar("error", "Erro ao fazer o cadastro. Verifique as credenciais ou o servidor!");
+    }
   }
-}
 
+  return (
+    <div className="todoOCadastroEquipe">
+      <div className="paraCentralizar">
+        <div className="borda">
+          <div className="voltarBrancoContainer">
+            <VoltarBranco />
+          </div>
 
-function alertar(icon, msg) {
-  Swal.fire({
-    icon,
-    text: msg,
-    confirmButtonColor: "#3085d6",
-  });
-}
+          <form onSubmit={cadastroEquipe}>
+            <div className="titulo_2">
+              <h1>Cadastro</h1>
+              <h5>Equipe</h5>
+            </div>
 
+            <label>Nome</label>
+            <input
+              className='input_cadastro_equipe'
+              type="text"
+              placeholder='Digite seu nome completo'
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
 
-return (
-  <div className="todoOCadastroEquipe">
-    <div className="paraCentralizar">
-      <div className="borda">
-        <div className="voltarBrancoContainer">
-          <VoltarBranco />
+            <label>Email</label>
+            <input
+              className='input_cadastro_equipe'
+              type="email"
+              placeholder='Digite seu e-mail'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <label>Senha</label>
+            <input
+              className='input_cadastro_equipe'
+              type="password"
+              placeholder='Digite sua senha'
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+
+            <div className="espacamento"></div>
+
+            <div className="botao">
+              <Botao nomeBotao="Cadastrar" type="submit" />
+            </div>
+          </form>
         </div>
-
-        <form onSubmit={cadastroEquipe}>
-          <div className="titulo_2">
-            <h1>Cadastro</h1>
-            <h5>Equipe</h5>
-          </div>
-
-          <label>Nome</label>
-          <input
-            className='input_cadastro_equipe'
-            type="text"
-            placeholder='Digite seu nome completo'
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-
-          />
-
-          <label>Email</label>
-          <input
-            className='input_cadastro_equipe'
-            type="email"
-            placeholder='Digite seu e-mail'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-
-          />
-
-          <label>Senha</label>
-          <input
-            className='input_cadastro_equipe'
-            type="password"
-            placeholder='Digite sua senha'
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-
-          />
-
-          <div className="espacamento"></div>
-
-          <div className="botao">
-            <Botao nomeBotao="Cadastrar" type="submit" />
-          </div>
-        </form>
       </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default CadastroEquipe;

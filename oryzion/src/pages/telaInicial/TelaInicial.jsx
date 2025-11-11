@@ -1,14 +1,27 @@
-
 import Header from '../../components/header/Header'
 import campo_um from '../../assets/img/campo_um.svg'
 import campo_dois from '../../assets/img/campo_dois.svg'
 import './TelaInicial.css'
 import Footer from '../../components/footer/Footer'
 import { useNavigate } from "react-router";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { userDecodeToken } from "../../auth/Auth"; // 👈 importa o decode
 
 const TelaInicial = () => {
   const navigate = useNavigate();
+  const [nome, setNome] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("Token do localStorage:", token);
+    if (token) {
+      const user = userDecodeToken(token);
+      console.log("Token decodificado:", user);
+      setNome(user.nome);
+    } else {
+      console.log("Nenhum token encontrado");
+    }
+  }, []);
 
   return (
     <>
@@ -16,7 +29,7 @@ const TelaInicial = () => {
 
       <main className="tela-inicial">
         <section className="titulo">
-          <h1>Olá, (Nome)</h1>
+          <h1>Olá, {nome || "Usuário"}</h1>
           <p>Acesse as páginas de Chamados e Feedbacks clicando em um dos campos abaixo.</p>
         </section>
 
@@ -50,4 +63,4 @@ const TelaInicial = () => {
   )
 }
 
-export default TelaInicial
+export default TelaInicial;
