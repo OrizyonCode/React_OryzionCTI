@@ -1,130 +1,254 @@
-.perfil-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #0f172a;
+/* Variáveis de cores */
+:root {
+    --primary-blue: #007bff; /* Cor principal dos botões */
+    --light-gray: #f8f9fa; /* Fundo do container */
+    --white: #ffffff; /* Fundo do cartão */
+    --text-color: #333333; /* Cor principal do texto */
+    --label-color: #6c757d; /* Cor do texto de rótulo */
+    --border-color: #dee2e6; /* Cor da borda */
+    --input-bg-color: #f7f9fc; /* Fundo dos campos de input */
 }
 
-.container-perfil {
-  display: flex;
-  /* flex: 1; */
-  justify-content: center;
-  gap: 20px;
-  padding: 40px 10%;
-  flex-wrap: wrap;
+/* Estilo geral do container da página */
+.perfil-container {
+    padding: 30px;
+    background-color: var(--light-gray);
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
-.card {
-  background-color: #1e2a47;
-  border-radius: 15px;
-  padding: 30px 20px;
-  flex: 1;
-  min-width: 300px;
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+/* Cabeçalho */
+.perfil-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
 }
 
-.lado-esquerdo-perfil {
-  background-color: #313D65;
+.perfil-header p {
+    font-size: 1rem;
+    color: black;
+    margin-bottom: 25px;
 }
 
-.lado-direito-perfil {
-  background-color: #040F1E;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;  /* Centraliza os itens horizontalmente */
-  justify-content: center;  /* Centraliza os itens verticalmente */
-  text-align: center;  /* Garante que o texto também fique centralizado */
+/* Cartão principal com o formulário */
+.perfil-card {
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    max-width: 900px; /* Largura máxima, se necessário */
+    margin: 0 auto;
 }
 
-.voltar {
-  align-self: flex-start;
+/* Seção de Foto */
+.perfil-photo-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-.imagem-perfil {
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.photo-display {
+    display: flex;
+    align-items: center;
 }
 
-.imagem-perfil img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+.avatar-wrapper {
+    position: relative;
+    margin-right: 20px;
 }
 
-.upload-container {
-  background-color: white;
-  border-radius: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 25px;
-  padding: 5px 10px;
-  box-sizing: border-box;
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #e0e0e0; /* Cor de fundo para o placeholder */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border: 2px solid var(--border-color);
+    /* Placeholder SVG para quando não houver foto */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.upload-label {
-  background-color: #040F1E;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
+/* NOVO: Estilo para a imagem real dentro do avatar */
+.avatar .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o círculo sem distorção */
+    border-radius: 50%;
 }
 
-.upload-label:hover {
-  background-color: #313D65;
+.edit-photo-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: 2px solid var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0;
 }
 
-.input_perfil {
-  width: 100%;
-  max-width: 400px;
-  height: 45px;
-  border-radius: 10px;
-  border: none;
-  padding-left: 12px;
-  margin-bottom: 20px;
-  outline: none;
-  font-size: 14px;
+.photo-info h3 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 5px;
 }
 
-h2 {
-  margin-bottom: 20px;
-  font-size: 20px;
-  text-align: center;
+.photo-info p {
+    font-size: 0.9rem;
+    color: var(--label-color);
 }
 
-.centralizar {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.photo-actions button {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.9rem;
 }
 
-/* Responsividade */
-@media screen and (max-width: 768px) {
-  .container-perfil {
-    flex-direction: column;
-    padding: 20px 5%;
-  }
-
-  .card {
-    max-width: 100%;
-    padding: 20px;
-  }
-
-  .imagem-perfil img {
-    width: 160px;
-    height: 160px;
-  }
+.delete-btn {
+    background-color: transparent;
+    color: var(--label-color);
+    border: 1px solid var(--border-color);
+    margin-right: 10px;
 }
-  
+
+.delete-btn:hover {
+    background-color: var(--light-gray);
+}
+
+.update-btn {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+}
+
+.update-btn:hover {
+    background-color: #0056b3; /* Um tom mais escuro */
+}
+
+/* Divisor */
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 20px 0;
+}
+
+/* Formulário e seus elementos */
+.perfil-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1 1 calc(50% - 10px); /* 50% menos a metade do gap */
+    min-width: 250px;
+}
+
+.form-group.full-width {
+    flex: 1 1 100%; /* Ocupa 100% da largura */
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg-color);
+    font-size: 1rem;
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+    color: var(--text-color);
+}
+
+.input-field:focus {
+    border-color: var(--primary-blue);
+    background-color: var(--white);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Estilo para campos somente leitura (readOnly) - dados que não podem ser alterados */
+.input-field[readOnly] {
+    background-color: var(--white); 
+    color: var(--label-color);
+}
+
+
+/* Ações do formulário (Botões Cancelar e Salvar) */
+.form-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    padding-top: 10px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.cancel-changes-btn {
+    background-color: transparent;
+    color: var(--label-color);
+    border: none;
+}
+
+.cancel-changes-btn:hover {
+    opacity: 0.8;
+}
+
+.save-changes-btn {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+}
+
+.save-changes-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Media Query para telas menores */
+@media (max-width: 768px) {
+    .perfil-photo-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .photo-actions {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .form-group {
+        flex: 1 1 100%; /* Todos os campos ocupam 100% da largura */
+    }
+}

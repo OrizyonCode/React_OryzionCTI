@@ -13,7 +13,36 @@ const Header = (props) => {
   const location = useLocation(); 
   const toggleMenu = () => setMenuAtivo(!menuAtivo);
 
+  // Variáveis de Checagem de Rota (Retornando o Dashboard)
   const estaNoDashboard = location.pathname === "/dashboard";
+  const estaNoCadastroEquipe = location.pathname === "/cadastroequipe";
+  const estaNaListaChamados = location.pathname === "/listagemchamado";
+  const estaNaListaFeedbacks = location.pathname === "/listagemfeedback"; 
+  const estaNaTelaInicial = location.pathname === "/"; 
+  const estaNaTelaInicialEspecifica = location.pathname === "/telainicial"; 
+  // NOVO: Variável de checagem para a página de chat
+  const estaNoChat = location.pathname === "/chat"; 
+  
+  // 1. Ocultar todos os links nas telas: /, /telainicial E /chat
+  if (estaNaTelaInicial || estaNaTelaInicialEspecifica || estaNoChat) {
+    return (
+      <header>
+        <nav className='layout_grid header_header'>
+          <div className='logo_header'>
+            <img src={Logo} alt="Logo Oryzion" />
+          </div>
+          <div className='header_pefil'>
+            <h3 className='usuario'>
+              {usuario?.nome ? usuario.nome : "Usuário"}
+            </h3>
+            <Link to="/perfil">
+              <img src={Suporte} alt="Ícone de perfil" />
+            </Link>
+          </div>
+        </nav>
+      </header>
+    );
+  }
 
   return (
     <header>
@@ -28,28 +57,36 @@ const Header = (props) => {
           <div className='line3'></div>
         </div>
 
-        {/* Links do header */}
+        {/* 2. Lógica Condicional de Agrupamento de Links com a Regra de Ocultar na Própria Página */}
         <ul className={`nav_list ${menuAtivo ? 'active' : ''}`} style={props.link_header}>
           {estaNoDashboard ? (
-            // Só aparece no dashboard
-            <li>
-              <Link className='link_header' to="/cadastroequipe">
-                Cadastro da equipe
-              </Link>
-            </li>
-          ) : (
-            // Aparece em todas as outras telas
+            // Só aparece no dashboard (e some na própria página do link)
             <>
-              <li>
-                <Link className='link_header' to="/listagemchamado">
-                  Lista de chamados
-                </Link>
-              </li>
-              <li>
-                <Link className='link_header' to="/Listagemfeedback">
-                  Lista de feedbacks
-                </Link>
-              </li>
+              {!estaNoCadastroEquipe && (
+                <li>
+                  <Link className='link_header' to="/cadastroequipe">
+                    Cadastro da equipe
+                  </Link>
+                </li>
+              )}
+            </>
+          ) : (
+            // Aparece em todas as outras telas (e some na própria página do link)
+            <>
+              {!estaNaListaChamados && (
+                <li>
+                  <Link className='link_header' to="/listagemchamado">
+                    Lista de chamados
+                  </Link>
+                </li>
+              )}
+              {!estaNaListaFeedbacks && (
+                <li>
+                  <Link className='link_header' to="/listagemfeedback">
+                    Lista de feedbacks
+                  </Link>
+                </li>
+              )}
             </>
           )}
         </ul>
