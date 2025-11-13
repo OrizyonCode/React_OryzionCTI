@@ -25,7 +25,6 @@ const BarraPesquisa = (props) => {
 
   return (
     <div className="barra_pesquisa_container">
-      {/* 📱 MOBILE: Ícone de filtro + menu dropdown */}
       {isMobile && props.visibilidade !== "none" && (
         <div className="filtro_container">
           <img

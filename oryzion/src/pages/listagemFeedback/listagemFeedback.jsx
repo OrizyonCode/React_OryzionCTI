@@ -18,16 +18,37 @@ const ListagemFeedback = () => {
   const feedbacksPorPagina = 3;
   const navigate = useNavigate();
 
-  // 🔹 Função para classificar feedbacks via IA
+  const removerFeedback = (idFeedback) => {
+  setFeedbacks((prevFeedbacks) => {
+    const novosFeedbacks = prevFeedbacks.filter(
+      (f) => f.idFeedback !== idFeedback && f.IdFeedback !== idFeedback
+    );
+
+    // 🔹 Se quiser que apareça outro logo em seguida:
+    // (simula a chegada de um novo item da API)
+    api.get('/feedback').then((res) => {
+      const novos = res.data;
+      const feedbackNovo = novos.find(
+        (n) => !novosFeedbacks.some((existente) => existente.idFeedback === n.idFeedback)
+      );
+      if (feedbackNovo) {
+        // adiciona um novo feedback ao final
+        setFeedbacks((atual) => [...atual, feedbackNovo]);
+      }
+    });
+
+    return novosFeedbacks;
+  });
+};
+
+
   async function classificarFeedbacks() {
     try {
-      console.log("🔍 Iniciando classificação dos feedbacks...");
-
       const respostaFeedback = await api.get('/feedback');
       const listaFeedbacks = respostaFeedback.data;
 
       if (!listaFeedbacks || listaFeedbacks.length === 0) {
-        alert("Nenhum feedback encontrado para classificar.");
+        alert('Nenhum feedback encontrado para classificar.');
         return;
       }
 
@@ -35,16 +56,12 @@ const ListagemFeedback = () => {
         const comentario = fb.comentario || fb.texto || fb.Texto;
         if (!comentario?.trim()) continue;
 
-        console.log(`🧠 Enviando para IA: "${comentario.slice(0, 50)}..."`);
-
         const respostaIa = await api.post('/AzureTextAnalyticsClient', { texto: comentario });
         const sentimento =
           respostaIa.data?.sentimento ||
           respostaIa.data?.Sentimento ||
           respostaIa.data?.resultado ||
-          "neutro";
-
-        console.log(`🎯 Feedback ${fb.idFeedback} classificado como: ${sentimento}`);
+          'neutro';
 
         const classificacaoObj = {
           idClassificacao: uuidv4(),
@@ -55,30 +72,25 @@ const ListagemFeedback = () => {
 
         await api.post('/Classificacao', classificacaoObj);
       }
-
-      alert('✅ Classificações realizadas com sucesso!');
     } catch (error) {
-      console.error("❌ Erro ao classificar feedbacks:", error);
+      console.error('Erro ao classificar feedbacks:');
       if (error.response) {
         alert(`Erro da API: ${error.response.data}`);
       } else {
-        alert("Erro inesperado ao classificar feedbacks. Veja o console para detalhes.");
+        alert('Erro ao classificar feedbacks.');
       }
     }
   }
 
-  // 🔹 Carrega e classifica feedbacks ao iniciar
   useEffect(() => {
     async function carregarFeedbacksEClassificar() {
       try {
         const resposta = await api.get('/feedback');
-        console.log("📥 Feedbacks carregados:", resposta.data);
         setFeedbacks(resposta.data);
 
         await classificarFeedbacks();
 
         const atualizados = await api.get('/feedback');
-        console.log("🔁 Feedbacks atualizados:", atualizados.data);
         setFeedbacks(atualizados.data);
       } catch (erro) {
         console.error('Erro ao buscar ou classificar feedbacks:', erro);
@@ -91,7 +103,6 @@ const ListagemFeedback = () => {
     carregarFeedbacksEClassificar();
   }, []);
 
-  // 🔹 Paginação
   const indiceInicial = (paginaAtual - 1) * feedbacksPorPagina;
   const indiceFinal = indiceInicial + feedbacksPorPagina;
   const feedbacksVisiveis = feedbacks.slice(indiceInicial, indiceFinal);
@@ -101,7 +112,6 @@ const ListagemFeedback = () => {
     if (nova >= 1 && nova <= totalPaginas) setPaginaAtual(nova);
   };
 
-  // 🔹 Renderização
   return (
     <>
       <Header visibilidade="none" />
@@ -147,12 +157,18 @@ const ListagemFeedback = () => {
                       texto={texto}
                       resumo={texto.slice(0, 100)}
                     />
+                    <div className="acoes-feedback">
+                      <button
+                        className="botao-excluir"
+                        onClick={() => removerFeedback(f.idFeedback || f.IdFeedback)}
+                      >
+                      </button>
+                    </div>
                   </div>
                 );
               })
             )}
 
-            {/* 🔹 Paginação */}
             <div className="paginacao">
               <button
                 disabled={paginaAtual === 1}

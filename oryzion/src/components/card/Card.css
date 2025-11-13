@@ -19,6 +19,23 @@
   gap: 12px;
 }
 
+.like_dislike button{
+  background-color: transparent;
+  border: none;
+  color: #fff; 
+  cursor: pointer;
+}
+
+.like_dislike img{
+  height: 37px;
+}
+
+.like_dislike{
+  gap: 20px;
+}
+
+
+
 .badge_sentimento {
   padding: 6px 12px;
   border-radius: 8px;
