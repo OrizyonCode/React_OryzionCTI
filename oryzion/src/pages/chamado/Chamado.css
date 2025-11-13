@@ -1,111 +1,231 @@
-.todoOChamado {
-  background-color: #040F1E;
-  color: white;
-}
+/* Chamado.css */
 
-.paraCentralizar {
+/* --- Layout da Página (Fundo e centralização) --- */
+.container_pagina {
+  background-color: #f4f7fa; /* Cor de fundo da tela */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  padding: 20px;
+}
+
+/* --- Container do Formulário (O "card" branco) --- */
+.container_cadastro {
   width: 100%;
-}
-
-.borda {
-  border: 2px solid white;
-  height: auto;
-  min-height: 70vh;
-  width: 95%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  position: relative;
-  padding: 40px 0;
-
-  background-image:
-    url('../../assets/img/direita.svg'),
-    url('../../assets/img/esquerda.svg');
-  background-repeat: no-repeat, no-repeat;
-  background-position:
-    top 20px right 20px,
-    bottom 20px left 20px;
-  background-size: 250px, 250px;
-}
-
-/* 🔙 Botão de voltar */
-.voltarBrancoContainer {
-  position: absolute;
-  top: 25px;
-  left: 25px;
-}
-
-/* --- Formulário --- */
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 400px;
-  gap: 14px;
-}
-
-.titulo_2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 35px;
-  font-size: 30px;
-  flex-direction: column;
-}
-
-h1 {
-  font-weight: 100;
-}
-
-.input_chamado {
-  background-color: white;
-  outline: none;
-  border: none;
-  color: black;
-  height: 38px;
+  max-width: 400px; /* Largura máxima do formulário */
+  background-color: #fff;
+  padding: 30px 40px; /* Preenchimento interno */
   border-radius: 8px;
-  padding-left: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
-.botao {
+/* --- Título --- */
+.titulo_cadastro {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px; /* Espaçamento abaixo do título */
+}
+
+/* --- Estilos de Input e Label --- */
+label {
+  display: block;
+  margin-bottom: 6px; /* Espaçamento entre o label e o input */
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.input_comum {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px; /* Espaçamento após cada input */
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  height: 40px; /* Altura padrão para inputs para uniformidade */
+}
+
+.input_comum:focus {
+  border-color: #0d6efd;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+}
+
+/* --- Senha com Toggle de Visibilidade --- */
+.senha_container {
+  position: relative;
+  margin-bottom: 20px; /* Espaçamento após o container da senha */
+}
+
+.input_senha {
+  padding-right: 40px; /* Espaço para o botão do olho */
+}
+
+.btn_olho {
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+  height: 100%; /* Garante que o clique seja detectado em toda a altura */
+  display: flex; /* Para centralizar o ícone verticalmente */
+  align-items: center;
+}
+
+.olho_icon {
+  width: 20px;
+  height: 20px;
+  color: #a0a0a0; /* Cor do ícone do olho */
+  transition: color 0.2s;
+}
+
+.btn_olho:hover .olho_icon {
+  color: #555;
+}
+
+/* --- Toggle CPF/CNPJ --- */
+.cpf_cnpj_toggle {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px; /* Espaçamento após o toggle */
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #d0d7de; /* Adicionando borda ao grupo */
+}
+
+.cpf_cnpj_toggle button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 0;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  color: #555;
+  transition: background-color 0.2s, color 0.2s;
+  height: 40px; /* Altura padrão para os botões do toggle */
+  display: flex;
   align-items: center;
-  margin-top: 30px;
+  justify-content: center;
 }
 
-.espacamento_chamado {
-  height: 10px;
+.cpf_cnpj_toggle .ativo {
+  background: #0d6efd;
+  color: #fff;
+  font-weight: 600;
 }
 
-/* --- Mobile --- */
-@media screen and (max-width: 600px) {
-  .borda {
-    width: 340px;
-    background-size: 100px, 100px;
-    padding: 20px 0;
-  }
+.cpf_cnpj_toggle button:first-child {
+  border-right: 1px solid #d0d7de; /* Separador entre os botões */
+}
 
-  form {
-    width: 260px;
-  }
+.cpf_cnpj_toggle .ativo:first-child {
+  border-right-color: #0d6efd; /* Remove a linha quando ativo */
+}
+.cpf_cnpj_toggle .ativo + button { /* Corrige a borda do botão adjacente ao ativo */
+    border-left-color: #0d6efd;
+}
 
-  .titulo_2 {
-    font-size: 22px;
-  }
 
-  .voltarBrancoContainer {
-    top: 10px;
-    left: 10px;
-  }
+/* --- Upload de Áudio --- */
+.label_upload {
+    margin-top: 5px; /* Ajuste para o espaçamento do label de upload */
+}
 
-  button {
-    /* width: 180px !important; */
-    height: 50px;
-  }
+.upload_box {
+  border: 2px dashed #d0d7de;
+  padding: 25px;
+  margin-top: 6px; /* Espaçamento entre o label e a caixa de upload */
+  margin-bottom: 25px; /* Espaçamento abaixo da caixa de upload */
+  border-radius: 6px;
+  background: #fcfcfc;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  display: flex; /* Usar flexbox para alinhar ícone e texto */
+  flex-direction: column; /* Colocar ícone e texto em coluna */
+  align-items: center; /* Centralizar horizontalmente */
+  justify-content: center; /* Centralizar verticalmente */
+  min-height: 120px; /* Altura mínima para a caixa de upload */
+}
+
+.upload_box:hover {
+  background-color: #f7f7f7;
+  border-color: #0d6efd;
+}
+
+.icon_upload {
+    width: 30px;
+    height: 30px;
+    color: #a0a0a0;
+    margin-bottom: 8px; /* Espaçamento entre o ícone e o texto */
+}
+
+.upload_box p {
+    line-height: 1.4;
+    font-size: 14px;
+    color: #666;
+    margin: 0; /* Remover margin padrão de parágrafo */
+}
+
+.upload_link {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.upload_info {
+    font-size: 12px;
+    color: #a0a0a0;
+    display: block; /* Garante que 'WAV...' fique em nova linha */
+    margin-top: 4px; /* Espaçamento entre as linhas do texto */
+}
+
+/* --- Botão Cadastrar --- */
+.btn_cadastrar {
+  width: 100%;
+  background: #0d6efd;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px; /* Espaçamento acima do botão */
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3); /* Sombra do botão */
+  height: 45px; /* Altura padrão para o botão */
+}
+
+.btn_cadastrar:hover {
+  background: #0b5ed7;
+  box-shadow: 0 6px 12px rgba(13, 110, 253, 0.4);
+}
+
+/* --- Link de Login --- */
+.login_text {
+  margin-top: 25px; /* Espaçamento acima do link de login */
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+.login_text a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.login_text a:hover {
+  color: #0b5ed7;
 }

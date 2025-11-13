@@ -35,9 +35,7 @@ const Header = (props) => {
             <h3 className='usuario'>
               {usuario?.nome ? usuario.nome : "Usuário"}
             </h3>
-            <Link to="/perfil">
               <img src={Suporte} alt="Ícone de perfil" />
-            </Link>
           </div>
         </nav>
       </header>
@@ -90,15 +88,12 @@ const Header = (props) => {
             </>
           )}
         </ul>
-
-        {/* Perfil do usuário */}
+        
         <div className='header_pefil'>
           <h3 className='usuario'>
             {usuario?.nome ? usuario.nome : "Usuário"}
           </h3>
-          <Link to="/perfil">
             <img src={Suporte} alt="Ícone de perfil" />
-          </Link>
         </div>
         
       </nav>
