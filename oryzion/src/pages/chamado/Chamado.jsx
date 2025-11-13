@@ -10,12 +10,8 @@ const Chamado = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-<<<<<<< HEAD
 
   const [idTipoUsuario, setIdTipoUsuario] = useState("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
-=======
-  const [idTipoUsuario] = useState("9437376C-23A7-4838-AE15-93AE57237680"); // Tipo padrão
->>>>>>> 5c0678fb17ffaf366eb2f1c3a55e44e2977b785d
 
   function alertar(icone, mensagem) {
     Swal.fire({
@@ -62,14 +58,10 @@ async function cadastroCompleto(e) {
       idSuporte: null
     };
 
-<<<<<<< HEAD
         setNome("");
         setEmail("");
         setSenha("");
         setIdTipoUsuario("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
-=======
-    const respostaChamado = await api.post("Chamado", chamado);
->>>>>>> 5c0678fb17ffaf366eb2f1c3a55e44e2977b785d
 
     if (respostaChamado.status === 201 || respostaChamado.status === 200) {
       Swal.fire({
