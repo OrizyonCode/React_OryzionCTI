@@ -1,137 +1,117 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import './Chamado.css';
-import Botao from '../../components/botao/Botao';
-import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
-import api from "../../Services/services";
-import Swal from "sweetalert2";
-import 'animate.css';
 
-const Chamado = () => {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+// Ícone de upload (SVG simples)
+const UploadIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon_upload"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 014 4.973V18a3 3 0 01-3 3H7a3 3 0 01-3-3v-1h1z"
+    />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 4v16m-4-8h8"
+    />
+  </svg>
+);
 
-  const [idTipoUsuario, setIdTipoUsuario] = useState("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
-
-  function alertar(icone, mensagem) {
-    Swal.fire({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      icon: icone,
-      title: mensagem,
-    });
-  }
-
-async function cadastroCompleto(e) {
-  e.preventDefault();
-
-  const usuario = { nome, email, senha, idTipoUsuario };
-
-  try {
-    // 1️⃣ Criar Usuário
-    const respostaUsuario = await api.post("Usuario", usuario);
-    const idUsuario = respostaUsuario.data.idUsuario || respostaUsuario.data.id;
-
-    // 2️⃣ Criar Cliente
-    const cliente = { idUsuario };
-    const respostaCliente = await api.post("Cliente", cliente);
-    const idCliente = respostaCliente.data.idCliente || respostaCliente.data.id;
-
-    // 3️⃣ Criar Classificação (chama IA no backend)
-    const classificacao = { 
-      nome, 
-      comentario: "Comentário inicial" // ou algum texto que a IA precise
-    };
-    const respostaClassificacao = await api.post("Classificacao", classificacao);
-    const idClassificacao = respostaClassificacao.data.idClassificacao || respostaClassificacao.data.id;
-
-    // 4️⃣ Criar Chamado com ID da classificação gerada pela IA
-    const chamado = {
-      idCliente,
-      idClassificacao,
-      status: true,
-      data: new Date().toISOString(),
-      audio: "",
-      idSuporte: null
-    };
-
-        setNome("");
-        setEmail("");
-        setSenha("");
-        setIdTipoUsuario("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
-
-    if (respostaChamado.status === 201 || respostaChamado.status === 200) {
-      Swal.fire({
-        title: "Tudo criado com sucesso!",
-        text: "Usuário, cliente e chamado foram registrados.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-    }
-
-  } catch (error) {
-    console.error("Erro no cadastro completo:", error);
-    alertar("error", "Erro ao cadastrar usuário, cliente ou chamado.");
-    console.log({ nome, email, senha, idTipoUsuario });
-  }
-}
+export default function Chamado() {
+  const [cpfCnpj, setCpfCnpj] = useState('cpf');
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
 
   return (
-    <div className="todoOChamado">
-      <div className="paraCentralizar">
-        <div className="borda">
-          <div className="voltarBrancoContainer">
-            <VoltarBranco />
+    <div className="container_pagina">
+      <div className="container_cadastro">
+        <form className="form_cadastro">
+          <h1 className="titulo_cadastro">Crie sua Conta</h1>
+
+          {/* Nome completo */}
+          <label>Nome completo</label>
+          <input type="text" placeholder="Insira seu nome completo" className="input_comum" />
+
+          {/* E-mail */}
+          <label>E-mail</label>
+          <input type="email" placeholder="exemplo@email.com" className="input_comum" />
+
+          {/* Senha */}
+          <label>Senha</label>
+          <div className="senha_container">
+            <input
+              type={senhaVisivel ? 'text' : 'password'}
+              placeholder="Mínimo 8 caracteres"
+              className="input_comum input_senha"
+            />
+            {/* O ícone de olho no screenshot é mais elaborado, então vou usar um SVG */}
+            <button
+              type="button"
+              className="btn_olho"
+              onClick={() => setSenhaVisivel(!senhaVisivel)}
+            >
+              <svg className="olho_icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={senhaVisivel ? "M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7 1.274-4.057 5.065-7 9.542-7 1.54 0 3.018.397 4.364 1.127" : "M15 12a3 3 0 11-6 0 3 3 0 016 0z"} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={senhaVisivel ? "M18.364 15.636A9.99 9.99 0 0021.542 12c-1.274-4.057-5.065-7-9.542-7a9.99 9.99 0 00-3.364.557M2.458 12c1.274 4.057 5.065 7 9.542 7 1.54 0 3.018-.397 4.364-1.127m4.092-4.509L13.875 18.825M17.5 12a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z" : "M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"} />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Toggle CPF/CNPJ */}
+          <div className="cpf_cnpj_toggle">
+            <button
+              type="button"
+              className={cpfCnpj === 'cpf' ? 'ativo' : ''}
+              onClick={() => setCpfCnpj('cpf')}
+            >
+              CPF
+            </button>
+            <button
+              type="button"
+              className={cpfCnpj === 'cnpj' ? 'ativo' : ''}
+              onClick={() => setCpfCnpj('cnpj')}
+            >
+              CNPJ
+            </button>
           </div>
 
-          <form onSubmit={cadastroCompleto}>
-            <div className="titulo_2">
-              <h1>Chamado</h1>
-            </div>
+          {/* Input do documento */}
+          <input
+            type="text"
+            placeholder={cpfCnpj === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}
+            className="input_comum"
+          />
 
-            <label>Nome</label>
-            <input
-              className='input_chamado'
-              type="text"
-              placeholder='Nome completo do cliente'
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              required
-            />
+          {/* Upload de áudio */}
+          <label className="label_upload">Upload de áudio</label>
+          <div className="upload_box">
+            <UploadIcon />
+            <p>
+              <span className="upload_link">Clique para carregar</span> ou arraste e solte
+              <br />
+              <span className="upload_info">WAV, MP3 ou M4A (MÁX. 10MB)</span>
+            </p>
+            {/* Input real de arquivo (escondido) */}
+            <input type="file" style={{ display: 'none' }} accept=".wav,.mp3,.m4a" />
+          </div>
 
-            <label>E-mail</label>
-            <input
-              className='input_chamado'
-              type="email"
-              placeholder='Digite seu e-mail'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          {/* Botão Cadastrar */}
+          <button type="submit" className="btn_cadastrar">
+            Cadastrar
+          </button>
 
-            <label>Senha</label>
-            <input
-              className='input_chamado'
-              type="password"
-              placeholder='Digite sua senha'
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
-
-            <div className="espacamento_chamado"></div>
-
-            <div className="botao">
-              <Botao nomeBotao="Cadastrar" type="submit" />
-            </div>
-          </form>
-        </div>
+          {/* Link para login */}
+          <p className="login_text">
+            Já tem uma conta? <a href="#">Faça login</a>
+          </p>
+        </form>
       </div>
     </div>
   );
-};
-
-export default Chamado;
+}
