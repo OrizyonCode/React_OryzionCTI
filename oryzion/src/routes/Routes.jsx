@@ -6,7 +6,6 @@ import DashBoard from '../pages/dashboard/Dashboard.jsx'
 import HistoricoFeedback from '../pages/historicoFeedback/HistoricoFeedback.jsx'
 import ListagemChamado from '../pages/listagemChamado/ListagemChamado.jsx'
 import ListagemFeedback from '../pages/listagemFeedback/listagemFeedback.jsx';
-import Perfil from '../pages/perfil/Perfil.jsx'
 import Resumo from '../pages/resumo/Resumo.jsx'
 import TelaInicial from '../pages/telaInicial/TelaInicial.jsx'
 import Login from '../pages/login/Login.jsx'
@@ -27,7 +26,6 @@ const Rotas = () => {
                 <Route path='/historicofeedback' element={<HistoricoFeedback/>} />
                 <Route path='/chamado' element={<Chamado/>} />
                 <Route path='/resumo' element={<Resumo/>} />
-                <Route path='/perfil' element={<Perfil/>} />
                 <Route path='*' element={<Error/>} />
         </Routes>
     )
