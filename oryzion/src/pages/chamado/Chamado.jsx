@@ -10,7 +10,8 @@ const Chamado = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [idTipoUsuario] = useState("9437376C-23A7-4838-AE15-93AE57237680"); // Tipo padrão
+
+  const [idTipoUsuario, setIdTipoUsuario] = useState("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
 
   function alertar(icone, mensagem) {
     Swal.fire({
@@ -57,7 +58,10 @@ async function cadastroCompleto(e) {
       idSuporte: null
     };
 
-    const respostaChamado = await api.post("Chamado", chamado);
+        setNome("");
+        setEmail("");
+        setSenha("");
+        setIdTipoUsuario("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
 
     if (respostaChamado.status === 201 || respostaChamado.status === 200) {
       Swal.fire({
