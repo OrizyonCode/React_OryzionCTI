@@ -1,231 +1,282 @@
-/* Chamado.css */
-
-/* --- Layout da Página (Fundo e centralização) --- */
-.container_pagina {
-  background-color: #f4f7fa; /* Cor de fundo da tela */
-  min-height: 100vh;
+/* ====== Layout Geral ====== */
+.container_cadastro {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-}
-
-/* --- Container do Formulário (O "card" branco) --- */
-.container_cadastro {
-  width: 100%;
-  max-width: 400px; /* Largura máxima do formulário */
-  background-color: #fff;
-  padding: 30px 40px; /* Preenchimento interno */
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-/* --- Título --- */
-.titulo_cadastro {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-  margin-bottom: 30px; /* Espaçamento abaixo do título */
-}
-
-/* --- Estilos de Input e Label --- */
-label {
-  display: block;
-  margin-bottom: 6px; /* Espaçamento entre o label e o input */
-  font-size: 14px;
-  color: #555;
-  font-weight: 500;
-}
-
-.input_comum {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 20px; /* Espaçamento após cada input */
-  border: 1px solid #d0d7de;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 15px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  height: 40px; /* Altura padrão para inputs para uniformidade */
-}
-
-.input_comum:focus {
-  border-color: #0d6efd;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
-}
-
-/* --- Senha com Toggle de Visibilidade --- */
-.senha_container {
+  min-height: 100vh;
+  background-color: #040F1E;
+  padding: 60px 0;
+  /* espaçamento acima e abaixo */
   position: relative;
-  margin-bottom: 20px; /* Espaçamento após o container da senha */
+  /* Para posicionar elementos */
+  overflow: hidden;
+  /* Garante que os efeitos não transbordem */
+
+  background-image: linear-gradient(135deg, rgba(49, 61, 85, 0.4) 0%, transparent 30%),
+    linear-gradient(45deg, rgba(49, 61, 85, 0.4) 0%, transparent 30%);
+  background-size: 100% 100%;
+  /* Garante que os gradientes cubram tudo */
+  background-repeat: no-repeat;
 }
 
-.input_senha {
-  padding-right: 40px; /* Espaço para o botão do olho */
-}
 
-.btn_olho {
+.container_cadastro::before,
+.container_cadastro::after {
+  content: '';
   position: absolute;
-  top: 50%;
-  right: 1px;
-  transform: translateY(-50%);
+  opacity: 0.3;
+  /* Para ser sutil */
+  background-color: #313D65;
+  /* Deep Ocean */
+}
+
+/* Elemento superior direito (linhas/hexágonos) */
+.container_cadastro::before {
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 250px;
+  /* Isso é um exemplo, pode ser ajustado para um pattern image ou SVG se precisar de hexágonos exatos */
+  background: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+      /* Deep Ocean */
+    ),
+    repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+      /* Deep Ocean */
+    );
+  background-size: 20px 20px;
+  transform: skewX(-20deg) translateX(50px);
+  /* Para dar um ângulo */
+  transform-origin: top right;
+}
+
+/* Elemento inferior esquerdo */
+.container_cadastro::after {
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 200px;
+  background: repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+      /* Deep Ocean */
+    ),
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+      /* Deep Ocean */
+    );
+  background-size: 20px 20px;
+  transform: skewX(20deg) translateX(-50px);
+  transform-origin: bottom left;
+}
+
+
+
+.form_cadastro {
+  border: solid 3px #313D65;
+  padding: 50px 60px;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+  /* Garante que o z-index funcione */
+}
+
+h2 {
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  margin-bottom: 35px;
+}
+
+/* ====== Grade de Campos ====== */
+.grid_campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 40px;
+  margin-bottom: 25px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #fff;
+  /* Cor cinza claro para a label */
+  margin-bottom: 6px;
+}
+
+input {
+  padding: 10px 14px;
+  border: 2px solid #313D65;
+  /* Borda mais discreta */
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+  background-color: #040F1E;
+  /* Fundo do input mais escuro */
+  color: #f8fafc;
+  /* Cor do texto dentro do input (branco) */
+}
+
+input:focus {
+  border-color: #040F1E;
+  /* Azul no foco */
+}
+
+/* ====== Campo Senha ====== */
+.campo_senha {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.campo_senha input {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.btn_visibilidade {
+  position: absolute;
+  right: 10px;
   background: none;
   border: none;
+  font-size: 1.1rem;
   cursor: pointer;
-  padding: 0 10px;
-  height: 100%; /* Garante que o clique seja detectado em toda a altura */
-  display: flex; /* Para centralizar o ícone verticalmente */
-  align-items: center;
+  color: #6b7280;
 }
 
-.olho_icon {
-  width: 20px;
-  height: 20px;
-  color: #a0a0a0; /* Cor do ícone do olho */
-  transition: color 0.2s;
-}
-
-.btn_olho:hover .olho_icon {
-  color: #555;
-}
-
-/* --- Toggle CPF/CNPJ --- */
-.cpf_cnpj_toggle {
+/* ====== CPF/CNPJ Switch ====== */
+.documento_switch {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px; /* Espaçamento após o toggle */
-  background: #e9ecef;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid #d0d7de; /* Adicionando borda ao grupo */
-}
-
-.cpf_cnpj_toggle button {
-  flex: 1;
-  border: none;
-  background: transparent;
-  padding: 10px 0;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  color: #555;
-  transition: background-color 0.2s, color 0.2s;
-  height: 40px; /* Altura padrão para os botões do toggle */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cpf_cnpj_toggle .ativo {
-  background: #0d6efd;
-  color: #fff;
-  font-weight: 600;
-}
-
-.cpf_cnpj_toggle button:first-child {
-  border-right: 1px solid #d0d7de; /* Separador entre os botões */
-}
-
-.cpf_cnpj_toggle .ativo:first-child {
-  border-right-color: #0d6efd; /* Remove a linha quando ativo */
-}
-.cpf_cnpj_toggle .ativo + button { /* Corrige a borda do botão adjacente ao ativo */
-    border-left-color: #0d6efd;
-}
-
-
-/* --- Upload de Áudio --- */
-.label_upload {
-    margin-top: 5px; /* Ajuste para o espaçamento do label de upload */
-}
-
-.upload_box {
-  border: 2px dashed #d0d7de;
-  padding: 25px;
-  margin-top: 6px; /* Espaçamento entre o label e a caixa de upload */
-  margin-bottom: 25px; /* Espaçamento abaixo da caixa de upload */
+  margin-bottom: 10px;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
-  background: #fcfcfc;
+  overflow: hidden;
+}
+
+.documento_switch button {
+  flex: 1;
+  padding: 8px;
+  background: #f1f5f9;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.documento_switch button.ativo {
+  background-color: #313D65;
+  color: #fff;
+}
+
+.documento_switch button:not(.ativo):hover {
+  background-color: #e2e8f0;
+}
+
+/* ====== Upload ====== */
+.upload_section {
+  margin: 20px 0;
+}
+
+.upload_area {
+  margin-bottom: 20px;
+}
+
+.upload_label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 25px;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
-  display: flex; /* Usar flexbox para alinhar ícone e texto */
-  flex-direction: column; /* Colocar ícone e texto em coluna */
-  align-items: center; /* Centralizar horizontalmente */
-  justify-content: center; /* Centralizar verticalmente */
-  min-height: 120px; /* Altura mínima para a caixa de upload */
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.upload_box:hover {
-  background-color: #f7f7f7;
-  border-color: #0d6efd;
+.upload_label:hover {
+  background-color: #f8fafc;
+  border-color: #2563eb;
 }
 
-.icon_upload {
-    width: 30px;
-    height: 30px;
-    color: #a0a0a0;
-    margin-bottom: 8px; /* Espaçamento entre o ícone e o texto */
+.upload_label p {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #475569;
 }
 
-.upload_box p {
-    line-height: 1.4;
-    font-size: 14px;
-    color: #666;
-    margin: 0; /* Remover margin padrão de parágrafo */
+.upload_label small {
+  color: #94a3b8;
 }
 
-.upload_link {
-  color: #0d6efd;
-  font-weight: 600;
+.icone_upload {
+  font-size: 1.5rem;
 }
 
-.upload_info {
-    font-size: 12px;
-    color: #a0a0a0;
-    display: block; /* Garante que 'WAV...' fique em nova linha */
-    margin-top: 4px; /* Espaçamento entre as linhas do texto */
-}
-
-/* --- Botão Cadastrar --- */
-.btn_cadastrar {
-  width: 100%;
-  background: #0d6efd;
-  color: #fff;
-  padding: 12px;
+/* ====== Botão ====== */
+.btn_cadastrar button {
+  background-color: #2563eb;
+  color: white;
+  padding: 14px;
   border: none;
   border-radius: 6px;
-  margin-top: 10px; /* Espaçamento acima do botão */
-  font-weight: 600;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3); /* Sombra do botão */
-  height: 45px; /* Altura padrão para o botão */
+  transition: background-color 0.2s ease;
+  width: 100%;
 }
 
 .btn_cadastrar:hover {
-  background: #0b5ed7;
-  box-shadow: 0 6px 12px rgba(13, 110, 253, 0.4);
+  background-color: #1e40af;
 }
 
-/* --- Link de Login --- */
-.login_text {
-  margin-top: 25px; /* Espaçamento acima do link de login */
-  color: #666;
-  font-size: 14px;
+/* ====== Login link ====== */
+.login_texto {
   text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #475569;
 }
 
-.login_text a {
-  color: #0d6efd;
+.login_texto a {
+  color: #2563eb;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
 }
 
-.login_text a:hover {
-  color: #0b5ed7;
+.login_texto a:hover {
+  text-decoration: underline;
+}
+
+/* ====== Responsividade ====== */
+@media (max-width: 700px) {
+  .grid_campos {
+    grid-template-columns: 1fr;
+  }
+
+  .form_cadastro {
+    padding: 35px 25px;
+  }
 }
