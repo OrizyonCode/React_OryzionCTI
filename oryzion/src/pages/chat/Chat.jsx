@@ -14,7 +14,7 @@ const Chat = () => {
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);
 
-        
+
 
   return (
     <>
