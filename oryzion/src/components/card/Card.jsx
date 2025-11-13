@@ -6,28 +6,36 @@ import imgUsuario from "../../assets/img/Usuario.svg";
 import Botao from '../botao/Botao';
 import { Link } from "react-router-dom";
 
-const Card = ({ classificacao = "neutro", positivo, negativo, resumo, texto }) => {
+const Card = ({ classificacao = "neutro", resumo, texto }) => {
   const [expandir, setExpandir] = useState(false);
+
+  // Texto do sentimento
+  const textoSentimento = {
+    positivo: "Positivo",
+    negativo: "Negativo",
+    neutro: "Neutro",
+  }[classificacao] || "Neutro";
 
   return (
     <div className={`divs_card ${classificacao}`}>
-      <div className='card_header'>
-        <div className='campo_usuario'>
+      <div className="card_header">
+        <div className="campo_usuario">
           <img src={imgUsuario} alt="Foto do usuário" />
           <p>Usuário</p>
         </div>
 
         <span className={`badge_sentimento ${classificacao}`}>
-          {classificacao === "positivo" && "Positivo"}
-          {classificacao === "negativo" && "Negativo"}
-          {classificacao === "neutro" && "Neutro"}
-        </span>
+       {textoSentimento}
+    </span>
+
       </div>
 
-      <div className='campo_feedback'>
-        <div className={`campo_comentario ${classificacao} ${expandir ? 'expandido' : ''}`}>
+      {/* Texto do feedback */}
+      <div className="campo_feedback">
+        <div className={`campo_comentario ${expandir ? 'expandido' : ''}`}>
           <p className={expandir ? 'mostrar' : 'ocultar'}>{resumo || texto}</p>
-          <button 
+
+          <button
             className="botao_leia_mais"
             onClick={() => setExpandir(!expandir)}
           >
@@ -36,7 +44,8 @@ const Card = ({ classificacao = "neutro", positivo, negativo, resumo, texto }) =
         </div>
       </div>
 
-      <div className='campo_audio'>
+      {/* Áudio + botão */}
+      <div className="campo_audio">
         <picture>
           <source media="(max-width: 768px)" srcSet={audioMobile} />
           <audio controls>
@@ -44,7 +53,7 @@ const Card = ({ classificacao = "neutro", positivo, negativo, resumo, texto }) =
           </audio>
         </picture>
 
-        <div className='botao_responde_card'>
+        <div className="botao_responde_card">
           <Link to="/chat">
             <Botao nomeBotao="Responder" />
           </Link>

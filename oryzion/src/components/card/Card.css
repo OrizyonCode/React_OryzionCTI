@@ -1,105 +1,92 @@
 .divs_card {
-  background-color: #FFFFFF;
+  background-color: #fff;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 15px;
   width: 100%;
   max-width: 750px;
   padding: 20px;
   border-radius: 12px;
-  align-items: flex-start;
-  justify-content: flex-end;
-  flex-wrap: wrap;
   box-shadow: 4px 5px 15px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-
+  margin: 0 auto 25px auto;
 }
 
-/* --- Usuário --- */
+/* Header */
+.card_header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge_sentimento {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  margin-left: auto;
+}
+
+.badge_sentimento.positivo {
+  background-color: #2ecc71; /* verde */
+}
+
+.badge_sentimento.negativo {
+  background-color: #e74c3c; /* vermelho */
+}
+
+.badge_sentimento.neutro {
+  background-color: #95a5a6; /* cinza */
+}
+
+
 .campo_usuario {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  width: 120px;
-  color: #2c2c2c;
-  padding: 10px;
   gap: 10px;
 }
 
 .campo_usuario img {
-  width: 80px;
+  width: 55px;
   border-radius: 50%;
 }
 
-/* --- Feedback --- */
-.campo_feedback {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.campo_usuario p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c2c2c;
 }
 
-/* Quadrante de comentário */
-.campo_comentario {
-  background-color: #dadde9;
-  border-radius: 20px;
-  padding: 15px 20px;
+/* Comentário */
+.campo_feedback {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 8px;
-  height: auto;
+  gap: 10px;
+}
+
+.campo_comentario {
+  background-color: #d7dbeb;
+  border-radius: 16px;
+  padding: 15px 18px;
   transition: all 0.3s ease;
-  margin-bottom: 20px;
-  /* 👈 adiciona espaço entre o comentário e o áudio */
 }
 
 .campo_comentario p {
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
-  line-height: 22px;
+  color: #2c2c2c;
+  line-height: 1.5;
 }
 
-.campo_audio button {
-  height: 40px;
-  width: 130px;
-  font-size: 15px;
-  background-color: #313D65;
-  border: none;
-}
-
-.campo_audio button:hover {
-  background-color: #040F1E;
-  border: none;
-  color: #fff;
-}
-
-
-/* --- Áudio --- */
-.campo_audio {
-  display: flex;
-  align-items: center;
-  gap: 120px;
-
-  margin-top: -30px;
-}
-
-/* Texto recolhido */
+/* Oculta parte do texto */
 .campo_comentario p.ocultar {
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  /* mostra apenas 3 linhas */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Quando expandido */
-.campo_comentario.expandido p {
-  display: block;
-}
-
-/* Botão "Mostrar mais" */
+/* Botão “Mostrar mais” */
 .botao_leia_mais {
   background: none;
   border: none;
@@ -109,7 +96,6 @@
   margin-top: 6px;
   font-size: 15px;
   align-self: flex-end;
-  /* fica no canto inferior direito */
   transition: 0.2s ease;
 }
 
@@ -117,142 +103,65 @@
   color: #000;
 }
 
+/* Áudio e botão lado a lado */
+.campo_audio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
 
-/* ============================= */
-/* 📱 MOBILE */
-/* ============================= */
+.campo_audio audio {
+  flex: 1;
+}
+
+.botao_responde_card {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.botao_responde_card button {
+  background-color: #313D65;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.botao_responde_card button:hover {
+  background-color: #040F1E;
+}
+
+/* ===== Responsividade ===== */
 @media (max-width: 768px) {
   .divs_card {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
     padding: 15px;
-    width: 100%;
-    max-width: 100%;
-  }
-
-
-  .campo_usuario p {
-    font-size: 19px;
-    font-weight: 530;
-  }
-
-  .campo_usuario {
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 0;
-    gap: 15px;
+    gap: 12px;
   }
 
   .campo_usuario img {
-    width: 55px;
+    width: 45px;
   }
 
-  /* Quadrante de comentário */
-  .campo_comentario {
+  .campo_usuario p {
+    font-size: 16px;
+  }
+
+  .campo_audio {
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    height: auto;
-    gap: 10px;
-    padding: 15px;
-  }
-
-  .campo_comentario p {
-    width: 100%;
-    text-align: left;
-    font-size: 15px;
-    line-height: 1.4;
-  }
-
-  .campo_comentario button {
-    width: 100%;
-    margin-top: 5px;
-  }
-
-  .card_header{
-    flex-direction: row;
-  }
-
-  .badge_sentimento {
-    margin-left: 8px;
-    font-size: 14px;
-    padding: 3px 10px;
-  }
-
-  /* botão Responder embaixo do áudio */
-   .campo_audio {
-    flex-direction: column; /* empilha o player e o botão */
-    width: 100%;
+    align-items: stretch;
     gap: 10px;
   }
-
 
   .botao_responde_card {
     width: 100%;
   }
 
-  .botao_responde_card a,
   .botao_responde_card button {
     width: 100%;
   }
-
-  /* nome + classificação lado a lado */
-  .card_header {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .badge_sentimento {
-    margin-left: 8px;
-    font-size: 14px;
-    padding: 3px 10px;
-  }
-
-}
-
-.card_header {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-
-.badge_sentimento {
-
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 12px;
-  color: #fff;
-  text-align: center;
-  min-width: 80px;
-}
-
-
-.badge_sentimento.positivo {
-  background-color: #4CAF50;
-}
-
-.badge_sentimento.negativo {
-  background-color: #F44336;
-}
-
-.badge_sentimento.neutro {
-  background-color: #03A9F4;
-}
-
-
-.divs_card {
-  border-left: 8px solid transparent;
-  border-radius: 12px;
-  padding: 12px;
-  background: #fff;
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
 }
