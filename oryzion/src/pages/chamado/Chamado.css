@@ -1,4 +1,3 @@
-/* ====== Layout Geral ====== */
 .container_cadastro {
   display: flex;
   justify-content: center;
@@ -6,16 +5,11 @@
   min-height: 100vh;
   background-color: #040F1E;
   padding: 60px 0;
-  /* espaçamento acima e abaixo */
   position: relative;
-  /* Para posicionar elementos */
   overflow: hidden;
-  /* Garante que os efeitos não transbordem */
-
   background-image: linear-gradient(135deg, rgba(49, 61, 85, 0.4) 0%, transparent 30%),
     linear-gradient(45deg, rgba(49, 61, 85, 0.4) 0%, transparent 30%);
   background-size: 100% 100%;
-  /* Garante que os gradientes cubram tudo */
   background-repeat: no-repeat;
 }
 
@@ -25,39 +19,32 @@
   content: '';
   position: absolute;
   opacity: 0.3;
-  /* Para ser sutil */
   background-color: #313D65;
   /* Deep Ocean */
 }
 
-/* Elemento superior direito (linhas/hexágonos) */
 .container_cadastro::before {
   top: 0;
   right: 0;
   width: 400px;
   height: 250px;
-  /* Isso é um exemplo, pode ser ajustado para um pattern image ou SVG se precisar de hexágonos exatos */
   background: repeating-linear-gradient(45deg,
       transparent,
       transparent 10px,
       #313D65 10px,
       #313D65 11px
-      /* Deep Ocean */
     ),
     repeating-linear-gradient(-45deg,
       transparent,
       transparent 10px,
       #313D65 10px,
       #313D65 11px
-      /* Deep Ocean */
     );
   background-size: 20px 20px;
   transform: skewX(-20deg) translateX(50px);
-  /* Para dar um ângulo */
   transform-origin: top right;
 }
 
-/* Elemento inferior esquerdo */
 .container_cadastro::after {
   bottom: 0;
   left: 0;
@@ -75,7 +62,6 @@
       transparent 10px,
       #313D65 10px,
       #313D65 11px
-      /* Deep Ocean */
     );
   background-size: 20px 20px;
   transform: skewX(20deg) translateX(-50px);
@@ -125,7 +111,7 @@ label {
   margin-bottom: 6px;
 }
 
-input {
+.campo input{
   padding: 10px 14px;
   border: 2px solid #313D65;
   /* Borda mais discreta */
@@ -134,17 +120,13 @@ input {
   font-size: 0.95rem;
   transition: border 0.2s ease;
   background-color: #040F1E;
-  /* Fundo do input mais escuro */
   color: #f8fafc;
-  /* Cor do texto dentro do input (branco) */
 }
 
-input:focus {
+.campo input:focus {
   border-color: #040F1E;
-  /* Azul no foco */
 }
 
-/* ====== Campo Senha ====== */
 .campo_senha {
   display: flex;
   align-items: center;
@@ -166,7 +148,6 @@ input:focus {
   color: #6b7280;
 }
 
-/* ====== CPF/CNPJ Switch ====== */
 .documento_switch {
   display: flex;
   margin-bottom: 10px;
@@ -195,7 +176,6 @@ input:focus {
   background-color: #e2e8f0;
 }
 
-/* ====== Upload ====== */
 .upload_section {
   margin: 20px 0;
 }
@@ -236,7 +216,6 @@ input:focus {
   font-size: 1.5rem;
 }
 
-/* ====== Botão ====== */
 .btn_cadastrar button {
   background-color: #2563eb;
   color: white;
@@ -253,7 +232,6 @@ input:focus {
   background-color: #1e40af;
 }
 
-/* ====== Login link ====== */
 .login_texto {
   text-align: center;
   margin-top: 20px;
@@ -270,7 +248,6 @@ input:focus {
   text-decoration: underline;
 }
 
-/* ====== Responsividade ====== */
 @media (max-width: 700px) {
   .grid_campos {
     grid-template-columns: 1fr;

@@ -10,6 +10,7 @@ import Resumo from '../pages/resumo/Resumo.jsx'
 import TelaInicial from '../pages/telaInicial/TelaInicial.jsx'
 import Login from '../pages/login/Login.jsx'
 import Error from '../pages/error/ErrorPage.jsx'
+import DashLista from "../pages/dashListagem/DashListagem.jsx"
 
 
 
@@ -26,6 +27,7 @@ const Rotas = () => {
                 <Route path='/historicofeedback' element={<HistoricoFeedback/>} />
                 <Route path='/chamado' element={<Chamado/>} />
                 <Route path='/resumo' element={<Resumo/>} />
+                <Route path='/DashListagem' element={<DashLista/>} />
                 <Route path='*' element={<Error/>} />
         </Routes>
     )
