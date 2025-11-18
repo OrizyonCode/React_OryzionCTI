@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Chamado.css";
 import Botao from "../../components/botao/Botao";
+import Olho from "../../assets/img/olho.png"
 
 function Chamado() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -90,9 +91,6 @@ function Chamado() {
           <Botao nomeBotao="Cadastrar" type="submit" />
         </div>
 
-        <p className="login_texto">
-          Já tem uma conta? <a href="#">Faça login</a>
-        </p>
       </form>
     </div>
   );
