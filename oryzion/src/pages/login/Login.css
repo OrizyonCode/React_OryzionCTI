@@ -50,7 +50,7 @@ form {
     font-size: 30px;
 }
 
-.titulo_4 img{
+.titulo_4 img {
     height: 120px;
 }
 
@@ -111,6 +111,17 @@ a:hover {
     text-decoration: underline;
 }
 
+/* ===== SweetAlert ===== */
+.swal-mini {
+    border-radius: 8px !important;
+    font-size: 12px !important;
+}
+
+.swal-mini-title {
+    font-size: 14px !important;
+}
+
+
 /* ===== Responsividade (Mobile) ===== */
 @media screen and (max-width: 600px) {
     button {
@@ -141,4 +152,3 @@ a:hover {
         font-size: 14px;
     }
 }
-    
