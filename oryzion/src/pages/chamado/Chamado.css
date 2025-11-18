@@ -121,11 +121,11 @@ label {
   transition: border 0.2s ease;
   background-color: #040F1E;
   color: #f8fafc;
+  margin-top: 5px;
+
 }
 
-.campo input:focus {
-  border-color: #040F1E;
-}
+
 
 .campo_senha {
   display: flex;
@@ -154,6 +154,7 @@ label {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   overflow: hidden;
+  margin-top: 5px;
 }
 
 .documento_switch button {
@@ -182,6 +183,7 @@ label {
 
 .upload_area {
   margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .upload_label {
@@ -195,17 +197,19 @@ label {
   text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  color: #fff;
 }
 
 .upload_label:hover {
   background-color: #f8fafc;
-  border-color: #2563eb;
+  border-color: #313D65;
+  color: #313D65;
 }
 
 .upload_label p {
   margin-top: 8px;
   font-size: 0.85rem;
-  color: #475569;
+
 }
 
 .upload_label small {
@@ -217,7 +221,7 @@ label {
 }
 
 .btn_cadastrar button {
-  background-color: #2563eb;
+  background-color: #313D65;
   color: white;
   padding: 14px;
   border: none;
@@ -228,9 +232,13 @@ label {
   width: 100%;
 }
 
-.btn_cadastrar:hover {
-  background-color: #1e40af;
+.btn_cadastrar button:hover {
+  background-color: #fff;
+  color: #040F1E;
+  border-color: #fff;
 }
+
+
 
 .login_texto {
   text-align: center;

@@ -84,7 +84,7 @@ const Login = () => {
                         let timerInterval;
         Swal.fire({
           title: "Suporte Encontrado!",
-          html: "Redirecionando para a Listagem... <b></b> ms",
+          html: "Redirecionando para a Tela Inicial... <b></b> ms",
           timer: 2000,
           timerProgressBar: true,
           didOpen: () => {
