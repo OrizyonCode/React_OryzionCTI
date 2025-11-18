@@ -9,11 +9,13 @@ import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 import { Link } from 'react-router-dom';
 import logo from "../../assets/img/LogoOryzion.svg";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const naviGate = useNavigate();
   const { setUsuario } = useAuth();
@@ -98,12 +100,23 @@ const Login = () => {
 
           <div className="login_campo senha">
             <label>Senha</label>
-            <input
-              type="password"
-              placeholder="Digite sua senha"
-              value={senha}
-              onChange={e => setSenha(e.target.value)}
-            />
+
+            <div className="login_senha_container">
+              <input
+                type={mostrarSenha ? "text" : "password"}
+                placeholder="Digite sua senha"
+                value={senha}
+                onChange={e => setSenha(e.target.value)}
+              />
+              
+              <span
+                className="login_icone_olho"
+                onClick={() => setMostrarSenha(!mostrarSenha)}
+              >
+                {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
+            </div>
+
           </div>
 
         </div>

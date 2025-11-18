@@ -129,6 +129,30 @@
     margin-bottom: 20px;
 }
 
+/* ===== Container do input + olho ===== */
+.login_senha_container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login_senha_container input {
+    width: 100%;
+}
+
+/* ===== Ícone do olho ===== */
+.login_icone_olho {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #ffffffa4;
+    transition: 0.2s;
+}
+
+.login_icone_olho:hover {
+    color: #ffffff;
+}
+
 /* ===== Responsivo ===== */
 @media (max-width: 700px) {
     .login_form {
