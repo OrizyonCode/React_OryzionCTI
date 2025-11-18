@@ -8,172 +8,112 @@ import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 import { Link } from 'react-router-dom';
-import logo from "../../assets/img/LogoOryzion.svg"
+import logo from "../../assets/img/LogoOryzion.svg";
 
 const Login = () => {
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
-    const naviGate = useNavigate();
+  const naviGate = useNavigate();
+  const { setUsuario } = useAuth();
 
-    const { setUsuario } = useAuth();
+  function alertar(icone, mensagem) {
+    Swal.fire({
+      icon: icone,
+      text: mensagem,
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
 
-    function alertar(icone, mensagem) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-        Toast.fire({
-            icon: icone,
-            title: mensagem
-        });
+  async function realizarAutenticacao(e) {
+    e.preventDefault();
+
+    if (email.trim() === "" || senha.trim() === "") {
+      return alertar("warning", "Preencha todos os campos!");
     }
 
-    async function realizarAutenticacao(e) {
-        e.preventDefault();
-        try {
-            const usuario = {
-                email: email,
-                senha: senha,
-            }
+    try {
+      const usuario = { email, senha };
+      const resposta = await api.post("Login", usuario);
+      const token = resposta.data.token;
 
-            if (senha.trim() !== "" && email.trim() !== "") {
+      if (!token) {
+        return alertar("error", "Algo deu errado...");
+      }
 
-                const resposta = await api.post("Login", usuario)
-                const token = resposta.data.token;
+      const tokenDecodificado = userDecodeToken(token);
+      setUsuario(tokenDecodificado);
 
-                if (token) {
-                    const tokenDecodificado = userDecodeToken(token);
-                    console.log("TOKEN DECODIFICADO ===>", tokenDecodificado);
-                    setUsuario(tokenDecodificado);
+      secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+      localStorage.setItem("token", token);
 
-                    localStorage.setItem("token", token); 
-                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+      let timerInterval;
 
-                    if (tokenDecodificado.tipoUsuario === "cliente") {
-                        let timerInterval;
-        Swal.fire({
-          title: "Usuário Encontrado!",
-          html: "Redirecionando para o Chat... <b></b> ms",
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-            const timer = Swal.getPopup().querySelector("b");
-            timerInterval = setInterval(() => {
-              timer.textContent = `${Swal.getTimerLeft()}`;
-            }, 100);
-          },
-          willClose: () => {
-            clearInterval(timerInterval);
-          }
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-            naviGate("/chat");
-          }
-        });
-                    } else if (tokenDecodificado.tipoUsuario === "suporte") {
-                        let timerInterval;
-        Swal.fire({
-          title: "Suporte Encontrado!",
-          html: "Redirecionando para a Tela Inicial... <b></b> ms",
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-            const timer = Swal.getPopup().querySelector("b");
-            timerInterval = setInterval(() => {
-              timer.textContent = `${Swal.getTimerLeft()}`;
-            }, 100);
-          },
-          willClose: () => {
-            clearInterval(timerInterval);
-          }
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-            naviGate("/TelaInicial");
-          }
-        });
-                    } else {
-                        let timerInterval;
-        Swal.fire({
-          title: "Superior Encontrado!",
-          html: "Redirecionando para o Dashboard... <b></b> ms",
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-            const timer = Swal.getPopup().querySelector("b");
-            timerInterval = setInterval(() => {
-              timer.textContent = `${Swal.getTimerLeft()}`;
-            }, 100);
-          },
-          willClose: () => {
-            clearInterval(timerInterval);
-          }
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-            naviGate("/dashboard");
-          }
-        });
-                    }
-                } else {
-                    alertar("error", "Preencha os campos!");
-                }
+      Swal.fire({
+        title: "Login realizado!",
+        html: "Redirecionando... <b></b> ms",
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const timer = Swal.getPopup().querySelector("b");
+          timerInterval = setInterval(() => {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }, 100);
+        },
+        willClose: () => clearInterval(timerInterval)
+      }).then(() => {
+        if (tokenDecodificado.tipoUsuario === "cliente") naviGate("/chat");
+        else if (tokenDecodificado.tipoUsuario === "suporte") naviGate("/TelaInicial");
+        else naviGate("/dashboard");
+      });
 
-            }
-        } catch (error) {
-            console.log(error);
-            alertar("error", "Email ou senha invalidos !");
-        }
+    } catch (error) {
+      console.log(error);
+      alertar("error", "Email ou senha inválidos!");
     }
+  }
 
-    return (
-        <div className="todoOLoginCliente">
-            <div className="paraCentralizar">
-                <div className="borda">
-                    <div className="borda_para_os_simbolos">
-                        <form onSubmit={realizarAutenticacao}>
-                            <div className="titulo_4">
-                                <img src={logo} alt="" />
-                            </div>
+  return (
+    <div className="login_container">
+      <form className="login_form" onSubmit={realizarAutenticacao}>
+        <h2 className="login_logo">
+          <img src={logo} alt="Logo" />
+        </h2>
 
-                            <label>Email</label>
-                            <input
-                                className='input_login_cliente'
-                                type="email"
-                                placeholder='Digite seu email'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+        <div className="login_grid">
+          <div className="login_campo">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Digite seu email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
 
-                            <label>Senha</label>
-                            <input
-                                className='input_login_cliente'
-                                type="password"
-                                placeholder='Digite sua senha'
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                            />
+          <div className="login_campo senha">
+            <label>Senha</label>
+            <input
+              type="password"
+              placeholder="Digite sua senha"
+              value={senha}
+              onChange={e => setSenha(e.target.value)}
+            />
+          </div>
 
-                            <div className="espacamento"></div>
-                            <div className="botao">
-                                <Botao nomeBotao="Entrar" type="submit" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
-    );
+
+        <div className="login_botao">
+          <Botao nomeBotao="Entrar" type="submit" />
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default Login;
