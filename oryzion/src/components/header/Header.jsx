@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Header.css';
-import Logo from '../../assets/img/LogoOryzion.svg';
+import Logo from '../../assets/img/loguinho.png'
 import Suporte from '../../assets/img/IconSuporte.svg';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
