@@ -46,7 +46,6 @@ const Login = () => {
       if (!token) {
         return alertar("error", "Algo deu errado...");
       }
-            // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
             if (email.trim() === "" || senha.trim() === "") {
                 Swal.fire({
                     position: "top-end",

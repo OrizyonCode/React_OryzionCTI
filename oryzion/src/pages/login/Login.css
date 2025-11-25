@@ -81,13 +81,8 @@
     margin-bottom: 35px;
 }
 
-<<<<<<< HEAD
 .login_logo img {
     height: 130px;
-=======
-.titulo_4 img {
-    height: 120px;
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
 }
 
 /* ===== Campos ===== */
@@ -158,39 +153,13 @@
     color: #ffffff;
 }
 
-<<<<<<< HEAD
 /* ===== Responsivo ===== */
 @media (max-width: 700px) {
     .login_form {
         padding: 35px 25px;
-=======
-a:hover {
-    text-decoration: underline;
-}
-
-/* ===== SweetAlert ===== */
-.swal-mini {
-    border-radius: 8px !important;
-    font-size: 12px !important;
-}
-
-.swal-mini-title {
-    font-size: 14px !important;
-}
-
-
-/* ===== Responsividade (Mobile) ===== */
-@media screen and (max-width: 600px) {
-    button {
-        height: 50px;
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
     }
 
     .login_logo img {
         height: 100px;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
