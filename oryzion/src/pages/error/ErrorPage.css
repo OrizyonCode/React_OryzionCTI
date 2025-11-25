@@ -1,70 +1,90 @@
-/* -------------------- Container -------------------- */
-.error-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    background: linear-gradient(135deg, #040F1E, #0c1a2c);
-    color: #E5E7EB;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
+/* ===== Container ===== */
+.error_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #040F1E;
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
 }
 
-/* -------------------- Conteúdo -------------------- */
-.error-content {
-    max-width: 500px;
-    width: 100%;
-    padding: 40px 30px;
-    border-radius: 16px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-    background-color: #0c1a2c;
-    animation: fadeIn 0.6s ease;
+/* ===== Card ===== */
+.error_content {
+  border: solid 3px #313D65;
+  padding: 50px 60px;
+  border-radius: 30px;
+  background-color: #0c1a2c;
+  width: 100%;
+  max-width: 620px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.6s ease;
 }
 
-/* -------------------- Código do Erro -------------------- */
-.error-code {
-    font-size: clamp(5rem, 15vw, 8rem);
-    font-weight: 900;
-    color: #3ABFF8;
-    margin-bottom: 10px;
+/* ===== Código do erro ===== */
+.error_code {
+  font-size: clamp(5rem, 12vw, 8rem);
+  font-weight: 900;
+  color: #3ABFF8;
+  margin-bottom: 10px;
 }
 
-/* -------------------- Título e Mensagem -------------------- */
-.error-title {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+/* ===== Títulos ===== */
+.error_title {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 15px;
 }
 
-.error-message {
-    font-size: 1rem;
-    color: #9CA3AF;
-    margin-bottom: 30px;
-    line-height: 1.6;
+.error_message {
+  font-size: 1rem;
+  color: #9CA3AF;
+  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
-/* -------------------- Botão -------------------- */
-.error-home-button {
-    background-color: #3ABFF8;
-    color: #040F1E;
-    border: none;
-    padding: 12px 35px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(58, 191, 248, 0.4);
+/* ===== Botão ===== */
+.error_button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+
+  background-color: #3ABFF8;
+  color: #040F1E;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(58, 191, 248, 0.4);
+
+  margin: 0 auto; 
 }
 
-.error-home-button:hover {
-    background-color: #0A98D9;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(58, 191, 248, 0.5);
+.error_button:hover {
+  background-color: #0A98D9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(58, 191, 248, 0.5);
 }
 
-/* -------------------- Animação -------------------- */
+/* ===== Animação ===== */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 700px) {
+  .error_content {
+    padding: 35px 25px;
+  }
+
+  .error_code {
+    font-size: 5rem;
+  }
 }
