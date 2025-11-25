@@ -68,6 +68,31 @@
     border-radius: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     width: 100%;
+}
+
+.borda {
+    border: 2px solid white;
+    height: 90vh;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+
+    background-image:
+        url('../../assets/img/direita.svg'),
+        url('../../assets/img/esquerda.svg');
+
+    background-repeat: no-repeat, no-repeat;
+    background-position:
+        top 20px right 20px,
+        bottom 20px left 20px;
+
+    background-size: 250px, 250px;
+}
+
+/* ===== Formulário ===== */
+form {
     max-width: 650px;
     display: flex;
     flex-direction: column;
