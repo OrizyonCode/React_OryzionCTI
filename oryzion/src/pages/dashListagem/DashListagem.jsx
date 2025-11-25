@@ -2,20 +2,27 @@ import { useState, useEffect } from 'react';
 import "./DashListagem.css";
 import imgUsuario from "../../assets/img/Usuario.svg";
 import dash from "../../assets/img/dash.png";
-import help from "../../assets/img/help.png";
+import help from "../../assets/img/help.svg";
 import api from '../../Services/services';
 import { useAuth } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
-
+import equipe from "../../assets/img/equipe.svg"
 
 const DashListagem = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [feedbacksFiltrados, setFeedbacksFiltrados] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const feedbacksPorPagina = 5;
-  const [filtroAtivo, setFiltroAtivo] = useState("Todos");
-    const { usuario } = useAuth();
+  const { usuario } = useAuth();
 
+  // Estado único de filtros
+  const [filtros, setFiltros] = useState({
+    nome: "",
+    data: "",
+    sentimento: "Todos",
+  });
+
+  // Carregar feedbacks da API
   useEffect(() => {
     async function carregar() {
       try {
@@ -25,7 +32,7 @@ const DashListagem = () => {
           const sentimentoApi = fb.classificacao?.comentario?.toLowerCase() ?? "neutro";
 
           return {
-            usuario: fb.usuario ?? "Anônimo",
+            usuario: fb.usuario ?? "Clara",
             feedback: fb.texto,
             sentimento: sentimentoApi,
             data: new Date(fb.data).toLocaleString("pt-BR", {
@@ -47,21 +54,61 @@ const DashListagem = () => {
     carregar();
   }, []);
 
-  // 🔥 FILTRO PRINCIPAL
-  function filtrar(tipo) {
-    setFiltroAtivo(tipo);
+  // Função de filtragem única
+  function aplicarFiltros({ nome, data, sentimento }) {
+    let filtrados = feedbacks;
 
-    if (tipo === "Todos") {
-      setFeedbacksFiltrados(feedbacks);
-    } else {
-      setFeedbacksFiltrados(
-        feedbacks.filter(fb => fb.sentimento.includes(tipo.toLowerCase()))
+    // Filtro por nome
+    if (nome) {
+      filtrados = filtrados.filter(fb =>
+        fb.usuario.toLowerCase().includes(nome.toLowerCase())
       );
     }
 
+    // Filtro por data
+    if (data) {
+      filtrados = filtrados.filter(fb =>
+        fb.data.includes(data)
+      );
+    }
+
+    // Filtro por sentimento
+    if (sentimento && sentimento !== "Todos") {
+      filtrados = filtrados.filter(fb =>
+        fb.sentimento.toLowerCase() === sentimento.toLowerCase()
+      );
+    }
+
+    setFeedbacksFiltrados(filtrados);
     setPaginaAtual(1);
   }
 
+  // Atualizar filtros
+  function atualizarNome(nome) {
+    setFiltros(prev => {
+      const novosFiltros = { ...prev, nome };
+      aplicarFiltros(novosFiltros);
+      return novosFiltros;
+    });
+  }
+
+  function atualizarData(data) {
+    setFiltros(prev => {
+      const novosFiltros = { ...prev, data };
+      aplicarFiltros(novosFiltros);
+      return novosFiltros;
+    });
+  }
+
+  function atualizarSentimento(sentimento) {
+    setFiltros(prev => {
+      const novosFiltros = { ...prev, sentimento };
+      aplicarFiltros(novosFiltros);
+      return novosFiltros;
+    });
+  }
+
+  // Paginação
   const indiceInicial = (paginaAtual - 1) * feedbacksPorPagina;
   const indiceFinal = indiceInicial + feedbacksPorPagina;
   const feedbacksVisiveis = feedbacksFiltrados.slice(indiceInicial, indiceFinal);
@@ -71,6 +118,7 @@ const DashListagem = () => {
     if (n >= 1 && n <= totalPaginas) setPaginaAtual(n);
   }
 
+  // Determina classe de cor do sentimento
   function corClasse(sentimento) {
     if (sentimento.includes("positivo")) return "sent-positivo";
     if (sentimento.includes("negativo")) return "sent-negativo";
@@ -79,24 +127,32 @@ const DashListagem = () => {
   }
 
   function helpCenter() {
-    alert("ola")
+    alert("Olá! Esta é a central de ajuda.");
   }
 
   return (
     <main className="dash_list_main">
-      
+
       <div className="menu_lateral_list">
         <div className="usuario_info">
           <img src={imgUsuario} alt="" />
-           {usuario?.nome ? usuario.nome : "Usuário"}
+          {usuario?.nome ? usuario.nome : "Usuário"}
         </div>
 
         <div className="pages_link">
           <div className="links_lateral">
             <img src={dash} alt="" />
-            <Link  to="/DashListagem">
-            <p>Dashboard</p>
+            <Link className='dash_link' to="/cadastroequipe">
+            Cadastro Equipe
             </Link>
+                  
+          </div>
+          <div className="links_lateral">
+            <img src={equipe} alt="" />
+            <Link className='dash_link' to="/Dashboard">
+            Dashboard
+            </Link>
+                  
           </div>
         </div>
 
@@ -113,15 +169,30 @@ const DashListagem = () => {
           <h1>Painel Feedbacks</h1>
 
           <div className="input_busca">
-            <input type="text" placeholder="Buscar feedback..." />
+            <input
+              type="text"
+              placeholder="Buscar por usuário..."
+              value={filtros.nome}
+              onChange={(e) => atualizarNome(e.target.value)}
+            />
+
+            <input
+             className="input_busca_data"
+              type="text"
+              placeholder="01/01/2000..."
+              value={filtros.data}
+              onChange={(e) => atualizarData(e.target.value)}
+            />
           </div>
+
+          
         </div>
 
         <div className="filtro_todos">
-          <button className={`filtro ${filtroAtivo === "Todos" ? "ativo" : ""}`} onClick={() => filtrar("Todos")}>Todos</button>
-          <button className={`filtro ${filtroAtivo === "Positivo" ? "ativo" : ""}`} onClick={() => filtrar("Positivo")}>Positivo</button>
-          <button className={`filtro ${filtroAtivo === "Negativo" ? "ativo" : ""}`} onClick={() => filtrar("Negativo")}>Negativo</button>
-          <button className={`filtro ${filtroAtivo === "Neutro" ? "ativo" : ""}`} onClick={() => filtrar("Neutro")}>Neutro</button>
+          <button className={`filtro ${filtros.sentimento === "Todos" ? "ativo" : ""}`} onClick={() => atualizarSentimento("Todos")}>Todos</button>
+          <button className={`filtro ${filtros.sentimento === "Positivo" ? "ativo" : ""}`} onClick={() => atualizarSentimento("Positivo")}>Positivo</button>
+          <button className={`filtro ${filtros.sentimento === "Negativo" ? "ativo" : ""}`} onClick={() => atualizarSentimento("Negativo")}>Negativo</button>
+          <button className={`filtro ${filtros.sentimento === "Neutro" ? "ativo" : ""}`} onClick={() => atualizarSentimento("Neutro")}>Neutro</button>
         </div>
 
         <div className="tabela_feedback">
@@ -137,11 +208,9 @@ const DashListagem = () => {
             <div className="linha_feedback" key={i}>
               <p>{item.usuario}</p>
               <p>{item.feedback}</p>
-
               <p className={`sent_tag ${corClasse(item.sentimento)}`}>
                 {item.sentimento}
               </p>
-
               <p>{item.data}</p>
               <p className="resposta">{item.resposta}</p>
             </div>
