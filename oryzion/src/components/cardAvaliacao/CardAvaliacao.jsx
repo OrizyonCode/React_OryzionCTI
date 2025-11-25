@@ -1,10 +1,11 @@
 import './CardAvaliacao.css'
 import Usuario from '../../assets/img/Usuario.svg'
-import botBanner from '../../assets/img/botBanner.svg'
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Esquerda from '../../assets/img/setaEsquerda.svg'
 import Direita from '../../assets/img/setaDireita.svg'
+// O import de 'botBanner' foi removido, pois a imagem não o exibe.
+// import botBanner from '../../assets/img/botBanner.svg' 
 
 const feedbacks = [
     {
@@ -33,6 +34,7 @@ const feedbacks = [
 const CardAvaliacao = () => {
 
     const [index, setIndex] = useState(0);
+    // Define 3 cards visíveis em telas grandes, 1 em telas pequenas.
     const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
 
     useEffect(() => {
@@ -47,6 +49,7 @@ const CardAvaliacao = () => {
     const getVisibleCards = () => {
         const arr = [];
         for (let i = 0; i < visibleCount; i++) {
+            // Usa o operador módulo (%) para criar um loop de cards.
             arr.push(feedbacks[(index + i) % feedbacks.length]);
         }
         return arr;
@@ -56,11 +59,13 @@ const CardAvaliacao = () => {
         <section className='banner_listagem'>
             <div className="layout_grid banner_cards">
 
-                <div className="titulo"><h2>Avaliações recentes</h2></div>
+                {/* Removido o título fixo para replicar a imagem */}
+                {/* <div className="titulo"><h2>Avaliações recentes</h2></div> */}
 
-                <div className='botBanner'>
+                {/* Removido o robô para replicar a imagem */}
+                {/* <div className='botBanner'>
                     <img src={botBanner} alt="" />
-                </div>
+                </div> */}
 
                 <div className="carousel_container">
 
@@ -101,11 +106,12 @@ const CardAvaliacao = () => {
                     </button>
                 </div>
 
+                {/* Adicionado o indicador de bolinhas (dots) */}
                 <div className="carousel_dots">
                     {feedbacks.map((_, i) => (
                         <span
                             key={i}
-                            className={`dot ${i === index ? "active" : ""}`}
+                            className={`dot ${i === index % feedbacks.length ? "active" : ""}`}
                             onClick={() => setIndex(i)}
                         />
                     ))}

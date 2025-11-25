@@ -3,8 +3,10 @@ body {
 }
 
 .banner_listagem {
-    background-color: #040F1E;
+    background-color: #111828;
     width: 100%;
+    /* Altura reduzida para o carrossel ficar mais alto no banner, 
+       já que o robô foi removido */
     height: 500px;
     position: relative;
 
@@ -18,10 +20,14 @@ body {
     width: 100%;
     max-width: 1200px;
     position: relative;
+    /* Adiciona padding horizontal para evitar que os botões de seta 
+       sejam cortados por telas pequenas que não alcançam 1200px */
+    padding: 0 60px;
+    box-sizing: border-box;
 }
 
 /* ======================= */
-/*      TÍTULO FIXO        */
+/* TÍTULO FIXO        */
 /* ======================= */
 
 .banner_cards .titulo {
@@ -39,7 +45,7 @@ body {
     font-weight: 600;
 }
 
-/* ROBÔ */
+/* ROBÔ (Mantido, mas sem uso no JSX atual) */
 .botBanner {
     width: 100%;
     display: flex;
@@ -52,14 +58,16 @@ body {
 }
 
 /* ======================= */
-/*      CARROSSEL          */
+/* CARROSSEL          */
 /* ======================= */
 
 .carousel_container {
     position: absolute;
-    bottom: 70px;
+    /* Ajustado para centralizar verticalmente no espaço disponível */
+    top: 50%; 
+    transform: translate(-50%, -50%); /* Centraliza completamente */
     left: 50%;
-    transform: translateX(-50%);
+    
 
     width: 100%;
     max-width: 1000px;
@@ -76,15 +84,17 @@ body {
 
 .carousel_inner_feedback {
     display: flex;
-    gap: 40px;
+    /* Alterado: Reduz o espaçamento entre os cards para que caibam melhor na tela */
+    gap: 20px; 
 }
 
 /* ======================= */
-/*          CARD           */
+/* CARD           */
 /* ======================= */
 
 .feedback_card {
-    width: 300px;
+    /* Alterado: Aumenta a largura do card para "esticar" e preencher melhor o espaço */
+    width: 320px; 
     background: white;
     border-radius: 20px;
     padding: 30px 25px;
@@ -99,6 +109,7 @@ body {
 }
 
 .avatar_user {
+    /* Removido do CardAvaliacao.jsx para replicar a imagem (onde não aparece o ícone) */
     width: 60px;
     margin-bottom: 8px;
 }
@@ -135,12 +146,12 @@ body {
 }
 
 /* ======================= */
-/*       BOTÕES SETA       */
+/* BOTÕES SETA       */
 /* ======================= */
 
 .carousel_button {
     position: absolute;
-    transform: translateY(-50%);
+    /* Removido o transform: translateY(-50%) porque já está no carousel_container pai */
     background-color: #313D65;
     border: none;
     cursor: pointer;
@@ -154,6 +165,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10; /* Garante que os botões fiquem sobre o banner */
 }
 
 .carousel_button:hover {
@@ -169,13 +181,17 @@ body {
 }
 
 /* ======================= */
-/*       BOLINHAS          */
+/* BOLINHAS (Mantido, mas sem uso no JSX atual)          */
 /* ======================= */
 
 .carousel_dots {
+    position: absolute;
+    bottom: 20px; /* Posiciona na parte inferior do banner */
+    left: 50%;
+    transform: translateX(-50%);
+
     display: flex;
     gap: 10px;
-    margin-top: 12px;
 }
 
 .dot {
@@ -194,10 +210,33 @@ body {
 }
 
 /* ======================= */
-/*       RESPONSIVO        */
+/* RESPONSIVO        */
 /* ======================= */
 
+@media (max-width: 1100px) {
+    /* Garante que os botões de seta não sejam cortados em telas menores que 1200px */
+    .banner_cards {
+        padding: 0 10px;
+    }
+
+    .carousel_button.prev {
+        left: 0;
+    }
+    
+    .carousel_button.next {
+        right: 0;
+    }
+
+    .carousel_container {
+        max-width: 900px;
+    }
+}
+
 @media (max-width: 600px) {
+
+    .banner_listagem {
+        height: 400px;
+    }
 
     .botBanner img {
         height: 400px;
@@ -220,5 +259,10 @@ body {
     .feedback_card {
         width: 260px;
         padding: 25px;
+    }
+    
+    /* Quando há apenas 1 card, centraliza a visualização */
+    .carousel_inner_feedback {
+        justify-content: center;
     }
 }
