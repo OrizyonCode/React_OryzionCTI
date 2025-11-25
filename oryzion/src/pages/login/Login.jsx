@@ -43,11 +43,6 @@ const Login = () => {
       const resposta = await api.post("Login", usuario);
       const token = resposta.data.token;
 
-<<<<<<< HEAD
-      if (!token) {
-        return alertar("error", "Algo deu errado...");
-      }
-=======
             // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
             if (email.trim() === "" || senha.trim() === "") {
                 Swal.fire({
@@ -67,7 +62,6 @@ const Login = () => {
             }
 
             if (senha.trim() !== "" && email.trim() !== "") {
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
 
       const tokenDecodificado = userDecodeToken(token);
       setUsuario(tokenDecodificado);
@@ -77,26 +71,6 @@ const Login = () => {
 
       let timerInterval;
 
-<<<<<<< HEAD
-      Swal.fire({
-        title: "Login realizado!",
-        html: "Redirecionando... <b></b> ms",
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading();
-          const timer = Swal.getPopup().querySelector("b");
-          timerInterval = setInterval(() => {
-            timer.textContent = `${Swal.getTimerLeft()}`;
-          }, 100);
-        },
-        willClose: () => clearInterval(timerInterval)
-      }).then(() => {
-        if (tokenDecodificado.tipoUsuario === "cliente") naviGate("/chat");
-        else if (tokenDecodificado.tipoUsuario === "suporte") naviGate("/TelaInicial");
-        else naviGate("/dashboard");
-      });
-=======
                     if (tokenDecodificado.tipoUsuario === "cliente") {
                         let timerInterval;
                         Swal.fire({
@@ -167,7 +141,6 @@ const Login = () => {
                 } else {
                     alertar("error", "Preencha os campos!");
                 }
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
 
     } catch (error) {
       console.log(error);
