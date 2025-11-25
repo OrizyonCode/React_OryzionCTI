@@ -19,30 +19,20 @@ const ListagemFeedback = () => {
   const navigate = useNavigate();
 
   const removerFeedback = (idFeedback) => {
-
-    api.get('/feedback').then((res) => {
-      const novos = res.data;
-      const feedbackNovo = novos.find(
-        (n) => !novosFeedbacks.some((existente) => existente.idFeedback === n.idFeedback)
-      );
-      if (feedbackNovo) {
-        setFeedbacks((atual) => [...atual, feedbackNovo]);
-      }
-    });
     setFeedbacks((prevFeedbacks) => {
       const novosFeedbacks = prevFeedbacks.filter(
         (f) => f.idFeedback !== idFeedback && f.IdFeedback !== idFeedback
       );
 
-      // 🔹 Se quiser que apareça outro logo em seguida:
-      // (simula a chegada de um novo item da API)
+      // Atualiza com novo feedback da API
       api.get('/feedback').then((res) => {
         const novos = res.data;
+
         const feedbackNovo = novos.find(
           (n) => !novosFeedbacks.some((existente) => existente.idFeedback === n.idFeedback)
         );
+
         if (feedbackNovo) {
-          // adiciona um novo feedback ao final
           setFeedbacks((atual) => [...atual, feedbackNovo]);
         }
       });
@@ -66,7 +56,10 @@ const ListagemFeedback = () => {
         const comentario = fb.comentario || fb.texto || fb.Texto;
         if (!comentario?.trim()) continue;
 
-        const respostaIa = await api.post('/AzureTextAnalyticsClient', { texto: comentario });
+        const respostaIa = await api.post('/AzureTextAnalyticsClient', {
+          texto: comentario,
+        });
+
         const sentimento =
           respostaIa.data?.sentimento ||
           respostaIa.data?.Sentimento ||
@@ -83,7 +76,7 @@ const ListagemFeedback = () => {
         await api.post('/Classificacao', classificacaoObj);
       }
     } catch (error) {
-      console.error('Erro ao classificar feedbacks:');
+      console.error('Erro ao classificar feedbacks:', error);
       if (error.response) {
         alert(`Erro da API: ${error.response.data}`);
       } else {
@@ -91,6 +84,7 @@ const ListagemFeedback = () => {
       }
     }
   }
+
 
   useEffect(() => {
     async function carregarFeedbacksEClassificar() {
@@ -112,6 +106,7 @@ const ListagemFeedback = () => {
 
     carregarFeedbacksEClassificar();
   }, []);
+
 
   const indiceInicial = (paginaAtual - 1) * feedbacksPorPagina;
   const indiceFinal = indiceInicial + feedbacksPorPagina;
@@ -143,7 +138,9 @@ const ListagemFeedback = () => {
               <p>Nenhum feedback encontrado.</p>
             ) : (
               feedbacksVisiveis.map((f) => {
-                const texto = f.texto || f.Texto || f.comentario || f.Comentario || '';
+                const texto =
+                  f.texto || f.Texto || f.comentario || f.Comentario || '';
+
                 const classificacaoObj =
                   f.classificacao ||
                   f.Classificacao ||
@@ -155,10 +152,10 @@ const ListagemFeedback = () => {
                   typeof classificacaoObj === 'string'
                     ? classificacaoObj
                     : classificacaoObj.sentimento ||
-                    classificacaoObj.Sentimento ||
-                    classificacaoObj.comentario ||
-                    classificacaoObj.Comentario ||
-                    'neutro';
+                      classificacaoObj.Sentimento ||
+                      classificacaoObj.comentario ||
+                      classificacaoObj.Comentario ||
+                      'neutro';
 
                 return (
                   <div key={f.idFeedback || f.IdFeedback} className="feedback">
@@ -167,12 +164,12 @@ const ListagemFeedback = () => {
                       texto={texto}
                       resumo={texto.slice(0, 100)}
                     />
+
                     <div className="acoes-feedback">
                       <button
                         className="botao-excluir"
                         onClick={() => removerFeedback(f.idFeedback || f.IdFeedback)}
-                      >
-                      </button>
+                      ></button>
                     </div>
                   </div>
                 );
@@ -186,6 +183,7 @@ const ListagemFeedback = () => {
               >
                 ←
               </button>
+
               {[...Array(totalPaginas)].map((_, i) => (
                 <button
                   key={i}
@@ -195,6 +193,7 @@ const ListagemFeedback = () => {
                   {i + 1}
                 </button>
               ))}
+
               <button
                 disabled={paginaAtual === totalPaginas}
                 onClick={() => mudarPagina(paginaAtual + 1)}
