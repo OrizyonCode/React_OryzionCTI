@@ -1,66 +1,78 @@
 .dash_list_main {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #f6f7f8;
 }
 
-
+/* MENU LATERAL */
 .menu_lateral_list {
-    width: 18%;      
-    min-width: 200px;
-    background-color: #FFFFFF;
+  width: 18%;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-right: 1px solid #e4e4e4;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.help_link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;      
+  padding: 30px;         
+  font-weight: 600;
+}
+
+.help_link img {
+  height: 30px;
+}
+
+.usuario_info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.usuario_info p {
+  color: #7c7c7c;
+  font-size: 16px;
+}
+
+.links_lateral {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.links_lateral img {
+  height: 30px;
+}
+
+.links_lateral p {
+  color: #7c7c7c;
+  font-size: 15px;
+}
+
+.pages_link {
+  padding: 20px 0;
 }
 
 .filtro_forms {
-    width: 82%;      
-    padding: 50px;
-    background-color: #F6F7F8;
+  width: 82%;
+  padding: 50px;
 }
 
-.usuario_info{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-
-
-.links_lateral{
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    gap: 10px;
-}
-
-.links_lateral img{
-    height: 30px;
-}
-
-.usuario_info{
-    padding: 30px 0px 0px 30px;
-}
-
-.usuario_info p{
-    color: #7C7C7C;
-}
-
-.pages_link{
-    padding: 30px;
-
-}
-
-.pages_link p{
-    color:#7C7C7C;
-}
-
-.filtro_todos{
-    padding: 15px;
-}
-
-.titulo_busca{
-    display: flex;
-    justify-content: space-between;
-    height: 30px;
+.titulo_busca {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .input_busca {
@@ -71,11 +83,6 @@
   border-radius: 12px;
   width: 250px;
   gap: 8px;
-}
-
-.input_busca .icon {
-  font-size: 18px;
-  opacity: 0.6;
 }
 
 .input_busca input {
@@ -89,4 +96,144 @@
 
 .input_busca input::placeholder {
   color: #999;
+}
+
+.filtro_todos {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.filtro {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.filtro:hover {
+  background: #d5d7da;
+}
+
+.tabela_feedback {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+}
+
+.header_linha {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  padding: 14px 10px;
+  font-weight: bold;
+  color: #5f6368;
+  border-bottom: 1px solid #e3e6ea;
+}
+
+.linha_feedback {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 18px 10px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+.linha_feedback:last-child {
+  border-bottom: none;
+}
+
+.linha_feedback p:nth-child(2) {
+  color: #555;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.linha_feedback p:nth-child(3) {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  text-align: center;
+  width: fit-content;
+}
+
+/* Cores dos sentimentos */
+.linha_feedback p.sent-positivo {
+  background: #d4f8df;
+  color: #2fb463;
+}
+
+.linha_feedback p.sent-negativo {
+  background: #ffd4d4;
+  color: #c72f2f;
+}
+
+.linha_feedback p.sent-neutro {
+  background: #eaecef;
+  color: #6c6f72;
+}
+
+.resposta {
+  color: #1976ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.resposta:hover {
+  text-decoration: underline;
+}
+
+.paginacao_numerica {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav_btn {
+  font-size: 20px;
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.nav_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.page_btn {
+  border: none;
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.page_btn:hover {
+  background: #e6e8eb;
+}
+
+.page_btn.active {
+  background: #1976ff;
+  color: white;
+  font-weight: bold;
+}
+
+.paginacao_numerica span {
+  opacity: 0.5;
+  padding: 0 4px;
 }
