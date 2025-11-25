@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import "./Chamado.css";
 import Botao from "../../components/botao/Botao";
 import api from "../../Services/services";
+import React, { useState } from "react";
 
 function Chamado() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -41,7 +41,10 @@ function Chamado() {
     e.preventDefault();
     setStatusCadastro("Enviando dados...");
 
+    let idUsuarioCriado = null;
+
     try {
+      // 1️⃣ CADASTRA O USUÁRIO
       const novoUsuario = {
         nome: nomeCompleto,
         email: email,
@@ -51,10 +54,12 @@ function Chamado() {
 
       const resUsuario = await api.post("Usuario", novoUsuario);
       if (resUsuario.status !== 201) {
-        throw new Error("Erro ao cadastrar usuário");
+        // Se o backend retornar um 400 ou outro erro, o catch será acionado. 
+        // Esta linha é para garantir que a execução não continue se o status for inesperado.
+        throw new Error("Erro ao cadastrar usuário"); 
       }
 
-      const idUsuarioCriado = resUsuario.data.idUsuario; // vem do backend
+      idUsuarioCriado = resUsuario.data.idUsuario; // Supondo que o ID venha nesta propriedade
 
       // 2️⃣ SE TIVER CNPJ, CADASTRA A EMPRESA
       if (cnpj.trim() !== "") {
@@ -63,26 +68,55 @@ function Chamado() {
           numeroIdentificador: cnpj
         };
 
+        // Não precisa de await aqui se não for dependência crítica para o Chamado
         await api.post("Empresa", novaEmpresa);
       }
 
-      // 3️⃣ CADASTRA O CHAMADO
-      const novoChamado = {
-        status: true,
-        data: new Date().toISOString(),
-        idCliente: idUsuarioCriado,
-        idSuporte: "bf4dcc04-d76b-40d0-946d-90f1e096bec3", // pegar via contexto/login
-        audio: null // futuramente, será pelo FormData
-      };
+      // 3️⃣ CADASTRA O CHAMADO COM ÁUDIO (CORRIGIDO PARA O ERRO 405)
+      
+      // Cria o objeto FormData para enviar multipart/form-data
+      const dataChamado = new FormData();
+      
+      // Anexa os campos do DTO do backend (ChamadoDTO)
+      dataChamado.append('Status', true); 
+      // O backend espera a data como string no formato ISO
+      dataChamado.append('Data', new Date().toISOString()); 
+      dataChamado.append('IdCliente', idUsuarioCriado);
+      dataChamado.append('IdSuporte', "bf4dcc04-d76b-40d0-946d-90f1e096bec3"); 
+      
+      // Anexa o arquivo de áudio se ele existir. O nome do campo deve ser 'ArquivoAudio'
+      if (audioFile) {
+        dataChamado.append('ArquivoAudio', audioFile); 
+      }
 
-      const resChamado = await api.post("Chamado", novoChamado);
+      // CORREÇÃO DA ROTA: Chama o endpoint específico que aceita o upload de áudio e FormData
+      const resChamado = await api.post("Chamado/cadastrar-com-audio", dataChamado, {
+          // O Axios geralmente define automaticamente o header 'multipart/form-data' ao enviar FormData,
+          // mas você pode ser explícito se tiver problemas.
+          // headers: { 'Content-Type': 'multipart/form-data' } 
+      });
+
       if (resChamado.status === 201) {
         setStatusCadastro("✅ CHAMADO CRIADO COM SUCESSO!");
       }
 
     } catch (error) {
       console.error("Erro no cadastro:", error);
-      setStatusCadastro("❌ ERRO AO CADASTRAR. Veja o console.");
+      
+      let mensagemErro = "❌ ERRO AO CADASTRAR. Verifique a conexão e o console.";
+      
+      // Tenta pegar a mensagem de erro da resposta do backend
+      if (error.response && error.response.data) {
+          // O backend retorna um JSON com { mensagem: "..." }
+          if (error.response.data.mensagem) {
+            mensagemErro = `❌ ERRO: ${error.response.data.mensagem}`;
+          // Se for o erro 405 original ou outro erro de rede
+          } else if (error.response.status === 405) {
+             mensagemErro = "❌ ERRO 405: Método não permitido. Verifique a rota da API.";
+          }
+      }
+      
+      setStatusCadastro(mensagemErro);
     }
   };
 
