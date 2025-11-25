@@ -21,12 +21,16 @@ const DashListagem = () => {
       console.log("Feedbacks recebidos:", response.data);
 
       const dadosTratados = response.data.map(fb => ({
-        usuario: fb.usuario ?? "Anônimo",
-        feedback: fb.texto,
-        sentimento: fb.classificacao?.sentimento ?? "Não classificado",
-        data: fb.data,
-        resposta: fb.classificacao?.resposta ?? "Sem resposta"
-      }));
+    usuario: fb.usuario ?? "Anônimo",
+    feedback: fb.texto,
+    sentimento: fb.classificacao?.sentimento ?? "Não classificado",
+    data: new Date(fb.data).toLocaleString("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short"
+  }),
+  resposta: fb.classificacao?.resposta ?? "Sem resposta"
+}));
+
 
       setFeedbacks(dadosTratados);
 
