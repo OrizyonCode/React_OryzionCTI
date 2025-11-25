@@ -1,111 +1,268 @@
-.todoOChamado {
-  background-color: #040F1E;
-  color: white;
-}
-
-.paraCentralizar {
+.container_cadastro {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  background-color: #040F1E;
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(135deg, rgba(49, 61, 85, 0.4) 0%, transparent 30%),
+    linear-gradient(45deg, rgba(49, 61, 85, 0.4) 0%, transparent 30%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+
+.container_cadastro::before,
+.container_cadastro::after {
+  content: '';
+  position: absolute;
+  opacity: 0.3;
+  background-color: #313D65;
+  /* Deep Ocean */
+}
+
+.container_cadastro::before {
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 250px;
+  background: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+    ),
+    repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+    );
+  background-size: 20px 20px;
+  transform: skewX(-20deg) translateX(50px);
+  transform-origin: top right;
+}
+
+.container_cadastro::after {
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 200px;
+  background: repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+      /* Deep Ocean */
+    ),
+    repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      #313D65 10px,
+      #313D65 11px
+    );
+  background-size: 20px 20px;
+  transform: skewX(20deg) translateX(-50px);
+  transform-origin: bottom left;
+}
+
+
+
+.form_cadastro {
+  border: solid 3px #313D65;
+  padding: 50px 60px;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+  /* Garante que o z-index funcione */
+}
+
+h2 {
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  margin-bottom: 35px;
+}
+
+/* ====== Grade de Campos ====== */
+.grid_campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 40px;
+  margin-bottom: 25px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #fff;
+  /* Cor cinza claro para a label */
+  margin-bottom: 6px;
+}
+
+.campo input{
+  padding: 10px 14px;
+  border: 2px solid #313D65;
+  /* Borda mais discreta */
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+  background-color: #040F1E;
+  color: #f8fafc;
+  margin-top: 5px;
+
+}
+
+
+
+.campo_senha {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.campo_senha input {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.btn_visibilidade {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.documento_switch {
+  display: flex;
+  margin-bottom: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.documento_switch button {
+  flex: 1;
+  padding: 8px;
+  background: #f1f5f9;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.documento_switch button.ativo {
+  background-color: #313D65;
+  color: #fff;
+}
+
+.documento_switch button:not(.ativo):hover {
+  background-color: #e2e8f0;
+}
+
+.upload_section {
+  margin: 20px 0;
+}
+
+.upload_area {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.upload_label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  color: #fff;
+}
+
+.upload_label:hover {
+  background-color: #f8fafc;
+  border-color: #313D65;
+  color: #313D65;
+}
+
+.upload_label p {
+  margin-top: 8px;
+  font-size: 0.85rem;
+
+}
+
+.upload_label small {
+  color: #94a3b8;
+}
+
+.icone_upload {
+  font-size: 1.5rem;
+}
+
+
+.btn_cadastrar button {
+  background-color: #313D65;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
   width: 100%;
 }
 
-.borda {
-  border: 2px solid white;
-  height: auto;
-  min-height: 70vh;
-  width: 95%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  position: relative;
-  padding: 40px 0;
-
-  background-image:
-    url('../../assets/img/direita.svg'),
-    url('../../assets/img/esquerda.svg');
-  background-repeat: no-repeat, no-repeat;
-  background-position:
-    top 20px right 20px,
-    bottom 20px left 20px;
-  background-size: 250px, 250px;
+.btn_cadastrar button:hover {
+  background-color: #fff;
+  color: #040F1E;
+  border-color: #fff;
 }
 
-/* 🔙 Botão de voltar */
-.voltarBrancoContainer {
-  position: absolute;
-  top: 25px;
-  left: 25px;
+
+
+.login_texto {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #475569;
 }
 
-/* --- Formulário --- */
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 400px;
-  gap: 14px;
+.login_texto a {
+  color: #2563eb;
+  text-decoration: none;
 }
 
-.titulo_2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 35px;
-  font-size: 30px;
-  flex-direction: column;
+.login_texto a:hover {
+  text-decoration: underline;
 }
 
-h1 {
-  font-weight: 100;
-}
-
-.input_chamado {
-  background-color: white;
-  outline: none;
-  border: none;
-  color: black;
-  height: 38px;
-  border-radius: 8px;
-  padding-left: 10px;
-}
-
-.botao {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-}
-
-.espacamento_chamado {
-  height: 10px;
-}
-
-/* --- Mobile --- */
-@media screen and (max-width: 600px) {
-  .borda {
-    width: 340px;
-    background-size: 100px, 100px;
-    padding: 20px 0;
+@media (max-width: 700px) {
+  .grid_campos {
+    grid-template-columns: 1fr;
   }
 
-  form {
-    width: 260px;
-  }
-
-  .titulo_2 {
-    font-size: 22px;
-  }
-
-  .voltarBrancoContainer {
-    top: 10px;
-    left: 10px;
-  }
-
-  button {
-    /* width: 180px !important; */
-    height: 50px;
+  .form_cadastro {
+    padding: 35px 25px;
   }
 }

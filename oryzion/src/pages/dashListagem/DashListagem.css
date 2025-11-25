@@ -1,0 +1,299 @@
+
+/* LAYOUT GERAL */
+.dash_list_main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #f6f7f8;
+}
+
+/* MENU LATERAL */
+.menu_lateral_list {
+  width: 18%;
+  min-width: 200px;
+  background-color: #ffffff;
+  border-right: 1px solid #e4e4e4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sentimento_tag {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  width: fit-content;
+  text-transform: capitalize;
+}
+
+/* cores iguais ao CARD */
+.sent-positivo { background-color: #2ecc71; }
+.sent-negativo { background-color: #e74c3c; }
+.sent-neutro { background-color: #95a5a6; }
+.sent-nao { background-color: #7f8c8d; }
+
+.sentimento_tag.não\ classificado,
+.sentimento_tag.nao\ classificado {
+  background-color: #dcdcdc;
+  color: #555;
+  border: 1px solid #777;
+}
+
+.help_link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 30px;
+  font-weight: 600;
+}
+
+.help_link button{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: none;
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+.help_link img {
+  height: 30px;
+}
+
+.usuario_info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.usuario_info p {
+  color: #7c7c7c;
+  font-size: 16px;
+}
+
+.links_lateral {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.links_lateral img {
+  height: 30px;
+}
+
+.links_lateral p {
+  color: #7c7c7c;
+  font-size: 15px;
+}
+
+.pages_link {
+  padding: 20px 0;
+}
+
+.filtro_forms {
+  width: 82%;
+  padding: 50px;
+}
+
+.titulo_busca {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filtro_forms h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  color: #313D55;
+}
+
+
+.input_busca {
+  display: flex;
+  align-items: center;
+  background: #E5E7EB;      /* fundo escuro */
+  padding: 12px 16px;
+  border-radius: 12px;
+  width: 370px;
+  gap: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.input_busca .icon {
+  font-size: 18px;
+  color: #cbd5e1; /* cinza claro */
+}
+
+.input_busca input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  width: 100%;
+  color: black; /* texto claro */
+  font-family: "Poppins", sans-serif;
+}
+
+.input_busca input::placeholder {
+  color: #94a3b8; 
+}
+
+/* 🔥 BOTÕES DE FILTRO */
+.filtro_todos {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+/* botão padrão */
+.filtro {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+/* hover */
+.filtro:hover {
+  background: #d5d7da;
+}
+
+/* 🔥 estado ativo */
+.filtro.ativo {
+  background: #6366F4;
+  color: white;
+  font-weight: 600;
+  transform: scale(1.06);
+  box-shadow: 0 4px 10px rgba(99, 102, 244, 0.35);
+}
+
+/* efeito ao clicar */
+.filtro:active {
+  transform: scale(0.95);
+}
+
+.tabela_feedback {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+}
+
+.header_linha {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  padding: 14px 10px;
+  font-weight: bold;
+  color: #5f6368;
+  border-bottom: 1px solid #e3e6ea;
+}
+
+.linha_feedback {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 18px 10px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+.linha_feedback:last-child {
+  border-bottom: none;
+}
+
+.linha_feedback p:nth-child(2) {
+  color: #555;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.linha_feedback p:nth-child(3) {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  text-align: center;
+  width: fit-content;
+}
+
+/* cores do sentimento */
+.linha_feedback p.sent-positivo {
+  background: #d4f8df; color: #2fb463;
+}
+
+.linha_feedback p.sent-negativo {
+  background: #ffd4d4; color: #c72f2f;
+}
+
+.linha_feedback p.sent-neutro {
+  background: #eaecef; color: #6c6f72;
+}
+
+.resposta {
+  color: #1976ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.resposta:hover {
+  text-decoration: underline;
+}
+
+.paginacao_numerica {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav_btn {
+  font-size: 20px;
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.nav_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.page_btn {
+  border: none;
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.page_btn:hover {
+  background: #e6e8eb;
+}
+
+.page_btn.active {
+  background: #6366F4;
+  color: white;
+  font-weight: bold;
+}
+
+.paginacao_numerica span {
+  opacity: 0.5;
+  padding: 0 4px;
+}

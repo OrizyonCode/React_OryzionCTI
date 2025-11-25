@@ -1,7 +1,8 @@
 header {
-  background-color: #040F1E;
-  box-shadow: 4px 3px 10px rgb(0, 0, 0);
+  background-color: #111828;
   width: 100%;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.221);  /* sombra para baixo */
+  position:relative;
 }
 
 .header_header {
@@ -13,9 +14,8 @@ header {
 }
 
 .logo_header img {
-  height: 60px;
+  height: 30px;
 }
-
 
 ul p{
   margin-top: 15px;
@@ -25,7 +25,7 @@ ul p{
 
 .header_pefil {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;        /* ⬅️ Centraliza verticalmente */
   justify-content: center;
   color: white;
@@ -45,6 +45,7 @@ ul p{
   height: 32px;               /* ⬅️ Um pouco maior */
   width: 32px;
   object-fit: contain;
+  margin-left: 20px;
 }
 
 .usuario {

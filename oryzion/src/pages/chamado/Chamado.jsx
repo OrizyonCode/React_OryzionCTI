@@ -1,137 +1,188 @@
 import React, { useState } from "react";
-import './Chamado.css';
-import Botao from '../../components/botao/Botao';
-import VoltarBranco from '../../components/voltarBranco/VoltarBranco';
+import "./Chamado.css";
+import Botao from "../../components/botao/Botao";
 import api from "../../Services/services";
-import Swal from "sweetalert2";
-import 'animate.css';
 
-const Chamado = () => {
-  const [nome, setNome] = useState("");
+function Chamado() {
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  // Estados do formulário
+  const [nomeCompleto, setNomeCompleto] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [senha, setSenha] = useState("Senai@134"); 
+  const [cnpj, setCnpj] = useState(""); // ⚠ CNPJ opcional
+  const [statusCadastro, setStatusCadastro] = useState(null);
 
-  const [idTipoUsuario, setIdTipoUsuario] = useState("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
+  // Upload de áudio
+  const [audioFile, setAudioFile] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
-  function alertar(icone, mensagem) {
-    Swal.fire({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      icon: icone,
-      title: mensagem,
-    });
-  }
+  const alternarSenha = () => setMostrarSenha(!mostrarSenha);
 
-async function cadastroCompleto(e) {
-  e.preventDefault();
-
-  const usuario = { nome, email, senha, idTipoUsuario };
-
-  try {
-    // 1️⃣ Criar Usuário
-    const respostaUsuario = await api.post("Usuario", usuario);
-    const idUsuario = respostaUsuario.data.idUsuario || respostaUsuario.data.id;
-
-    // 2️⃣ Criar Cliente
-    const cliente = { idUsuario };
-    const respostaCliente = await api.post("Cliente", cliente);
-    const idCliente = respostaCliente.data.idCliente || respostaCliente.data.id;
-
-    // 3️⃣ Criar Classificação (chama IA no backend)
-    const classificacao = { 
-      nome, 
-      comentario: "Comentário inicial" // ou algum texto que a IA precise
-    };
-    const respostaClassificacao = await api.post("Classificacao", classificacao);
-    const idClassificacao = respostaClassificacao.data.idClassificacao || respostaClassificacao.data.id;
-
-    // 4️⃣ Criar Chamado com ID da classificação gerada pela IA
-    const chamado = {
-      idCliente,
-      idClassificacao,
-      status: true,
-      data: new Date().toISOString(),
-      audio: "",
-      idSuporte: null
-    };
-
-        setNome("");
-        setEmail("");
-        setSenha("");
-        setIdTipoUsuario("3e3742e6-a13b-4c1e-b20d-c89938fdd57d");
-
-    if (respostaChamado.status === 201 || respostaChamado.status === 200) {
-      Swal.fire({
-        title: "Tudo criado com sucesso!",
-        text: "Usuário, cliente e chamado foram registrados.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
+  // Upload do arquivo
+  const handleFileChange = (files) => {
+    if (files && files.length > 0) {
+      setAudioFile(files[0]);
     }
+  };
 
-  } catch (error) {
-    console.error("Erro no cadastro completo:", error);
-    alertar("error", "Erro ao cadastrar usuário, cliente ou chamado.");
-    console.log({ nome, email, senha, idTipoUsuario });
-  }
-}
+  const handleDragOver = (e) => { e.preventDefault(); setIsDragging(true); };
+  const handleDragLeave = (e) => { e.preventDefault(); setIsDragging(false); };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    handleFileChange(e.dataTransfer.files);
+  };
 
+  const handleInputFileChange = (e) => handleFileChange(e.target.files);
+
+  // -------------- CADASTRAR ---------------------  
+  const handleCadastro = async (e) => {
+    e.preventDefault();
+    setStatusCadastro("Enviando dados...");
+
+    try {
+      const novoUsuario = {
+        nome: nomeCompleto,
+        email: email,
+        senha: senha,
+        idTipoUsuario: "82951b0c-a10d-4cbe-9fcf-0a5b9a970df2" 
+      };
+
+      const resUsuario = await api.post("Usuario", novoUsuario);
+      if (resUsuario.status !== 201) {
+        throw new Error("Erro ao cadastrar usuário");
+      }
+
+      const idUsuarioCriado = resUsuario.data.idUsuario; // vem do backend
+
+      // 2️⃣ SE TIVER CNPJ, CADASTRA A EMPRESA
+      if (cnpj.trim() !== "") {
+        const novaEmpresa = {
+          nomeFantasia: nomeCompleto, // ou outro campo
+          numeroIdentificador: cnpj
+        };
+
+        await api.post("Empresa", novaEmpresa);
+      }
+
+      // 3️⃣ CADASTRA O CHAMADO
+      const novoChamado = {
+        status: true,
+        data: new Date().toISOString(),
+        idCliente: idUsuarioCriado,
+        idSuporte: "bf4dcc04-d76b-40d0-946d-90f1e096bec3", // pegar via contexto/login
+        audio: null // futuramente, será pelo FormData
+      };
+
+      const resChamado = await api.post("Chamado", novoChamado);
+      if (resChamado.status === 201) {
+        setStatusCadastro("✅ CHAMADO CRIADO COM SUCESSO!");
+      }
+
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      setStatusCadastro("❌ ERRO AO CADASTRAR. Veja o console.");
+    }
+  };
+
+  // -------------------------------------------------
   return (
-    <div className="todoOChamado">
-      <div className="paraCentralizar">
-        <div className="borda">
-          <div className="voltarBrancoContainer">
-            <VoltarBranco />
-          </div>
+    <div className="container_cadastro">
+      <form className="form_cadastro" onSubmit={handleCadastro}>
+        <h2>Cadastro de Chamado</h2>
 
-          <form onSubmit={cadastroCompleto}>
-            <div className="titulo_2">
-              <h1>Chamado</h1>
-            </div>
-
-            <label>Nome</label>
-            <input
-              className='input_chamado'
+        <div className="grid_campos">
+          <div className="campo">
+            <label>Nome completo</label>
+            <input 
               type="text"
-              placeholder='Nome completo do cliente'
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
+              placeholder="Insira seu nome completo"
+              value={nomeCompleto}
+              onChange={(e) => setNomeCompleto(e.target.value)}
               required
             />
+          </div>
 
+          <div className="campo">
             <label>E-mail</label>
-            <input
-              className='input_chamado'
+            <input 
               type="email"
-              placeholder='Digite seu e-mail'
+              placeholder="exemplo@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+          </div>
 
-            <label>Senha</label>
-            <input
-              className='input_chamado'
-              type="password"
-              placeholder='Digite sua senha'
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
-
-            <div className="espacamento_chamado"></div>
-
-            <div className="botao">
-              <Botao nomeBotao="Cadastrar" type="submit" />
+          <div className="campo">
+            <label>Senha Padrão</label>
+            <div className="campo_senha">
+              <input
+                type={mostrarSenha ? "text" : "password"}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+              />
+              <button type="button" className="btn_visibilidade" onClick={alternarSenha}>
+                {mostrarSenha ? '🙈' : '👁️'}
+              </button>
             </div>
-          </form>
+          </div>
+
+          <div className="campo">
+            <label>CNPJ (opcional)</label>
+            <input
+              type="text"
+              placeholder="00.000.000/0000-00"
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
+            />
+          </div>
         </div>
-      </div>
+
+        {/* UPLOAD DE ÁUDIO */}
+        <div className="upload_section">
+          <label>Upload de áudio</label>
+          <div 
+            className={`upload_area ${isDragging ? 'dragging' : ''}`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input 
+              type="file"
+              accept=".mp3,.wav,.m4a"
+              id="audioUpload" hidden
+              onChange={handleInputFileChange}
+            />
+            
+            <label htmlFor="audioUpload" className="upload_label">
+              <span className="icone_upload">📤</span>
+              {audioFile ? (
+                <p>
+                  <strong>Arquivo Selecionado:</strong><br />
+                  <small>{audioFile.name} ({(audioFile.size / 1024 / 1024).toFixed(2)} MB)</small>
+                </p>
+              ) : (
+                <p><strong>Clique ou arraste um áudio</strong><br /><small>WAV, MP3 ou M4A (MAX. 10MB)</small></p>
+              )}
+            </label>
+          </div>
+        </div>
+
+        {statusCadastro && (
+          <div style={{ padding: 10, marginTop: 10, fontWeight: 'bold', color: statusCadastro.includes('❌') ? 'red' : 'green' }}>
+            {statusCadastro}
+          </div>
+        )}
+
+        <div className="btn_cadastrar">
+          <Botao nomeBotao="Cadastrar" type="submit" />
+        </div>
+      </form>
     </div>
   );
-};
+}
 
 export default Chamado;
