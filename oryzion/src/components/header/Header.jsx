@@ -10,37 +10,41 @@ const Header = (props) => {
   const [menuAtivo, setMenuAtivo] = useState(false);
   const { usuario } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
+  console.log("PATH ATUAL:", location.pathname);
   const toggleMenu = () => setMenuAtivo(!menuAtivo);
 
   // Variáveis de Checagem de Rota (Retornando o Dashboard)
   const estaNoDashboard = location.pathname === "/dashboard";
   const estaNoCadastroEquipe = location.pathname === "/cadastroequipe";
   const estaNaListaChamados = location.pathname === "/listagemchamado";
-  const estaNaListaFeedbacks = location.pathname === "/listagemfeedback"; 
-  const estaNaTelaInicial = location.pathname === "/"; 
-  const estaNaTelaInicialEspecifica = location.pathname === "/telainicial"; 
+  const estaNaListaFeedbacks = location.pathname === "/listagemfeedback";
+  const estaNaTelaInicial = location.pathname === "/";
+  const path = location.pathname.toLowerCase();
+  const estaNaTelaInicialEspecifica = path === "/telainicial";
   // NOVO: Variável de checagem para a página de chat
-  const estaNoChat = location.pathname === "/chat"; 
-  
+  const estaNoChat = location.pathname === "/chat";
+
   // 1. Ocultar todos os links nas telas: /, /telainicial E /chat
-  if (estaNaTelaInicial || estaNaTelaInicialEspecifica || estaNoChat) {
+  if (path === "/" || path === "/telainicial" || path === "/chat") {
     return (
       <header>
         <nav className='layout_grid header_header'>
           <div className='logo_header'>
             <img src={Logo} alt="Logo Oryzion" />
           </div>
+
           <div className='header_pefil'>
             <h3 className='usuario'>
               {usuario?.nome ? usuario.nome : "Usuário"}
             </h3>
-              <img src={Suporte} alt="Ícone de perfil" />
+            <img src={Suporte} alt="Ícone de perfil" />
           </div>
         </nav>
       </header>
     );
   }
+
 
   return (
     <header>
@@ -63,7 +67,7 @@ const Header = (props) => {
               {!estaNoCadastroEquipe && (
                 <li>
                   <Link className='link_header' to="/cadastroequipe">
-                    Cadastro da equipe
+                    Cadastro Equipe
                   </Link>
                 </li>
               )}
@@ -74,28 +78,28 @@ const Header = (props) => {
               {!estaNaListaChamados && (
                 <li>
                   <Link className='link_header' to="/listagemchamado">
-                    Lista de chamados
+                    Listagem Chamado
                   </Link>
                 </li>
               )}
               {!estaNaListaFeedbacks && (
                 <li>
                   <Link className='link_header' to="/listagemfeedback">
-                    Lista de feedbacks
+                    Listagem Feedback
                   </Link>
                 </li>
               )}
             </>
           )}
         </ul>
-        
+
         <div className='header_pefil'>
           <h3 className='usuario'>
             {usuario?.nome ? usuario.nome : "Usuário"}
           </h3>
-            <img src={Suporte} alt="Ícone de perfil" />
+          <img src={Suporte} alt="Ícone de perfil" />
         </div>
-        
+
       </nav>
     </header>
   );

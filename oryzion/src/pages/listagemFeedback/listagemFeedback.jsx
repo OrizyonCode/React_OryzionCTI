@@ -19,6 +19,16 @@ const ListagemFeedback = () => {
   const navigate = useNavigate();
 
   const removerFeedback = (idFeedback) => {
+
+    api.get('/feedback').then((res) => {
+      const novos = res.data;
+      const feedbackNovo = novos.find(
+        (n) => !novosFeedbacks.some((existente) => existente.idFeedback === n.idFeedback)
+      );
+      if (feedbackNovo) {
+        setFeedbacks((atual) => [...atual, feedbackNovo]);
+      }
+    });
     setFeedbacks((prevFeedbacks) => {
       const novosFeedbacks = prevFeedbacks.filter(
         (f) => f.idFeedback !== idFeedback && f.IdFeedback !== idFeedback
