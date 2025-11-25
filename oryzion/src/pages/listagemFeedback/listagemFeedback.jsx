@@ -19,27 +19,27 @@ const ListagemFeedback = () => {
   const navigate = useNavigate();
 
   const removerFeedback = (idFeedback) => {
-  setFeedbacks((prevFeedbacks) => {
-    const novosFeedbacks = prevFeedbacks.filter(
-      (f) => f.idFeedback !== idFeedback && f.IdFeedback !== idFeedback
-    );
-
-    // 🔹 Se quiser que apareça outro logo em seguida:
-    // (simula a chegada de um novo item da API)
-    api.get('/feedback').then((res) => {
-      const novos = res.data;
-      const feedbackNovo = novos.find(
-        (n) => !novosFeedbacks.some((existente) => existente.idFeedback === n.idFeedback)
+    setFeedbacks((prevFeedbacks) => {
+      const novosFeedbacks = prevFeedbacks.filter(
+        (f) => f.idFeedback !== idFeedback && f.IdFeedback !== idFeedback
       );
-      if (feedbackNovo) {
-        // adiciona um novo feedback ao final
-        setFeedbacks((atual) => [...atual, feedbackNovo]);
-      }
-    });
 
-    return novosFeedbacks;
-  });
-};
+      // 🔹 Se quiser que apareça outro logo em seguida:
+      // (simula a chegada de um novo item da API)
+      api.get('/feedback').then((res) => {
+        const novos = res.data;
+        const feedbackNovo = novos.find(
+          (n) => !novosFeedbacks.some((existente) => existente.idFeedback === n.idFeedback)
+        );
+        if (feedbackNovo) {
+          // adiciona um novo feedback ao final
+          setFeedbacks((atual) => [...atual, feedbackNovo]);
+        }
+      });
+
+      return novosFeedbacks;
+    });
+  };
 
 
   async function classificarFeedbacks() {
@@ -145,10 +145,10 @@ const ListagemFeedback = () => {
                   typeof classificacaoObj === 'string'
                     ? classificacaoObj
                     : classificacaoObj.sentimento ||
-                      classificacaoObj.Sentimento ||
-                      classificacaoObj.comentario ||
-                      classificacaoObj.Comentario ||
-                      'neutro';
+                    classificacaoObj.Sentimento ||
+                    classificacaoObj.comentario ||
+                    classificacaoObj.Comentario ||
+                    'neutro';
 
                 return (
                   <div key={f.idFeedback || f.IdFeedback} className="feedback">
