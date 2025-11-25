@@ -18,13 +18,6 @@ const ListagemFeedback = () => {
   const feedbacksPorPagina = 3;
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  // 🔹 Função para classificar feedbacks via IA
-  async function classificarFeedbacks() {
-    try {
-      console.log("🔍 Iniciando classificação dos feedbacks...");
-
-=======
   const removerFeedback = (idFeedback) => {
     setFeedbacks((prevFeedbacks) => {
       const novosFeedbacks = prevFeedbacks.filter(
@@ -51,16 +44,11 @@ const ListagemFeedback = () => {
 
   async function classificarFeedbacks() {
     try {
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
       const respostaFeedback = await api.get('/feedback');
       const listaFeedbacks = respostaFeedback.data;
 
       if (!listaFeedbacks || listaFeedbacks.length === 0) {
-<<<<<<< HEAD
-        alert("Nenhum feedback encontrado para classificar.");
-=======
         alert('Nenhum feedback encontrado para classificar.');
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
         return;
       }
 
@@ -68,27 +56,15 @@ const ListagemFeedback = () => {
         const comentario = fb.comentario || fb.texto || fb.Texto;
         if (!comentario?.trim()) continue;
 
-<<<<<<< HEAD
-        console.log(`🧠 Enviando para IA: "${comentario.slice(0, 50)}..."`);
-
-        const respostaIa = await api.post('/AzureTextAnalyticsClient', { texto: comentario });
-=======
         const respostaIa = await api.post('/AzureTextAnalyticsClient', {
           texto: comentario,
         });
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
         const sentimento =
           respostaIa.data?.sentimento ||
           respostaIa.data?.Sentimento ||
           respostaIa.data?.resultado ||
-<<<<<<< HEAD
-          "neutro";
-
-        console.log(`🎯 Feedback ${fb.idFeedback} classificado como: ${sentimento}`);
-=======
           'neutro';
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
 
         const classificacaoObj = {
           idClassificacao: uuidv4(),
@@ -99,49 +75,26 @@ const ListagemFeedback = () => {
 
         await api.post('/Classificacao', classificacaoObj);
       }
-<<<<<<< HEAD
-
-      alert('✅ Classificações realizadas com sucesso!');
-    } catch (error) {
-      console.error("❌ Erro ao classificar feedbacks:", error);
-      if (error.response) {
-        alert(`Erro da API: ${error.response.data}`);
-      } else {
-        alert("Erro inesperado ao classificar feedbacks. Veja o console para detalhes.");
-=======
     } catch (error) {
       console.error('Erro ao classificar feedbacks:', error);
       if (error.response) {
         alert(`Erro da API: ${error.response.data}`);
       } else {
         alert('Erro ao classificar feedbacks.');
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
       }
     }
   }
 
-<<<<<<< HEAD
-  // 🔹 Carrega e classifica feedbacks ao iniciar
-=======
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
   useEffect(() => {
     async function carregarFeedbacksEClassificar() {
       try {
         const resposta = await api.get('/feedback');
-<<<<<<< HEAD
-        console.log("📥 Feedbacks carregados:", resposta.data);
-=======
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
         setFeedbacks(resposta.data);
 
         await classificarFeedbacks();
 
         const atualizados = await api.get('/feedback');
-<<<<<<< HEAD
-        console.log("🔁 Feedbacks atualizados:", atualizados.data);
-=======
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
         setFeedbacks(atualizados.data);
       } catch (erro) {
         console.error('Erro ao buscar ou classificar feedbacks:', erro);
@@ -154,11 +107,7 @@ const ListagemFeedback = () => {
     carregarFeedbacksEClassificar();
   }, []);
 
-<<<<<<< HEAD
-  // 🔹 Paginação
-=======
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
   const indiceInicial = (paginaAtual - 1) * feedbacksPorPagina;
   const indiceFinal = indiceInicial + feedbacksPorPagina;
   const feedbacksVisiveis = feedbacks.slice(indiceInicial, indiceFinal);
@@ -168,7 +117,6 @@ const ListagemFeedback = () => {
     if (nova >= 1 && nova <= totalPaginas) setPaginaAtual(nova);
   };
 
-  // 🔹 Renderização
   return (
     <>
       <Header visibilidade="none" />
@@ -190,21 +138,15 @@ const ListagemFeedback = () => {
               <p>Nenhum feedback encontrado.</p>
             ) : (
               feedbacksVisiveis.map((f) => {
-<<<<<<< HEAD
-                const texto = f.texto || f.Texto || f.comentario || f.Comentario || '';
-=======
                 const texto =
                   f.texto || f.Texto || f.comentario || f.Comentario || '';
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
                 const classificacaoObj =
                   f.classificacao ||
                   f.Classificacao ||
                   f.sentimento ||
                   f.Sentimento ||
                   {};
-<<<<<<< HEAD
-=======
 
                 const sentimento =
                   typeof classificacaoObj === 'string'
@@ -233,30 +175,7 @@ const ListagemFeedback = () => {
                 );
               })
             )}
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
 
-                const sentimento =
-                  typeof classificacaoObj === 'string'
-                    ? classificacaoObj
-                    : classificacaoObj.sentimento ||
-                      classificacaoObj.Sentimento ||
-                      classificacaoObj.comentario ||
-                      classificacaoObj.Comentario ||
-                      'neutro';
-
-                return (
-                  <div key={f.idFeedback || f.IdFeedback} className="feedback">
-                    <Card
-                      classificacao={String(sentimento).toLowerCase()}
-                      texto={texto}
-                      resumo={texto.slice(0, 100)}
-                    />
-                  </div>
-                );
-              })
-            )}
-
-            {/* 🔹 Paginação */}
             <div className="paginacao">
               <button
                 disabled={paginaAtual === 1}
@@ -264,10 +183,7 @@ const ListagemFeedback = () => {
               >
                 ←
               </button>
-<<<<<<< HEAD
-=======
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
               {[...Array(totalPaginas)].map((_, i) => (
                 <button
                   key={i}
@@ -277,10 +193,7 @@ const ListagemFeedback = () => {
                   {i + 1}
                 </button>
               ))}
-<<<<<<< HEAD
-=======
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
               <button
                 disabled={paginaAtual === totalPaginas}
                 onClick={() => mudarPagina(paginaAtual + 1)}

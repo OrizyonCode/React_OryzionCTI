@@ -21,11 +21,8 @@ export default function Dashboard() {
   const [cardSelecionado, setCardSelecionado] = useState(null);
   const [feedbackRespondido, setFeedbackRespondido] = useState([]);
   const [carregando, setCarregando] = useState(true);
-<<<<<<< HEAD
-=======
   const [avaliacaoMensal, setAvaliacaoMensal] = useState([]);
   const [avaliacaoFeedbackAnual, setAvaliacaoFeedbackAnual] = useState([]); // 🆕 novo estado
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
 
   const abrirModal = (tipo) => {
     setCardSelecionado(tipo);
@@ -39,18 +36,6 @@ export default function Dashboard() {
 
   const COLORS = ["#1e293b", "#7f1d1d"];
 
-<<<<<<< HEAD
-  // === Buscar dados da API ===
-  useEffect(() => {
-    async function carregarFeedbacks() {
-      try {
-        const resposta = await fetch("http://localhost:5128/api/Feedback"); // ⬅️ ajusta a porta se for diferente
-        const dados = await resposta.json();
-
-        // Conta quantos foram respondidos e não respondidos
-        const respondidos = dados.filter(f => f.status === true).length;
-        const naoRespondidos = dados.filter(f => f.status === false).length;
-=======
   // === Buscar dados da API de feedback ===
   useEffect(() => {
     async function carregarFeedbacks() {
@@ -60,16 +45,11 @@ export default function Dashboard() {
 
         const respondidos = dados.filter((f) => f.status === true).length;
         const naoRespondidos = dados.filter((f) => f.status === false).length;
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
 
         setFeedbackRespondido([
           { name: "Respondidos", value: respondidos },
           { name: "Não Respondidos", value: naoRespondidos },
         ]);
-<<<<<<< HEAD
-
-=======
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
       } catch (erro) {
         console.error("Erro ao carregar feedbacks:", erro);
       } finally {
@@ -80,20 +60,6 @@ export default function Dashboard() {
     carregarFeedbacks();
   }, []);
 
-<<<<<<< HEAD
-  return (
-    <>
-      <div className="dashboard-container">
-        <Header />
-        <main className="dashboard-graphs">
-          {/* === FEEDBACK RESPONDIDO === */}
-          <div
-            className="dash-card"
-            onClick={() => abrirModal("feedbackRespondido")}
-          >
-            <h3>FEEDBACK RESPONDIDO</h3>
-
-=======
   // === Buscar dados da API de classificações (mensal) ===
   useEffect(() => {
     async function carregarAvaliacoesMensais() {
@@ -176,7 +142,6 @@ export default function Dashboard() {
           >
             <h3>FEEDBACK RESPONDIDO</h3>
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
             {carregando ? (
               <p>Carregando gráfico...</p>
             ) : (
@@ -199,10 +164,6 @@ export default function Dashboard() {
               </ResponsiveContainer>
             )}
           </div>
-<<<<<<< HEAD
-        </main>
-
-=======
 
           {/* === AVALIAÇÃO MENSAL === */}
           <div
@@ -245,7 +206,6 @@ export default function Dashboard() {
           </div>
         </main>
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
         {/* === MODAL === */}
         {modalAberto && (
           <div className="modal-overlay" onClick={fecharModal}>
@@ -254,30 +214,6 @@ export default function Dashboard() {
                 ✕
               </button>
 
-<<<<<<< HEAD
-              <ResponsiveContainer width="100%" height={400}>
-                <PieChart>
-                  <Pie
-                    data={feedbackRespondido}
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={150}
-                    label
-                  >
-                    {feedbackRespondido.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                    ))}
-                  </Pie>
-                  <Legend />
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
-
-      </div>
-=======
               {cardSelecionado === "feedbackRespondido" && (
                 <ResponsiveContainer width="100%" height={400}>
                   <PieChart>
@@ -332,9 +268,7 @@ export default function Dashboard() {
         )}
       </div>
 
->>>>>>> 54d9b770de190c03ae863816d9aadf5ed6063676
       <Footer />
     </>
   );
 }
-
