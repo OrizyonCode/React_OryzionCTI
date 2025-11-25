@@ -82,7 +82,7 @@
 }
 
 .login_logo img {
-    height: 130px;
+    height: 40px;
 }
 
 /* ===== Campos ===== */
@@ -120,9 +120,21 @@
 
 /* ===== Botão ===== */
 .login_botao button {
-    width: 100%;
-    padding: 14px;
-    border-radius: 6px;
+  background-color: #313D65;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.login_botao button:hover {
+  background-color: #fff;
+  color: #040F1E;
+  border-color: #fff;
 }
 
 .login_campo.senha {

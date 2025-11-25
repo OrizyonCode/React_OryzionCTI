@@ -8,7 +8,7 @@ import { userDecodeToken } from "../../auth/Auth";
 import Swal from "sweetalert2";
 import secureLocalStorage from "react-secure-storage";
 import { Link } from 'react-router-dom';
-import logo from "../../assets/img/LogoOryzion.svg";
+import logo from "../../assets/img/loguinho.png";
 import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
