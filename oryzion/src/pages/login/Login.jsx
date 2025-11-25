@@ -43,31 +43,9 @@ const Login = () => {
       const resposta = await api.post("Login", usuario);
       const token = resposta.data.token;
 
-<<<<<<< HEAD
       if (!token) {
         return alertar("error", "Algo deu errado...");
       }
-=======
-            // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
-            if (email.trim() === "" || senha.trim() === "") {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    title: "Campos vazios",
-                    showConfirmButton: false,
-                    timer: 1200,
-                    width: "220px",
-                    padding: "8px",
-                    customClass: {
-                        popup: "swal-mini",
-                        title: "swal-mini-title"
-                    }
-                });
-                return;
-            }
-
-            if (senha.trim() !== "" && email.trim() !== "") {
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
 
       const tokenDecodificado = userDecodeToken(token);
       setUsuario(tokenDecodificado);
@@ -77,7 +55,6 @@ const Login = () => {
 
       let timerInterval;
 
-<<<<<<< HEAD
       Swal.fire({
         title: "Login realizado!",
         html: "Redirecionando... <b></b> ms",
@@ -96,78 +73,6 @@ const Login = () => {
         else if (tokenDecodificado.tipoUsuario === "suporte") naviGate("/TelaInicial");
         else naviGate("/dashboard");
       });
-=======
-                    if (tokenDecodificado.tipoUsuario === "cliente") {
-                        let timerInterval;
-                        Swal.fire({
-                            title: "Usuário Encontrado!",
-                            html: "Redirecionando para o Chat... <b></b> ms",
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                const timer = Swal.getPopup().querySelector("b");
-                                timerInterval = setInterval(() => {
-                                    timer.textContent = `${Swal.getTimerLeft()}`;
-                                }, 100);
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval);
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                naviGate("/chat");
-                            }
-                        });
-                    } else if (tokenDecodificado.tipoUsuario === "suporte") {
-                        let timerInterval;
-                        Swal.fire({
-                            title: "Suporte Encontrado!",
-                            html: "Redirecionando para a Listagem... <b></b> ms",
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                const timer = Swal.getPopup().querySelector("b");
-                                timerInterval = setInterval(() => {
-                                    timer.textContent = `${Swal.getTimerLeft()}`;
-                                }, 100);
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval);
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                naviGate("/TelaInicial");
-                            }
-                        });
-                    } else {
-                        let timerInterval;
-                        Swal.fire({
-                            title: "Superior Encontrado!",
-                            html: "Redirecionando para o Dashboard... <b></b> ms",
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                const timer = Swal.getPopup().querySelector("b");
-                                timerInterval = setInterval(() => {
-                                    timer.textContent = `${Swal.getTimerLeft()}`;
-                                }, 100);
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval);
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                naviGate("/dashboard");
-                            }
-                        });
-                    }
-                } else {
-                    alertar("error", "Preencha os campos!");
-                }
->>>>>>> 405697897c0c043ce5c9abac47f5659cb1a5e7cb
 
     } catch (error) {
       console.log(error);
