@@ -43,104 +43,116 @@ const Login = () => {
       const resposta = await api.post("Login", usuario);
       const token = resposta.data.token;
 
-            // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
-            if (email.trim() === "" || senha.trim() === "") {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    title: "Campos vazios",
-                    showConfirmButton: false,
-                    timer: 1200,
-                    width: "220px",
-                    padding: "8px",
-                    customClass: {
-                        popup: "swal-mini",
-                        title: "swal-mini-title"
-                    }
-                });
-                return;
+      // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
+      if (email.trim() === "" || senha.trim() === "") {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Campos vazios",
+          showConfirmButton: false,
+          timer: 1200,
+          width: "220px",
+          padding: "8px",
+          customClass: {
+            popup: "swal-mini",
+            title: "swal-mini-title"
+          }
+        });
+        return;
+      }
+
+      if (senha.trim() !== "" && email.trim() !== "") {
+
+        const tokenDecodificado = userDecodeToken(token);
+
+        // 👉 Pega só o primeiro nome
+        const primeiroNome = tokenDecodificado.nome?.split(" ")[0];
+
+        // 👉 Cria um novo objeto com o nome ajustado
+        const usuarioComPrimeiroNome = {
+          ...tokenDecodificado,
+          nome: primeiroNome
+        };
+
+        // 👉 Salva no contexto
+        setUsuario(usuarioComPrimeiroNome);
+
+        // 👉 Salva no storage
+        secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioComPrimeiroNome));
+        localStorage.setItem("token", token);
+
+        let timerInterval;
+
+        if (tokenDecodificado.tipoUsuario === "cliente") {
+          let timerInterval;
+          Swal.fire({
+            title: "Cliente Encontrado!",
+            html: "Redirecionando para o Chat... <b></b> ms",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
             }
-
-            if (senha.trim() !== "" && email.trim() !== "") {
-
-      const tokenDecodificado = userDecodeToken(token);
-      setUsuario(tokenDecodificado);
-
-      secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
-      localStorage.setItem("token", token);
-
-      let timerInterval;
-
-                    if (tokenDecodificado.tipoUsuario === "cliente") {
-                        let timerInterval;
-                        Swal.fire({
-                            title: "Usuário Encontrado!",
-                            html: "Redirecionando para o Chat... <b></b> ms",
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                const timer = Swal.getPopup().querySelector("b");
-                                timerInterval = setInterval(() => {
-                                    timer.textContent = `${Swal.getTimerLeft()}`;
-                                }, 100);
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval);
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                naviGate("/chat");
-                            }
-                        });
-                    } else if (tokenDecodificado.tipoUsuario === "suporte") {
-                        let timerInterval;
-                        Swal.fire({
-                            title: "Suporte Encontrado!",
-                            html: "Redirecionando para a Listagem... <b></b> ms",
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                const timer = Swal.getPopup().querySelector("b");
-                                timerInterval = setInterval(() => {
-                                    timer.textContent = `${Swal.getTimerLeft()}`;
-                                }, 100);
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval);
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                naviGate("/TelaInicial");
-                            }
-                        });
-                    } else {
-                        let timerInterval;
-                        Swal.fire({
-                            title: "Superior Encontrado!",
-                            html: "Redirecionando para o Dashboard... <b></b> ms",
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading();
-                                const timer = Swal.getPopup().querySelector("b");
-                                timerInterval = setInterval(() => {
-                                    timer.textContent = `${Swal.getTimerLeft()}`;
-                                }, 100);
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval);
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                naviGate("/dashboard");
-                            }
-                        });
-                    }
-                } else {
-                    alertar("error", "Preencha os campos!");
-                }
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              naviGate("/chat");
+            }
+          });
+        } else if (tokenDecodificado.tipoUsuario === "suporte") {
+          let timerInterval;
+          Swal.fire({
+            title: "Suporte Encontrado!",
+            html: "Redirecionando para a Listagem... <b></b> ms",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              naviGate("/TelaInicial");
+            }
+          });
+        } else {
+          let timerInterval;
+          Swal.fire({
+            title: "Superior Encontrado!",
+            html: "Redirecionando para o Dashboard... <b></b> ms",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              naviGate("/dashboard");
+            }
+          });
+        }
+      } else {
+        alertar("error", "Preencha os campos!");
+      }
 
     } catch (error) {
       console.log(error);
@@ -176,7 +188,7 @@ const Login = () => {
                 value={senha}
                 onChange={e => setSenha(e.target.value)}
               />
-              
+
               <span
                 className="login_icone_olho"
                 onClick={() => setMostrarSenha(!mostrarSenha)}

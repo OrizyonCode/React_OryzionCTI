@@ -8,12 +8,13 @@ import adiciona from '../../assets/img/adicionar.svg';
 import upload from '../../assets/img/Upload.svg';
 import edita from '../../assets/img/Editar.svg';
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
-// import ErrorPage from '../error/ErrorPage'; // descomenta se tiver esse componente
 
 const ListagemChamado = () => {
+
   const [chamados, setChamados] = useState([]);
   const [erro, setErro] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function buscarChamados() {
@@ -47,10 +48,17 @@ const ListagemChamado = () => {
     return <p style={{ color: 'red', textAlign: 'center' }}>Erro ao carregar chamados: {erro}</p>;
   }
 
+  // FILTRO PELO NOME
+  const chamadosFiltrados = chamados.filter(c =>
+    c.nome?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Header />
-      <BarraPesquisa visibilidade="none" />
+
+      {/* Barra de pesquisa funcional */}
+      <BarraPesquisa visibilidade="none" onSearch={setSearchTerm} />
 
       <section className='layout_grid listagemChamado'>
         <div className='img_adiciona'>
@@ -64,25 +72,29 @@ const ListagemChamado = () => {
           <p>🔄 Carregando chamados...</p>
         ) : (
           <div className='tabela_chamados'>
+            
+            {/* COLUNA PROTOCOLO */}
             <div className='coluna tabela_header'>
               <h3>Protocolo</h3>
-              {chamados.map((c, index) => (
+              {chamadosFiltrados.map((c, index) => (
                 <p key={c.idChamado || c.id}>
                   {String(index + 1).padStart(5, '0')}
                 </p>
               ))}
             </div>
 
+            {/* COLUNA NOME */}
             <div className='coluna tabela_header'>
               <h3>Nome</h3>
-              {chamados.map((c, index) => (
+              {chamadosFiltrados.map((c, index) => (
                 <p key={index}>{c.nome || "—"}</p>
               ))}
             </div>
 
+            {/* RESUMO */}
             <div className='coluna tabela_header'>
               <h3>Resumo</h3>
-              {chamados.map((c, index) => (
+              {chamadosFiltrados.map((c, index) => (
                 <div key={index}>
                   <Link to="/resumo">
                     <img src={mais} alt="Ver resumo" />
@@ -91,9 +103,10 @@ const ListagemChamado = () => {
               ))}
             </div>
 
+            {/* UPLOAD */}
             <div className='coluna tabela_header'>
               <h3>Upload</h3>
-              {chamados.map((c, index) => (
+              {chamadosFiltrados.map((c, index) => (
                 <div key={index}>
                   <label htmlFor={`uploadItem-${index}`}>
                     <img src={upload} alt="Upload" style={{ cursor: 'pointer' }} />
@@ -103,14 +116,14 @@ const ListagemChamado = () => {
               ))}
             </div>
 
-        
-
+            {/* STATUS */}
             <div className='coluna tabela_header'>
               <h3>Status</h3>
-              {chamados.map((c, index) => (
+              {chamadosFiltrados.map((c, index) => (
                 <p key={index}>{c.status ? "✅ Ativo" : "⏳ Pendente"}</p>
               ))}
             </div>
+
           </div>
         )}
       </section>

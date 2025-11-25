@@ -1,4 +1,3 @@
-
 import FundoBarraPesquisa from "../../assets/img/BarraPesquisa.png";
 import './BarraPesquisa.css';
 import Lupa from "../../assets/img/Search.svg"
@@ -48,7 +47,11 @@ const BarraPesquisa = (props) => {
       {/* Barra de pesquisa */}
       <div className="search_box">
         <img src={Lupa} alt="Pesquisar" className="lupa_icon" />
-        <input type="text" placeholder="Pesquise aqui" />
+        <input 
+          type="text" 
+          placeholder="Pesquise aqui" 
+          onChange={(e) => props.onSearch && props.onSearch(e.target.value)}
+        />
       </div>
 
       {!isMobile && props.visibilidade !== "none" && (

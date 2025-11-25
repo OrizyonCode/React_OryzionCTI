@@ -1,11 +1,9 @@
 import Header from '../../components/header/Header'
-import campo_um from '../../assets/img/campo_um.svg'
-import campo_dois from '../../assets/img/campo_dois.svg'
 import './TelaInicial.css'
 import Footer from '../../components/footer/Footer'
 import { useNavigate } from "react-router";
 import { useEffect, useState } from 'react'
-import { userDecodeToken } from "../../auth/Auth"; // 👈 importa o decode
+import { userDecodeToken } from "../../auth/Auth";
 
 const TelaInicial = () => {
   const navigate = useNavigate();
@@ -13,13 +11,14 @@ const TelaInicial = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("Token do localStorage:", token);
+
     if (token) {
       const user = userDecodeToken(token);
-      console.log("Token decodificado:", user);
-      setNome(user.nome);
-    } else {
-      console.log("Nenhum token encontrado");
+
+      // 👉 Pegando só o primeiro nome
+      const primeiroNome = user.nome?.split(" ")[0];
+
+      setNome(primeiroNome);
     }
   }, []);
 
@@ -27,33 +26,30 @@ const TelaInicial = () => {
     <>
       <Header />
 
-      <main className="tela-inicial">
-        <section className="titulo">
-          <h1>Olá, {nome || "Usuário"}</h1>
-          <p>Acesse as páginas de Chamados e Feedbacks clicando em um dos campos abaixo.</p>
+      <main className="telaInicial">
+        <section className="tituloTela">
+          <h1>
+            Olá, <span className="nome-destaque">{nome || "Usuário"}</span>
+          </h1>
+          <p>
+            Acesse as páginas de Chamados e Feedbacks clicando em um dos campos abaixo.
+          </p>
         </section>
 
-        <section className="fundo">
-          <div className="campos">
-            <div
-              className="card_telaInicial acesso"
-              onClick={() => navigate("/listagemchamado")}
-            >
-              <img src={campo_um} alt="Lista de Chamados" />
-              <div className="overlay">
-                <span>Lista de Chamados</span>
-              </div>
-            </div>
+        <section className="cards-container">
+          <div className="card-acesso" onClick={() => navigate("/listagemchamado")}>
+            <h2>Listagem Chamado</h2>
+            <p>
+              Acompanhe e gerencie todos os protocolos de chamados abertos,
+              adicione novos e edite os existentes.
+            </p>
+          </div>
 
-            <div
-              className="card_telaInicial acesso"
-              onClick={() => navigate("/listagemfeedback")}
-            >
-              <img src={campo_dois} alt="Listagem de Feedbacks" />
-              <div className="overlay">
-                <span>Lista de Feedbacks</span>
-              </div>
-            </div>
+          <div className="card-acesso" onClick={() => navigate("/listagemfeedback")}>
+            <h2>Listagem Feedback</h2>
+            <p>
+              Visualize e responda aos feedbacks recebidos, organize por perfil e gerencie as interações.
+            </p>
           </div>
         </section>
       </main>
