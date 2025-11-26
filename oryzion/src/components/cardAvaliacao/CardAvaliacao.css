@@ -2,14 +2,14 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
-
 .banner_listagem {
-    background-color: #040F1E;
+    background-color: #111828;
     width: 100%;
+    /* Altura reduzida para o carrossel ficar mais alto no banner, 
+       já que o robô foi removido */
     height: 500px;
-    /* 👈 volta para a altura antiga */
     position: relative;
-    /* 👈 importante para o posicionamento absoluto dos filhos */
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,14 +18,19 @@ body {
 
 .banner_cards {
     width: 100%;
-    height: 100%;
     max-width: 1200px;
     position: relative;
+    /* Adiciona padding horizontal para evitar que os botões de seta 
+       sejam cortados por telas pequenas que não alcançam 1200px */
+    padding: 0 60px;
+    box-sizing: border-box;
 }
 
-/* Título fixo no topo */
+/* ======================= */
+/* TÍTULO FIXO        */
+/* ======================= */
+
 .banner_cards .titulo {
-    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
@@ -38,24 +43,13 @@ body {
     color: white;
     font-size: 22px;
     font-weight: 600;
-
-    margin-top: 22px;
 }
 
-
-.card_avaliacao img {
-    margin-top: -20px;
-}
-
-.card_avaliacao h3 {
-    margin-top: -30px;
-}
-
+/* ROBÔ (Mantido, mas sem uso no JSX atual) */
 .botBanner {
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
 }
 
 .botBanner img {
@@ -63,32 +57,21 @@ body {
     object-fit: contain;
 }
 
-.link_responder {
-    color: #313D65;
-    font-weight: 700;
-    text-decoration: none;
-
-}
-
-.link_responder:hover {
-    color: #040F1E;
-    transition: all 0.2s ease-in-out;
-}
-
-/* ------------------ */
-/*   CARROSSEL        */
-/* ------------------ */
+/* ======================= */
+/* CARROSSEL          */
+/* ======================= */
 
 .carousel_container {
     position: absolute;
-    /* 👈 agora fica sobreposto */
-    bottom: 60px;
-    /* 👈 ajusta a posição vertical */
+    /* Ajustado para centralizar verticalmente no espaço disponível */
+    top: 50%; 
+    transform: translate(-50%, -50%); /* Centraliza completamente */
     left: 50%;
-    transform: translateX(-50%);
-    /* centraliza no meio do banner */
+    
+
     width: 100%;
     max-width: 1000px;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,38 +82,78 @@ body {
     width: 100%;
 }
 
-.carousel_inner {
+.carousel_inner_feedback {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    transition: transform 0.6s ease-in-out;
+    /* Alterado: Reduz o espaçamento entre os cards para que caibam melhor na tela */
+    gap: 20px; 
 }
 
-.carousel_inner .card_avaliacao {
+/* ======================= */
+/* CARD           */
+/* ======================= */
+
+.feedback_card {
+    /* Alterado: Aumenta a largura do card para "esticar" e preencher melhor o espaço */
+    width: 320px; 
     background: white;
-    color: black;
-    width: 260px;
-    height: 310px;
-    border-radius: 10%;
-    box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 30px 25px;
+
+    text-align: center;
+
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
-    border: 4px solid #313D65;
-    flex: 0 0 auto;
+
+    box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Botões */
+.avatar_user {
+    /* Removido do CardAvaliacao.jsx para replicar a imagem (onde não aparece o ícone) */
+    width: 60px;
+    margin-bottom: 8px;
+}
+
+.feedback_card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.badge_feedback {
+    padding: 6px 22px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.comentario_feedback {
+    font-size: 15px;
+    color: #5a5a5a;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.link_responder {
+    color: #313D65;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.link_responder:hover {
+    color: #040F1E;
+    transition: 0.2s;
+}
+
+/* ======================= */
+/* BOTÕES SETA       */
+/* ======================= */
+
 .carousel_button {
     position: absolute;
-
-    transform: translateY(-50%);
+    /* Removido o transform: translateY(-50%) porque já está no carousel_container pai */
     background-color: #313D65;
-    color: white;
     border: none;
-    font-size: 1.8rem;
     cursor: pointer;
 
     border-radius: 50%;
@@ -142,50 +165,104 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10; /* Garante que os botões fiquem sobre o banner */
+}
+
+.carousel_button:hover {
+    opacity: 1;
 }
 
 .carousel_button.prev {
     left: -50px;
-
-
 }
 
 .carousel_button.next {
     right: -50px;
 }
 
-.carousel_button:hover {
-    opacity: 1;
-    background-color: #1f2a44;
+/* ======================= */
+/* BOLINHAS (Mantido, mas sem uso no JSX atual)          */
+/* ======================= */
+
+.carousel_dots {
+    position: absolute;
+    bottom: 20px; /* Posiciona na parte inferior do banner */
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 10px;
 }
 
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #999;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-@media (max-width: 600px) {
-  .botBanner img {
-    height: 400px;
-    margin-top: 40px;
-  }
-
-  .carousel_button {
-    background-color: #313D65;
-    width: 30px;
-    height: 30px;
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .carousel_button img {
+.dot.active {
+    background: #5b4bff;
     width: 14px;
     height: 14px;
-  }
+}
 
-  .carousel_button.prev {
-    left: 10px;
-  }
+/* ======================= */
+/* RESPONSIVO        */
+/* ======================= */
 
-  .carousel_button.next {
-    right: 10px;
-  }
+@media (max-width: 1100px) {
+    /* Garante que os botões de seta não sejam cortados em telas menores que 1200px */
+    .banner_cards {
+        padding: 0 10px;
+    }
+
+    .carousel_button.prev {
+        left: 0;
+    }
+    
+    .carousel_button.next {
+        right: 0;
+    }
+
+    .carousel_container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .banner_listagem {
+        height: 400px;
+    }
+
+    .botBanner img {
+        height: 400px;
+        margin-top: 40px;
+    }
+
+    .carousel_button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .carousel_button.prev {
+        left: 10px;
+    }
+
+    .carousel_button.next {
+        right: 10px;
+    }
+
+    .feedback_card {
+        width: 260px;
+        padding: 25px;
+    }
+    
+    /* Quando há apenas 1 card, centraliza a visualização */
+    .carousel_inner_feedback {
+        justify-content: center;
+    }
 }

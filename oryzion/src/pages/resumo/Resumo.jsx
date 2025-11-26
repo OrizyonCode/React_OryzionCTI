@@ -17,8 +17,6 @@ const Resumo = () => {
     window.history.back(); 
   };
 
-
- 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
