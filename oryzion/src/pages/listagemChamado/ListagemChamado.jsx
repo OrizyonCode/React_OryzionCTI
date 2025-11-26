@@ -9,7 +9,7 @@ import './ListagemChamado.css';
 
 import mais from '../../assets/img/MaisBotao.svg';
 import adiciona from '../../assets/img/adicionar.svg';
-import transcricao from '../../assets/img/transcricao.png';
+import transcricaoIcon from '../../assets/img/transcricao.png';
 import download from '../../assets/img/download.png';
 
 const ListagemChamado = () => {
@@ -18,26 +18,17 @@ const ListagemChamado = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [modalAberto, setModalAberto] = useState(false);
-  const [transcricaoSelecionada, setTranscricaoSelecionada] = useState("");
+  const [transcricaoSelecionada, setTranscricaoSelecionada] = useState(null);
 
   // Buscar chamados
   useEffect(() => {
     async function buscarChamados() {
       try {
         const resposta = await fetch("http://localhost:5128/api/Chamado");
-        const contentType = resposta.headers.get("content-type") || "";
-
-        if (!resposta.ok) {
-          throw new Error(`Erro HTTP ${resposta.status}: ${resposta.statusText}`);
-        }
-
-        if (!contentType.includes("application/json")) {
-          throw new Error(`Resposta da API não é JSON. Tipo recebido: ${contentType}`);
-        }
+        if (!resposta.ok) throw new Error(`Erro HTTP ${resposta.status}`);
 
         const dados = await resposta.json();
         setChamados(dados);
-
       } catch (error) {
         setErro(error.message);
       } finally {
@@ -54,46 +45,22 @@ const ListagemChamado = () => {
   // Filtro seguro
   const chamadosFiltrados = chamados.filter((c) => {
     const termo = searchTerm.toLowerCase();
-
     const protocolo = (c.idChamado ?? "").toString().toLowerCase();
     const cliente = (c.cliente?.usuario?.nome ?? "").toLowerCase();
     const status = c.status ? "ativo" : "pendente";
 
-    return (
-      protocolo.includes(termo) ||
-      cliente.includes(termo) ||
-      status.includes(termo)
-    );
+    return protocolo.includes(termo) || cliente.includes(termo) || status.includes(termo);
   });
 
-
-  // 🔥 ABRIR MODAL + GERAR TRANSCRIÇÃO
-  const abrirModal = async (idChamado) => {
-    try {
-      setTranscricaoSelecionada("Gerando transcrição...");
-      setModalAberto(true);
-
-      const resposta = await fetch(
-        `http://localhost:5128/api/Chamado/transcricao/${idChamado}`
-      );
-
-      if (!resposta.ok) {
-        throw new Error("Erro ao gerar a transcrição.");
-      }
-
-      const dados = await resposta.json();
-      setTranscricaoSelecionada(dados.transcricao);
-
-    } catch (error) {
-      console.error(error);
-      setTranscricaoSelecionada("Não foi possível gerar a transcrição.");
-    }
+  // Abrir modal mostrando a transcrição do chamado
+  const abrirModal = (transcricao) => {
+    setTranscricaoSelecionada(transcricao ?? null); // mantém nulo se não houver transcrição
+    setModalAberto(true);
   };
 
   return (
     <>
       <Header />
-
       <BarraPesquisa mostrarFiltros={false} onSearch={setSearchTerm} />
 
       <section className="layout_grid listagemChamado">
@@ -119,42 +86,44 @@ const ListagemChamado = () => {
           </div>
 
           {/* Linhas */}
-          {chamadosFiltrados.map((c, index) => (
+          {chamadosFiltrados.map((c) => (
             <div className="linha" key={c.idChamado}>
 
-              {/* Protocolo */}
               <p>{c.idChamado}</p>
-
-              {/* Cliente */}
               <p>{c.cliente?.usuario?.nome ?? "—"}</p>
 
               {/* Transcrição */}
+              {/* Transcrição */}
               <div className="acao">
-                <div onClick={() => abrirModal(c.idChamado)}>
-                  <img
-                    src={transcricao}
-                    alt="Transcrição"
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
+                {c.transcricao ? (
+                  <div onClick={() => abrirModal(c.transcricao)}>
+                    <img
+                      src={transcricaoIcon}
+                      alt="Transcrição"
+                      style={{ cursor: "pointer", opacity: 1 }}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <img
+                      src={transcricaoIcon}
+                      alt="Sem transcrição"
+                      style={{ opacity: 0.3, cursor: "not-allowed" }}
+                      title="Nenhuma transcrição disponível"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Áudio */}
               <div className="acao">
                 {c.audio ? (
                   <a href={c.audio} download>
-                    <img
-                      src={download}
-                      alt="Baixar áudio"
-                      style={{ cursor: "pointer" }}
-                    />
+                    <img src={download} alt="Baixar áudio" style={{ cursor: "pointer" }} />
                   </a>
-                ) : (
-                  <p style={{ opacity: 0.5 }}>—</p>
-                )}
+                ) : <p style={{ opacity: 0.5 }}>—</p>}
               </div>
 
-              {/* Status */}
               <p>{c.status ? "✅ Ativo" : "⏳ Pendente"}</p>
 
             </div>
@@ -167,17 +136,11 @@ const ListagemChamado = () => {
       {modalAberto && (
         <div className="modal_overlay">
           <div className="modal_conteudo">
-
             <h2 className='titulo_do_modal'>Transcrição do Áudio</h2>
-
             <p className="texto_transcricao">
-              {transcricaoSelecionada || "Nenhuma transcrição disponível."}
+              {transcricaoSelecionada ?? "Nenhuma transcrição disponível."}
             </p>
-
-            <button onClick={() => setModalAberto(false)}>
-              Fechar
-            </button>
-
+            <button onClick={() => setModalAberto(false)}>Fechar</button>
           </div>
         </div>
       )}
