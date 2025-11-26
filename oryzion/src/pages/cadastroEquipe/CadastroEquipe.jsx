@@ -73,7 +73,7 @@ const CadastroEquipe = () => {
             <label>Nome</label>
             <input
               type="text"
-              placeholder="Digite seu nome completo"
+              placeholder="Digite o nome completo"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
@@ -83,7 +83,7 @@ const CadastroEquipe = () => {
             <label>Email</label>
             <input
               type="email"
-              placeholder="Digite seu e-mail"
+              placeholder="Digite o e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -95,7 +95,7 @@ const CadastroEquipe = () => {
             <div className="cadastro_senha_container">
               <input
                 type={mostrarSenha ? "text" : "password"}
-                placeholder="Digite sua senha"
+                placeholder="Digite a senha"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
               />

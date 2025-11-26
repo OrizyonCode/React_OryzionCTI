@@ -1,100 +1,57 @@
-body {
-    font-family: "Poppins", sans-serif;
-}
-
 .banner_listagem {
-    background-color: #111828;
+    background-color: #0a1020;
     width: 100%;
-    /* Altura reduzida para o carrossel ficar mais alto no banner, 
-       já que o robô foi removido */
     height: 500px;
     position: relative;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .banner_cards {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px; /* MAIS LARGO AINDA PARA AJUDAR NO ESTICAMENTO */
     position: relative;
-    /* Adiciona padding horizontal para evitar que os botões de seta 
-       sejam cortados por telas pequenas que não alcançam 1200px */
+
     padding: 0 60px;
     box-sizing: border-box;
+    margin-top: -50px;
 }
 
 /* ======================= */
-/* TÍTULO FIXO        */
-/* ======================= */
-
-.banner_cards .titulo {
-    display: flex;
-    justify-content: center;
-}
-
-.titulo h2 {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 22px;
-    font-weight: 600;
-}
-
-/* ROBÔ (Mantido, mas sem uso no JSX atual) */
-.botBanner {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.botBanner img {
-    height: 500px;
-    object-fit: contain;
-}
-
-/* ======================= */
-/* CARROSSEL          */
+/* CARROSSEL */
 /* ======================= */
 
 .carousel_container {
     position: absolute;
-    /* Ajustado para centralizar verticalmente no espaço disponível */
     top: 50%; 
-    transform: translate(-50%, -50%); /* Centraliza completamente */
+    transform: translate(-50%, -50%);
     left: 50%;
     
-
     width: 100%;
-    max-width: 1000px;
-
+    max-width: 1300px; /* AQUI É O PULO DO GATO */
+    
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .carousel_wrapper {
-    overflow: hidden;
     width: 100%;
+    overflow: hidden;
 }
 
 .carousel_inner_feedback {
     display: flex;
-    /* Alterado: Reduz o espaçamento entre os cards para que caibam melhor na tela */
-    gap: 20px; 
+    gap: 30px; /* MAIS ESPAÇO ENTRE OS CARDS */
 }
 
 /* ======================= */
-/* CARD           */
+/* CARD */
 /* ======================= */
 
 .feedback_card {
-    /* Alterado: Aumenta a largura do card para "esticar" e preencher melhor o espaço */
-    width: 320px; 
+    width: 420px; /* ESTICADÃO DE VERDADE AGORA */
     background: white;
     border-radius: 20px;
     padding: 30px 25px;
@@ -109,33 +66,25 @@ body {
 }
 
 .avatar_user {
-    /* Removido do CardAvaliacao.jsx para replicar a imagem (onde não aparece o ícone) */
     width: 60px;
     margin-bottom: 8px;
 }
 
-.feedback_card h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
+.badge_sentimento.positivo {
+    background: #6CCD8F;
 }
 
-.badge_feedback {
-    padding: 6px 22px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 18px;
+.badge_sentimento.negativo {
+    background: #E06C6C;
 }
 
-.comentario_feedback {
-    font-size: 15px;
-    color: #5a5a5a;
-    margin-bottom: 25px;
-    line-height: 1.4;
+.badge_sentimento.neutro {
+    background: #8AA7B6;
 }
 
+/* LINK */
 .link_responder {
-    color: #313D65;
+    color: #584EC9;
     font-weight: 700;
     text-decoration: none;
 }
@@ -146,52 +95,44 @@ body {
 }
 
 /* ======================= */
-/* BOTÕES SETA       */
+/* BOTÕES */
 /* ======================= */
 
 .carousel_button {
     position: absolute;
-    /* Removido o transform: translateY(-50%) porque já está no carousel_container pai */
     background-color: #313D65;
     border: none;
     cursor: pointer;
 
     border-radius: 50%;
-    opacity: 0.85;
-
-    height: 40px;
-    width: 40px;
-
+    border: 2px solid #8893b0;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10; /* Garante que os botões fiquem sobre o banner */
-}
-
-.carousel_button:hover {
-    opacity: 1;
+    z-index: 10;
 }
 
 .carousel_button.prev {
-    left: -50px;
+    left: -60px;
 }
 
 .carousel_button.next {
-    right: -50px;
+    right: -60px;
 }
 
 /* ======================= */
-/* BOLINHAS (Mantido, mas sem uso no JSX atual)          */
+/* DOTS */
 /* ======================= */
 
 .carousel_dots {
     position: absolute;
-    bottom: 20px; /* Posiciona na parte inferior do banner */
+    bottom: -220px;
     left: 50%;
     transform: translateX(-50%);
 
     display: flex;
     gap: 10px;
+    height: 10px;
 }
 
 .dot {
@@ -207,62 +148,4 @@ body {
     background: #5b4bff;
     width: 14px;
     height: 14px;
-}
-
-/* ======================= */
-/* RESPONSIVO        */
-/* ======================= */
-
-@media (max-width: 1100px) {
-    /* Garante que os botões de seta não sejam cortados em telas menores que 1200px */
-    .banner_cards {
-        padding: 0 10px;
-    }
-
-    .carousel_button.prev {
-        left: 0;
-    }
-    
-    .carousel_button.next {
-        right: 0;
-    }
-
-    .carousel_container {
-        max-width: 900px;
-    }
-}
-
-@media (max-width: 600px) {
-
-    .banner_listagem {
-        height: 400px;
-    }
-
-    .botBanner img {
-        height: 400px;
-        margin-top: 40px;
-    }
-
-    .carousel_button {
-        width: 30px;
-        height: 30px;
-    }
-
-    .carousel_button.prev {
-        left: 10px;
-    }
-
-    .carousel_button.next {
-        right: 10px;
-    }
-
-    .feedback_card {
-        width: 260px;
-        padding: 25px;
-    }
-    
-    /* Quando há apenas 1 card, centraliza a visualização */
-    .carousel_inner_feedback {
-        justify-content: center;
-    }
 }
