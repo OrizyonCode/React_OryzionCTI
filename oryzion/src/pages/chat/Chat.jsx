@@ -12,7 +12,6 @@ const Chat = () => {
   const [chat, setChat] = useState([]);
   const [mensagem, setMensagem] = useState("");
 
-  const idFeedback = "9E37056E-8C1F-4F35-9628-5C342E428A61"
 
   const abrirModal = () => setModalAberto(true);
   const fecharModal = () => setModalAberto(false);

@@ -207,6 +207,10 @@
   font-size: 14px;
 }
 
+.linha_feedback:nth-child(){
+  margin-left: 10px;
+}
+
 .linha_feedback:last-child {
   border-bottom: none;
 }

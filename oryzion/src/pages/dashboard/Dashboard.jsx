@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import { useNavigate } from "react-router-dom";
+
 import {
   PieChart,
   Pie,
@@ -14,6 +16,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -23,6 +26,8 @@ export default function Dashboard() {
   const [chamadosMensal, setChamadosMensal] = useState([]);
   const [chamadosAnual, setChamadosAnual] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const abrirModal = (tipo) => {
     setCardSelecionado(tipo);
@@ -100,7 +105,19 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  const COLORS = ["#4ade80", "#f87171"]; // verde e vermelho
+  const COLORS = ["#4ade80", "#f87171"];
+
+  // -------------------------------
+  // 🔥 ENVIO CORRIGIDO PARA DashListagem
+  // -------------------------------
+  const enviarFiltroListagem = (valor) => {
+    navigate("/DashListagem", {
+      state: {
+        tipo: "resposta",
+        valor: valor
+      }
+    });
+  };
 
   const renderPieChart = (data, outerRadius = 70) => (
     <ResponsiveContainer width="100%" height="100%">
@@ -112,8 +129,10 @@ export default function Dashboard() {
           cx="50%"
           cy="50%"
           outerRadius={outerRadius}
-          fill="#8884d8"
           label
+          onClick={(entry) => {
+            enviarFiltroListagem(entry.name === "Respondidos" ? "respondidos" : "naorespondidos");
+          }}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -154,36 +173,53 @@ export default function Dashboard() {
       <div className="dashboard-container">
         <Header />
         <main className="dashboard-graphs">
+
           <div className="dash-card" onClick={() => abrirModal("feedback")}>
             <h3>FEEDBACK RESPONDIDO</h3>
             <div className="grafico-placeholder">
-              {resumoFeedback.length > 0 ? renderPieChart(resumoFeedback, 90) : <p>Nenhum dado disponível</p>}
+              {resumoFeedback.length > 0
+                ? renderPieChart(resumoFeedback, 90)
+                : <p>Nenhum dado disponível</p>}
             </div>
           </div>
 
           <div className="dash-card" onClick={() => abrirModal("mensal")}>
             <h3>CHAMADOS POR MÊS</h3>
             <div className="grafico-placeholder">
-              {chamadosMensal.length > 0 ? renderBarChart(chamadosMensal, "mes", "#60a5fa") : <p>Nenhum dado disponível</p>}
+              {chamadosMensal.length > 0
+                ? renderBarChart(chamadosMensal, "mes", "#60a5fa")
+                : <p>Nenhum dado disponível</p>}
             </div>
           </div>
 
           <div className="dash-card" onClick={() => abrirModal("anual")}>
             <h3>CHAMADOS POR ANO</h3>
             <div className="grafico-placeholder">
-              {chamadosAnual.length > 0 ? renderBarChart(chamadosAnual, "ano", "#f97316") : <p>Nenhum dado disponível</p>}
+              {chamadosAnual.length > 0
+                ? renderBarChart(chamadosAnual, "ano", "#f97316")
+                : <p>Nenhum dado disponível</p>}
             </div>
           </div>
+
         </main>
 
         {modalAberto && (
           <div className="modal-overlay" onClick={fecharModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <button className="fechar-modal" onClick={fecharModal}>✕</button>
+
               <div className="grafico-placeholder expanded">
-                {cardSelecionado === "feedback" && resumoFeedback.length > 0 && renderPieChart(resumoFeedback, 120)}
-                {cardSelecionado === "mensal" && chamadosMensal.length > 0 && renderBarChart(chamadosMensal, "mes", "#60a5fa")}
-                {cardSelecionado === "anual" && chamadosAnual.length > 0 && renderBarChart(chamadosAnual, "ano", "#facc15")}
+                {cardSelecionado === "feedback" &&
+                  resumoFeedback.length > 0 &&
+                  renderPieChart(resumoFeedback, 120)}
+
+                {cardSelecionado === "mensal" &&
+                  chamadosMensal.length > 0 &&
+                  renderBarChart(chamadosMensal, "mes", "#60a5fa")}
+
+                {cardSelecionado === "anual" &&
+                  chamadosAnual.length > 0 &&
+                  renderBarChart(chamadosAnual, "ano", "#facc15")}
               </div>
             </div>
           </div>
@@ -192,4 +228,4 @@ export default function Dashboard() {
       <Footer />
     </>
   );
-}
+} 
