@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import {
-  Tooltip,
-  Legend,
   PieChart,
   Pie,
   Cell,
-  ResponsiveContainer,
+  Tooltip,
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
 import "./Dashboard.css";
 
 export default function Dashboard() {
   const [modalAberto, setModalAberto] = useState(false);
   const [cardSelecionado, setCardSelecionado] = useState(null);
-  const [feedbackRespondido, setFeedbackRespondido] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [avaliacaoMensal, setAvaliacaoMensal] = useState([]);
-  const [avaliacaoFeedbackAnual, setAvaliacaoFeedbackAnual] = useState([]); // 🆕 novo estado
+  const [resumoFeedback, setResumoFeedback] = useState([]);
+  const [chamadosMensal, setChamadosMensal] = useState([]);
+  const [chamadosAnual, setChamadosAnual] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const abrirModal = (tipo) => {
     setCardSelecionado(tipo);
@@ -34,240 +34,161 @@ export default function Dashboard() {
     setCardSelecionado(null);
   };
 
-  const COLORS = ["#1e293b", "#7f1d1d"];
-
-  // === Buscar dados da API de feedback ===
   useEffect(() => {
-    async function carregarFeedbacks() {
+    const fetchData = async () => {
       try {
-        const resposta = await fetch("http://localhost:5128/api/Feedback");
-        const dados = await resposta.json();
+        setLoading(true);
 
-        const respondidos = dados.filter((f) => f.status === true).length;
-        const naoRespondidos = dados.filter((f) => f.status === false).length;
+        const feedbackRes = await fetch("https://localhost:7162/api/Feedback/dashboard");
+        const feedbackData = await feedbackRes.json();
 
-        setFeedbackRespondido([
-          { name: "Respondidos", value: respondidos },
-          { name: "Não Respondidos", value: naoRespondidos },
-        ]);
-      } catch (erro) {
-        console.error("Erro ao carregar feedbacks:", erro);
+        const feedbackArray =
+          feedbackData && ("respondidos" in feedbackData || "naoRespondidos" in feedbackData)
+            ? [
+                { name: "Respondidos", value: feedbackData.respondidos || 0 },
+                { name: "Não Respondidos", value: feedbackData.naoRespondidos || 0 },
+              ]
+            : [];
+
+        setResumoFeedback(feedbackArray);
+
+        const chamadoRes = await fetch("https://localhost:7162/api/Chamado");
+        const chamadoData = await chamadoRes.json();
+
+        if (chamadoData && chamadoData.length > 0) {
+          const porMes = {};
+          const porAno = {};
+
+          chamadoData.forEach((c) => {
+            if (!c.data) return;
+            const d = new Date(c.data);
+            if (isNaN(d)) return;
+
+            const mesAno = `${d.getMonth() + 1}/${d.getFullYear()}`;
+            const ano = d.getFullYear();
+
+            porMes[mesAno] = (porMes[mesAno] || 0) + 1;
+            porAno[ano] = (porAno[ano] || 0) + 1;
+          });
+
+          setChamadosMensal(
+            Object.keys(porMes)
+              .sort((a, b) => {
+                const [mesA, anoA] = a.split("/").map(Number);
+                const [mesB, anoB] = b.split("/").map(Number);
+                return new Date(anoA, mesA - 1) - new Date(anoB, mesB - 1);
+              })
+              .map((k) => ({ mes: k, quantidade: porMes[k] }))
+          );
+
+          setChamadosAnual(
+            Object.keys(porAno)
+              .sort((a, b) => a - b)
+              .map((k) => ({ ano: k, quantidade: porAno[k] }))
+          );
+        } else {
+          setChamadosMensal([]);
+          setChamadosAnual([]);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
       } finally {
-        setCarregando(false);
+        setLoading(false);
       }
-    }
+    };
 
-    carregarFeedbacks();
+    fetchData();
   }, []);
 
-  // === Buscar dados da API de classificações (mensal) ===
-  useEffect(() => {
-    async function carregarAvaliacoesMensais() {
-      try {
-        const resposta = await fetch("http://localhost:5128/api/Classificacao");
-        const dados = await resposta.json();
+  const COLORS = ["#4ade80", "#f87171"]; // verde e vermelho
 
-        const traduzido = dados.map((c) => {
-          const s = c.sentimento?.toLowerCase();
-          if (s === "positive") c.sentimento = "positivo";
-          if (s === "negative") c.sentimento = "negativo";
-          if (s === "neutral") c.sentimento = "neutro";
-          return c;
-        });
+  const renderPieChart = (data, outerRadius = 70) => (
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={data}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          outerRadius={outerRadius}
+          fill="#8884d8"
+          label
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
-        const positivos = traduzido.filter((c) => c.sentimento === "positivo").length;
-        const negativos = traduzido.filter((c) => c.sentimento === "negativo").length;
-        const neutros = traduzido.filter((c) => c.sentimento === "neutro").length;
+  const renderBarChart = (data, dataKey, fillColor) => (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey={dataKey} />
+        <YAxis allowDecimals={false} />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="quantidade" fill={fillColor} />
+      </BarChart>
+    </ResponsiveContainer>
+  );
 
-        setAvaliacaoMensal([{ mes: "Total", positivos, negativos, neutros }]);
-      } catch (erro) {
-        console.error("Erro ao carregar avaliações mensais:", erro);
-      }
-    }
-
-    carregarAvaliacoesMensais();
-  }, []);
-
-  // === Buscar dados da API de classificações (anual) ===
-  useEffect(() => {
-    async function carregarAvaliacoesAnuais() {
-      try {
-        const resposta = await fetch("http://localhost:5128/api/Classificacao");
-        const dados = await resposta.json();
-
-        const traduzido = dados.map((c) => {
-          const s = c.sentimento?.toLowerCase();
-          if (s === "positive") c.sentimento = "positivo";
-          if (s === "negative") c.sentimento = "negativo";
-          if (s === "neutral") c.sentimento = "neutro";
-          return c;
-        });
-
-        // Agrupar os feedbacks por ano
-        const porAno = {};
-        traduzido.forEach((c) => {
-          const ano = new Date(c.data || c.createdAt || Date.now()).getFullYear(); // 👈 ajusta se teu campo for diferente
-          if (!porAno[ano]) porAno[ano] = { positivos: 0, negativos: 0, neutros: 0 };
-
-          if (c.sentimento === "positivo") porAno[ano].positivos++;
-          if (c.sentimento === "negativo") porAno[ano].negativos++;
-          if (c.sentimento === "neutro") porAno[ano].neutros++;
-        });
-
-        // Converter pra formato que o gráfico entende
-        const dadosFormatados = Object.keys(porAno).map((ano) => ({
-          ano,
-          ...porAno[ano],
-        }));
-
-        setAvaliacaoFeedbackAnual(dadosFormatados);
-      } catch (erro) {
-        console.error("Erro ao carregar avaliações anuais:", erro);
-      }
-    }
-
-    carregarAvaliacoesAnuais();
-  }, []);
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="dashboard-container">
+          <p style={{ textAlign: "center", marginTop: "2rem" }}>Carregando dados...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
       <div className="dashboard-container">
         <Header />
-
         <main className="dashboard-graphs">
-          {/* === FEEDBACK RESPONDIDO === */}
-          <div
-            className="dash-card"
-            onClick={() => abrirModal("feedbackRespondido")}
-          >
+          <div className="dash-card" onClick={() => abrirModal("feedback")}>
             <h3>FEEDBACK RESPONDIDO</h3>
-
-            {carregando ? (
-              <p>Carregando gráfico...</p>
-            ) : (
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={feedbackRespondido}
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={100}
-                    label
-                  >
-                    {feedbackRespondido.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                    ))}
-                  </Pie>
-                  <Legend />
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            )}
+            <div className="grafico-placeholder">
+              {resumoFeedback.length > 0 ? renderPieChart(resumoFeedback, 90) : <p>Nenhum dado disponível</p>}
+            </div>
           </div>
 
-          {/* === AVALIAÇÃO MENSAL === */}
-          <div
-            className="dash-card"
-            onClick={() => abrirModal("avaliacaoMensal")}
-          >
-            <h3>AVALIAÇÃO MENSAL</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={avaliacaoMensal}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="mes" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="neutros" fill="#94a3b8" />
-                <Bar dataKey="positivos" fill="#1e293b" />
-                <Bar dataKey="negativos" fill="#7f1d1d" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="dash-card" onClick={() => abrirModal("mensal")}>
+            <h3>CHAMADOS POR MÊS</h3>
+            <div className="grafico-placeholder">
+              {chamadosMensal.length > 0 ? renderBarChart(chamadosMensal, "mes", "#60a5fa") : <p>Nenhum dado disponível</p>}
+            </div>
           </div>
 
-          {/* === AVALIAÇÃO FEEDBACK (ANUAL) === */}
-          <div
-            className="dash-card"
-            onClick={() => abrirModal("avaliacaoFeedback")}
-          >
-            <h3>AVALIAÇÃO FEEDBACK (ANUAL)</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={avaliacaoFeedbackAnual} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="ano" type="category" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="negativos" fill="#7f1d1d" />
-                <Bar dataKey="positivos" fill="#1e293b" />
-                <Bar dataKey="neutros" fill="#94a3b8" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="dash-card" onClick={() => abrirModal("anual")}>
+            <h3>CHAMADOS POR ANO</h3>
+            <div className="grafico-placeholder">
+              {chamadosAnual.length > 0 ? renderBarChart(chamadosAnual, "ano", "#f97316") : <p>Nenhum dado disponível</p>}
+            </div>
           </div>
         </main>
 
-        {/* === MODAL === */}
         {modalAberto && (
           <div className="modal-overlay" onClick={fecharModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="fechar-modal" onClick={fecharModal}>
-                ✕
-              </button>
-
-              {cardSelecionado === "feedbackRespondido" && (
-                <ResponsiveContainer width="100%" height={400}>
-                  <PieChart>
-                    <Pie
-                      data={feedbackRespondido}
-                      dataKey="value"
-                      nameKey="name"
-                      outerRadius={150}
-                      label
-                    >
-                      {feedbackRespondido.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                      ))}
-                    </Pie>
-                    <Legend />
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              )}
-
-              {cardSelecionado === "avaliacaoMensal" && (
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart data={avaliacaoMensal}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="mes" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="neutros" fill="#94a3b8" />
-                    <Bar dataKey="positivos" fill="#1e293b" />
-                    <Bar dataKey="negativos" fill="#7f1d1d" />
-                  </BarChart>
-                </ResponsiveContainer>
-              )}
-
-              {cardSelecionado === "avaliacaoFeedback" && (
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart data={avaliacaoFeedbackAnual} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" />
-                    <YAxis dataKey="ano" type="category" />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="negativos" fill="#7f1d1d" />
-                    <Bar dataKey="positivos" fill="#1e293b" />
-                    <Bar dataKey="neutros" fill="#94a3b8" />
-                  </BarChart>
-                </ResponsiveContainer>
-              )}
+              <button className="fechar-modal" onClick={fecharModal}>✕</button>
+              <div className="grafico-placeholder expanded">
+                {cardSelecionado === "feedback" && resumoFeedback.length > 0 && renderPieChart(resumoFeedback, 120)}
+                {cardSelecionado === "mensal" && chamadosMensal.length > 0 && renderBarChart(chamadosMensal, "mes", "#60a5fa")}
+                {cardSelecionado === "anual" && chamadosAnual.length > 0 && renderBarChart(chamadosAnual, "ano", "#facc15")}
+              </div>
             </div>
           </div>
         )}
       </div>
-
       <Footer />
     </>
   );
