@@ -18,16 +18,24 @@ main {
 
 .listagem_feedbacks {
   display: flex;
-  justify-content: center;
-  flex: 1;
-  padding-bottom: 40px; /* evita que o conteúdo encoste no footer */
+  flex-direction: column; 
+  align-items: center;
+  width: 100%; 
+  max-width: 1400px; 
+  margin: 0 auto; 
+  padding-bottom: 40px; 
 }
 
-.qtd_feedback h2{
-   font-size: 20px;
+.qtd_feedback { 
+   width: 100%; 
+   color: black;
    display: flex;
-   justify-content: flex-start;
+   font-size: 20px;
+   margin-top: 30px;
+   margin-bottom: -70px;
 }
+
+
 
 
 .listagem_cards {
@@ -36,9 +44,42 @@ main {
     flex-direction: column;
     gap: 30px; /* espaço entre cards */
     width: 100%;
-    max-width: 800px;
+    max-width: 100%;
     height: auto; /* 👈 deixa a altura automática */
     margin-left: auto;
     margin-right: auto;
 }
 
+.paginacao_container {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    align-items: center;
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 50px; /* Espaço entre o último card e a paginação */
+    margin-bottom: 20px;
+}
+
+.botao_pagina {
+    background: #fff;
+    color: #444;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px; /* Cantos levemente arredondados */
+    min-width: 40px; /* Garante que o botão tenha um tamanho mínimo */
+    transition: 0.2s ease;
+}
+
+.botao_pagina:hover {
+    background: #f0f0f0;
+}
+
+/* Estilo para o botão ATIVO (o que representa a página atual) */
+.botao_pagina.ativo {
+    background: #5d50e8; /* Cor roxa do seu layout */
+    color: white;
+    border-color: #5d50e8;
+    font-weight: 600;
+}
