@@ -24,6 +24,7 @@ body {
        sejam cortados por telas pequenas que não alcançam 1200px */
     padding: 0 60px;
     box-sizing: border-box;
+    margin-top: -50px;
 }
 
 /* ======================= */
@@ -186,12 +187,13 @@ body {
 
 .carousel_dots {
     position: absolute;
-    bottom: 20px; /* Posiciona na parte inferior do banner */
+    bottom: -220px; /* Posiciona na parte inferior do banner */
     left: 50%;
     transform: translateX(-50%);
 
     display: flex;
     gap: 10px;
+    height: 10px;
 }
 
 .dot {

@@ -12,7 +12,7 @@ const CadastroEquipe = () => {
   const [senha, setSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [idTipoUsuario, setIdTipoUsuario] = useState(
-    "4f210bb6-3eec-40df-b0ca-46d10d86b356"
+    "BF4DCC04-D76B-40D0-946D-90F1E096BEC3"
   );
 
   function alertar(icone, mensagem) {
@@ -46,7 +46,7 @@ const CadastroEquipe = () => {
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("4f210bb6-3eec-40df-b0ca-46d10d86b356");
+        setIdTipoUsuario("BF4DCC04-D76B-40D0-946D-90F1E096BEC3");
       } else {
         alertar("warning", "Verifique os dados e tente novamente.");
       }
