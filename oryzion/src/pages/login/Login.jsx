@@ -43,7 +43,6 @@ const Login = () => {
       const resposta = await api.post("Login", usuario);
       const token = resposta.data.token;
 
-      // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
       if (email.trim() === "" || senha.trim() === "") {
         Swal.fire({
           position: "top-end",
@@ -99,7 +98,7 @@ const Login = () => {
 
         let timerInterval;
 
-        if (tokenDecodificado.tipoUsuario === "cliente") {
+        if (tokenDecodificado.tipoUsuario === "Cliente") {
           let timerInterval;
           Swal.fire({
             title: "Cliente Encontrado!",
@@ -121,7 +120,7 @@ const Login = () => {
               naviGate("/chat");
             }
           });
-        } else if (tokenDecodificado.tipoUsuario === "suporte") {
+        } else if (tokenDecodificado.tipoUsuario === "Suporte") {
           let timerInterval;
           Swal.fire({
             title: "Suporte Encontrado!",

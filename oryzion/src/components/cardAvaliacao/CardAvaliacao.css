@@ -1,17 +1,12 @@
-body {
-    font-family: "Poppins", sans-serif;
-}
-
 .banner_listagem {
-    background-color: #111828;
+    background-color: #0a1020;
     width: 100%;
     height: 500px;
     position: relative;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .banner_cards {
@@ -38,13 +33,12 @@ body {
     max-width: 1300px; /* AQUI É O PULO DO GATO */
     
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .carousel_wrapper {
-    overflow: hidden;
     width: 100%;
+    overflow: hidden;
 }
 
 .carousel_inner_feedback {
@@ -76,26 +70,19 @@ body {
     margin-bottom: 8px;
 }
 
-.feedback_card h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
+.badge_sentimento.positivo {
+    background: #6CCD8F;
 }
 
-.badge_feedback {
-    padding: 6px 22px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 18px;
+.badge_sentimento.negativo {
+    background: #E06C6C;
 }
 
-.comentario_feedback {
-    font-size: 15px;
-    color: #5a5a5a;
-    margin-bottom: 25px;
-    line-height: 1.4;
+.badge_sentimento.neutro {
+    background: #8AA7B6;
 }
 
+/* LINK */
 .link_responder {
     color: #584EC9;
     font-weight: 700;
@@ -118,11 +105,7 @@ body {
     cursor: pointer;
 
     border-radius: 50%;
-    opacity: 0.85;
-
-    height: 40px;
-    width: 40px;
-
+    border: 2px solid #8893b0;
     display: flex;
     justify-content: center;
     align-items: center;
