@@ -1,3 +1,4 @@
+/* ================= CONTAINER ================= */
 .container_cadastro {
   display: flex;
   justify-content: center;
@@ -13,16 +14,12 @@
   background-repeat: no-repeat;
 }
 
-
-
-
 .container_cadastro::before,
 .container_cadastro::after {
   content: '';
   position: absolute;
   opacity: 0.3;
   background-color: #313D65;
-  /* Deep Ocean */
 }
 
 .container_cadastro::before {
@@ -57,7 +54,6 @@
       transparent 10px,
       #313D65 10px,
       #313D65 11px
-      /* Deep Ocean */
     ),
     repeating-linear-gradient(45deg,
       transparent,
@@ -70,8 +66,7 @@
   transform-origin: bottom left;
 }
 
-
-
+/* ================= FORM ================= */
 .form_cadastro {
   border: solid 3px #313D65;
   padding: 50px 60px;
@@ -83,7 +78,6 @@
   flex-direction: column;
   z-index: 1;
   position: relative;
-  /* Garante que o z-index funcione */
 }
 
 h2 {
@@ -93,7 +87,33 @@ h2 {
   margin-bottom: 35px;
 }
 
-/* ====== Grade de Campos ====== */
+/* Botão modo rápido */
+.form_cadastro > div:first-child {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn_modo_rapido {
+  background-color: #313D65;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+.btn_modo_rapido:hover {
+  background-color: #fff;
+  color: #313D65;
+  border: 1px solid #313D65;
+  transform: translateY(-2px);
+}
+
+/* ================= GRID DE CAMPOS ================= */
 .grid_campos {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -109,26 +129,29 @@ h2 {
 label {
   font-size: 0.9rem;
   color: #fff;
-  /* Cor cinza claro para a label */
   margin-bottom: 6px;
 }
 
-.campo input{
+.campo input,
+.campo select {
   padding: 10px 14px;
   border: 2px solid #313D65;
-  /* Borda mais discreta */
   border-radius: 6px;
   outline: none;
   font-size: 0.95rem;
-  transition: border 0.2s ease;
+  transition: border 0.2s ease, background 0.2s ease;
   background-color: #040F1E;
   color: #f8fafc;
   margin-top: 5px;
-
 }
 
+.campo input:focus,
+.campo select:focus {
+  border-color: #00ffa6;
+  background-color: #0b1a33;
+}
 
-
+/* ================= SENHA ================= */
 .campo_senha {
   display: flex;
   align-items: center;
@@ -150,35 +173,7 @@ label {
   color: #6b7280;
 }
 
-.documento_switch {
-  display: flex;
-  margin-bottom: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  overflow: hidden;
-  margin-top: 5px;
-}
-
-.documento_switch button {
-  flex: 1;
-  padding: 8px;
-  background: #f1f5f9;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #64748b;
-  transition: all 0.2s ease;
-}
-
-.documento_switch button.ativo {
-  background-color: #313D65;
-  color: #fff;
-}
-
-.documento_switch button:not(.ativo):hover {
-  background-color: #e2e8f0;
-}
-
+/* ================= UPLOAD ================= */
 .upload_section {
   margin: 20px 0;
 }
@@ -186,6 +181,22 @@ label {
 .upload_area {
   margin-bottom: 20px;
   margin-top: 10px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload_area.dragging {
+  border-color: #00ffa6;
+  background-color: rgba(0, 255, 166, 0.05);
 }
 
 .upload_label {
@@ -193,13 +204,6 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #d1d5db;
-  border-radius: 8px;
-  padding: 25px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  color: #fff;
 }
 
 .upload_label:hover {
@@ -211,7 +215,6 @@ label {
 .upload_label p {
   margin-top: 8px;
   font-size: 0.85rem;
-
 }
 
 .upload_label small {
@@ -222,7 +225,7 @@ label {
   font-size: 1.5rem;
 }
 
-
+/* ================= BOTÃO CADASTRAR ================= */
 .btn_cadastrar button {
   background-color: #313D65;
   color: white;
@@ -231,7 +234,7 @@ label {
   border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   width: 100%;
 }
 
@@ -241,24 +244,7 @@ label {
   border-color: #fff;
 }
 
-
-
-.login_texto {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #475569;
-}
-
-.login_texto a {
-  color: #2563eb;
-  text-decoration: none;
-}
-
-.login_texto a:hover {
-  text-decoration: underline;
-}
-
+/* ================= ALERTS / TOAST ================= */
 .toast-glass {
   backdrop-filter: blur(12px);
   background: rgba(30, 30, 30, 0.55);
@@ -276,6 +262,7 @@ label {
   border-left: 5px solid #ff4c4c;
   animation: shakeError 0.5s ease-in-out;
 }
+
 .big-alert-overlay {
   position: fixed;
   inset: 0;
@@ -319,8 +306,6 @@ label {
   animation: iconFloat 2s infinite ease-in-out;
 }
 
-/* ----------- SUCESSO / ERRO ----------- */
-
 .big-success {
   box-shadow: 0 0 25px rgba(0, 255, 150, 0.5);
   border-color: rgba(0, 255, 150, 0.4);
@@ -341,8 +326,7 @@ label {
   animation: iconShake 0.6s ease;
 }
 
-/* -------- ANIMAÇÕES -------- */
-
+/* ================= ANIMAÇÕES ================= */
 @keyframes zoomInGlow {
   from { transform: scale(0.7); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -366,7 +350,6 @@ label {
   100% { transform: translateX(0); }
 }
 
-
 @keyframes floatUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0px); opacity: 1; }
@@ -380,7 +363,7 @@ label {
   100% { transform: translateX(0); }
 }
 
-
+/* ================= RESPONSIVO ================= */
 @media (max-width: 700px) {
   .grid_campos {
     grid-template-columns: 1fr;
@@ -388,5 +371,10 @@ label {
 
   .form_cadastro {
     padding: 35px 25px;
+  }
+
+  .btn_modo_rapido {
+    width: 100%;
+    margin-bottom: 10px;
   }
 }
