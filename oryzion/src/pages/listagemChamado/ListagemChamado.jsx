@@ -57,7 +57,7 @@ const ListagemChamado = () => {
     <>
       <Header />
 
-      <BarraPesquisa visibilidade="none" onSearch={setSearchTerm} />
+      <BarraPesquisa mostrarFiltros={false} onSearch={setSearchTerm} />
 
       <section className='layout_grid listagemChamado'>
         <div className='img_adiciona'>
