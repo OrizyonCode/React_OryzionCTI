@@ -2,32 +2,100 @@ import "./Chamado.css";
 import Botao from "../../components/botao/Botao";
 import api from "../../Services/services";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
+import "animate.css";
 
 function Chamado() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
-
-  // Estados do formulário
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("Senai@134"); 
-  const [cnpj, setCnpj] = useState(""); // ⚠ CNPJ opcional
+  const [senha, setSenha] = useState("Senai@134");
+  const [cnpj, setCnpj] = useState("");
+  const [nomeFantasia, setNomeFantasia] = useState("");
   const [statusCadastro, setStatusCadastro] = useState(null);
-
-  // Upload de áudio
   const [audioFile, setAudioFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const alternarSenha = () => setMostrarSenha(!mostrarSenha);
+  // ------------------ ALERTS ------------------
 
-  // Upload do arquivo
-  const handleFileChange = (files) => {
-    if (files && files.length > 0) {
-      setAudioFile(files[0]);
-    }
+  const alertSuccess = () => {
+    Swal.fire({
+      title: "Chamado Criado!",
+      text: "Seu chamado foi registrado com sucesso!",
+      icon: "success",
+      background: "#0d0d0d",
+      color: "#fff",
+      iconColor: "#313D65",
+      confirmButtonColor: "#313D65",
+      confirmButtonText: "Fechar",
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInDown
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutUp
+          animate__faster
+        `
+      }
+    });
   };
 
-  const handleDragOver = (e) => { e.preventDefault(); setIsDragging(true); };
-  const handleDragLeave = (e) => { e.preventDefault(); setIsDragging(false); };
+  const alertError = () => {
+    Swal.fire({
+      title: "Erro ao Criar!",
+      text: "Não foi possível criar o chamado. Verifique os dados e tente novamente.",
+      icon: "error",
+      background: "#0d0d0d",
+      color: "#fff",
+      width: "40rem",
+      padding: "2.5rem",
+      iconColor: "#ff4b4b",
+      confirmButtonColor: "#ff4b4b",
+      confirmButtonText: "Tentar Novamente",
+      backdrop: `
+        rgba(0,0,0,0.85)
+        center top
+        no-repeat
+      `,
+      showClass: {
+        popup: `
+          animate__animated
+          animate__zoomIn
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__zoomOut
+          animate__faster
+        `
+      }
+    });
+  };
+
+
+  const alternarSenha = () => setMostrarSenha(!mostrarSenha);
+
+  const handleFileChange = (files) => {
+    if (files && files.length > 0) setAudioFile(files[0]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
@@ -36,100 +104,69 @@ function Chamado() {
 
   const handleInputFileChange = (e) => handleFileChange(e.target.files);
 
-  // -------------- CADASTRAR ---------------------  
+
   const handleCadastro = async (e) => {
     e.preventDefault();
-    setStatusCadastro("Enviando dados...");
-
-    let idUsuarioCriado = null;
+    setStatusCadastro("Enviando...");
 
     try {
-      // 1️⃣ CADASTRA O USUÁRIO
-      const novoUsuario = {
+      const usuario = {
         nome: nomeCompleto,
         email: email,
         senha: senha,
-        idTipoUsuario: "82951b0c-a10d-4cbe-9fcf-0a5b9a970df2" 
+        imagem: "",
+        idTipoUsuario: "0C741803-1334-4D72-8D87-7410AA2E051C"
       };
 
-      const resUsuario = await api.post("Usuario", novoUsuario);
-      if (resUsuario.status !== 201) {
-        // Se o backend retornar um 400 ou outro erro, o catch será acionado. 
-        // Esta linha é para garantir que a execução não continue se o status for inesperado.
-        throw new Error("Erro ao cadastrar usuário"); 
-      }
+      const resposta = await api.post("Usuario", usuario);
+      if (resposta.status !== 201) throw new Error();
 
-      idUsuarioCriado = resUsuario.data.idUsuario; // Supondo que o ID venha nesta propriedade
+      const idUsuarioCriado = resposta.data.idUsuario;
+      const clienteObj = { idUsuario: idUsuarioCriado };
+      const resCliente = await api.post("Cliente", clienteObj);
+      if (resCliente.status !== 201) throw new Error();
 
-      // 2️⃣ SE TIVER CNPJ, CADASTRA A EMPRESA
+      const idClienteCriado = resCliente.data.idCliente;
+
       if (cnpj.trim() !== "") {
-        const novaEmpresa = {
-          nomeFantasia: nomeCompleto, // ou outro campo
-          numeroIdentificador: cnpj
+        const empresaObj = {
+          nomeFantasia: nomeFantasia || nomeCompleto,
+          numeroIdentificador: cnpj.replace(/\D/g, "")
         };
-
-        // Não precisa de await aqui se não for dependência crítica para o Chamado
-        await api.post("Empresa", novaEmpresa);
+        const resEmpresa = await api.post("Empresa", empresaObj);
+        if (resEmpresa.status !== 201) throw new Error();
       }
 
-      // 3️⃣ CADASTRA O CHAMADO COM ÁUDIO (CORRIGIDO PARA O ERRO 405)
-      
-      // Cria o objeto FormData para enviar multipart/form-data
-      const dataChamado = new FormData();
-      
-      // Anexa os campos do DTO do backend (ChamadoDTO)
-      dataChamado.append('Status', true); 
-      // O backend espera a data como string no formato ISO
-      dataChamado.append('Data', new Date().toISOString()); 
-      dataChamado.append('IdCliente', idUsuarioCriado);
-      dataChamado.append('IdSuporte', "bf4dcc04-d76b-40d0-946d-90f1e096bec3"); 
-      
-      // Anexa o arquivo de áudio se ele existir. O nome do campo deve ser 'ArquivoAudio'
-      if (audioFile) {
-        dataChamado.append('ArquivoAudio', audioFile); 
-      }
+      const form = new FormData();
+      form.append("Status", true);
+      form.append("Data", new Date().toISOString());
+      form.append("IdCliente", idClienteCriado);
+      form.append("IdSuporte", "E588F264-C23C-4F9E-B676-4C02311CD231");
+      if (audioFile) form.append("ArquivoAudio", audioFile);
 
-      // CORREÇÃO DA ROTA: Chama o endpoint específico que aceita o upload de áudio e FormData
-      const resChamado = await api.post("Chamado/cadastrar-com-audio", dataChamado, {
-          // O Axios geralmente define automaticamente o header 'multipart/form-data' ao enviar FormData,
-          // mas você pode ser explícito se tiver problemas.
-          // headers: { 'Content-Type': 'multipart/form-data' } 
-      });
+      const resChamado = await api.post("Chamado/cadastrar-com-audio", form);
+      if (resChamado.status !== 201) throw new Error();
 
-      if (resChamado.status === 201) {
-        setStatusCadastro("✅ CHAMADO CRIADO COM SUCESSO!");
-      }
+      alertSuccess();
+      setStatusCadastro("Chamado criado!");
 
     } catch (error) {
-      console.error("Erro no cadastro:", error);
-      
-      let mensagemErro = "❌ ERRO AO CADASTRAR. Verifique a conexão e o console.";
-      
-      // Tenta pegar a mensagem de erro da resposta do backend
-      if (error.response && error.response.data) {
-          // O backend retorna um JSON com { mensagem: "..." }
-          if (error.response.data.mensagem) {
-            mensagemErro = `❌ ERRO: ${error.response.data.mensagem}`;
-          // Se for o erro 405 original ou outro erro de rede
-          } else if (error.response.status === 405) {
-             mensagemErro = "❌ ERRO 405: Método não permitido. Verifique a rota da API.";
-          }
-      }
-      
-      setStatusCadastro(mensagemErro);
+      alertError();
+      setStatusCadastro("Erro ao cadastrar chamado");
     }
   };
 
-  // -------------------------------------------------
+
   return (
     <div className="container_cadastro">
       <form className="form_cadastro" onSubmit={handleCadastro}>
         <h2>Cadastro de Chamado</h2>
-        
+
         <div className="grid_campos">
+
           <div className="campo">
             <label>Nome completo</label>
-            <input 
+            <input
               type="text"
               placeholder="Insira seu nome completo"
               value={nomeCompleto}
@@ -140,7 +177,7 @@ function Chamado() {
 
           <div className="campo">
             <label>E-mail</label>
-            <input 
+            <input
               type="email"
               placeholder="exemplo@email.com"
               value={email}
@@ -159,7 +196,7 @@ function Chamado() {
                 required
               />
               <button type="button" className="btn_visibilidade" onClick={alternarSenha}>
-                {mostrarSenha ? '🙈' : '👁️'}
+                {mostrarSenha ? "🙈" : "👁️"}
               </button>
             </div>
           </div>
@@ -172,38 +209,54 @@ function Chamado() {
               value={cnpj}
               onChange={(e) => setCnpj(e.target.value)}
             />
+
+            <input
+              type="text"
+              placeholder="Nome Fantasia"
+              value={nomeFantasia}
+              onChange={(e) => setNomeFantasia(e.target.value)}
+            />
           </div>
+
         </div>
 
-        {/* UPLOAD DE ÁUDIO */}
         <div className="upload_section">
           <label>Upload de áudio</label>
-          <div 
-            className={`upload_area ${isDragging ? 'dragging' : ''}`}
+
+          <div
+            className={`upload_area ${isDragging ? "dragging" : ""}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
-            <input 
+            <input
               type="file"
               accept=".mp3,.wav,.m4a"
-              id="audioUpload" hidden
+              id="audioUpload"
+              hidden
               onChange={handleInputFileChange}
             />
-            
+
             <label htmlFor="audioUpload" className="upload_label">
               <span className="icone_upload">📤</span>
+
               {audioFile ? (
                 <p>
                   <strong>Arquivo Selecionado:</strong><br />
-                  <small>{audioFile.name} ({(audioFile.size / 1024 / 1024).toFixed(2)} MB)</small>
+                  <small>
+                    {audioFile.name} ({(audioFile.size / 1024 / 1024).toFixed(2)} MB)
+                  </small>
                 </p>
               ) : (
-                <p><strong>Clique ou arraste um áudio</strong><br /><small>WAV, MP3 ou M4A (MAX. 10MB)</small></p>
+                <p>
+                  <strong>Clique ou arraste um áudio</strong><br />
+                  <small>WAV, MP3 ou M4A (MAX. 10MB)</small>
+                </p>
               )}
             </label>
           </div>
         </div>
+
         <div className="btn_cadastrar">
           <Botao nomeBotao="Cadastrar" type="submit" />
         </div>
