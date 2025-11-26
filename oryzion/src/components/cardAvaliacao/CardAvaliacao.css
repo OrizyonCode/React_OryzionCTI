@@ -50,7 +50,7 @@
     overflow: hidden;
 }
 
-.carousel_inner {
+.carousel_inner_feedback {
     display: flex;
     gap: 25px;
     transition: transform 0.5s ease;

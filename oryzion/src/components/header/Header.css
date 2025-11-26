@@ -21,7 +21,7 @@ header {
 }
 
 .logo_header img {
-  height: 60px;
+  height: 30px;
 }
 
 header,
@@ -46,7 +46,7 @@ ul p{
 
 .header_pefil {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;        /* ⬅️ Centraliza verticalmente */
   justify-content: center;
   color: white;
@@ -66,6 +66,7 @@ ul p{
   height: 32px;               /* ⬅️ Um pouco maior */
   width: 32px;
   object-fit: contain;
+  margin-left: 20px;
 }
 
 .usuario {

@@ -1,31 +1,25 @@
-
-import FundoBarraPesquisa from "../../assets/img/BarraPesquisa.png";
-import './BarraPesquisa.css';
-import Lupa from "../../assets/img/Search.svg"
-import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import Filtro from '../../assets/img/Slider.svg'
+import Lupa from "../../assets/img/lupa2.png";
+import Filtro from "../../assets/img/Slider.svg";
+import "./BarraPesquisa.css";
 
-const BarraPesquisa = (props) => {
-
+const BarraPesquisa = ({ visibilidade, onSearch }) => {
   const [mostrarMenu, setMostrarMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleMenu = () => {
-    setMostrarMenu(!mostrarMenu);
-  };
+  const toggleMenu = () => setMostrarMenu(!mostrarMenu);
 
   return (
     <div className="barra_pesquisa_container">
-      {isMobile && props.visibilidade !== "none" && (
+
+      {/* Filtro Mobile */}
+      {isMobile && visibilidade !== "none" && (
         <div className="filtro_container">
           <img
             src={Filtro}
@@ -33,10 +27,11 @@ const BarraPesquisa = (props) => {
             className="filtro_icon"
             onClick={toggleMenu}
           />
+
           {mostrarMenu && (
             <div className="filtro_menu">
-              <div className="filtro_item">Positivos</div>
               <div className="filtro_item">Negativos</div>
+              <div className="filtro_item">Positivos</div>
               <div className="filtro_item">Neutros</div>
               <div className="filtro_item">Resolvidos</div>
               <div className="filtro_item">Pendentes</div>
@@ -45,23 +40,29 @@ const BarraPesquisa = (props) => {
         </div>
       )}
 
-      {/* Barra de pesquisa */}
+      {/* Barra de Pesquisa */}
       <div className="search_box">
         <img src={Lupa} alt="Pesquisar" className="lupa_icon" />
-        <input type="text" placeholder="Pesquise aqui" />
+        
+        <input
+          type="text"
+          placeholder="Pesquise por feedback..."
+          onChange={(e) => onSearch(e.target.value)} // ← AGORA FUNCIONA
+        />
       </div>
 
-      {!isMobile && props.visibilidade !== "none" && (
+      {/* Filtro Desktop */}
+      {!isMobile && visibilidade !== "none" && (
         <ul className="links">
-          <li>Positivos</li>
           <li>Negativos</li>
-          <li>Neutros</li>
+          <li>Positivos</li>
+          <li className="ativo">Neutros</li>
           <li>Resolvidos</li>
           <li>Pendentes</li>
         </ul>
       )}
     </div>
   );
-}
+};
 
 export default BarraPesquisa;

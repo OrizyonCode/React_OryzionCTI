@@ -43,9 +43,6 @@ const CardHistorico = ({ dados }) => {
         )}
       </div>
 
-      <div className="botao_responda">
-        <Botao nomeBotao="Responda aqui" />
-      </div>
     </div>
   );
 };
