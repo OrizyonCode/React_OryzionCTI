@@ -1,97 +1,116 @@
-import './CardAvaliacao.css'
-import Usuario from '../../assets/img/Usuario.svg'
-import botBanner from '../../assets/img/botBanner.svg'
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import Esquerda from '../../assets/img/setaEsquerda.svg'
-import Direita from '../../assets/img/setaDireita.svg'
+import React, { useState, useEffect, useRef } from "react";
+import "./CardAvaliacao.css";
+
+import botBanner from "../../assets/img/botBanner.svg";
+import Esquerda from "../../assets/img/setaEsquerda.svg";
+import Direita from "../../assets/img/setaDireita.svg";
+import { Link } from "react-router-dom";
 
 const avaliacoes = [
-    { id: 1, texto: 'Gostei' },
-    { id: 2, texto: 'Não gostei' },
-    { id: 3, texto: 'Mais ou menos' },
-    { id: 4, texto: 'Excelente' },
-    { id: 5, texto: 'Poderia melhorar' },
-    { id: 6, texto: 'Muito bom!' },
-    { id: 7, texto: 'Regular' },
-    { id: 8, texto: 'Top demais!' },
+  { nome: "Ana Clara", resumo: "Ótima plataforma! Aprendi muito rápido.", sentimento: "positivo" },
+  { nome: "Carlos Souza", resumo: "Suporte excelente, resolveram meu problema!", sentimento: "positivo" },
+  { nome: "Mariana Lopes", resumo: "Gostei, mas poderia ter mais temas.", sentimento: "neutro" },
+  { nome: "João Pedro", resumo: "Travou algumas vezes, mas é boa.", sentimento: "negativo" },
+  { nome: "Rafael Dias", resumo: "Muito bom! Recomendo bastante.", sentimento: "positivo" },
 ];
 
-const CardAvaliacao = ({ classificacao = "neutro" }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
+const CardAvaliacao = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setVisibleCount(window.innerWidth <= 768 ? 1 : 3);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+  const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
 
-    const intervalRef = useRef(null);
-    const timeoutRef = useRef(null);
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % avaliacoes.length);
+    resetAutoPlay();
+  };
 
-    const nextSlide = () => { setCurrentIndex(prev => (prev + 1) % avaliacoes.length); resetAutoPlay(); };
-    const prevSlide = () => { setCurrentIndex(prev => (prev - 1 + avaliacoes.length) % avaliacoes.length); resetAutoPlay(); };
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + avaliacoes.length) % avaliacoes.length);
+    resetAutoPlay();
+  };
 
-    const getVisibleCards = () => {
-        const cards = [];
-        for (let i = 0; i < visibleCount; i++) {
-            cards.push(avaliacoes[(currentIndex + i) % avaliacoes.length]);
-        }
-        return cards;
+  const getVisibleCards = () => {
+    const cards = [];
+    for (let i = 0; i < visibleCount; i++) {
+      cards.push(avaliacoes[(currentIndex + i) % avaliacoes.length]);
+    }
+    return cards;
+  };
+
+  const startAutoPlay = () => {
+    if (intervalRef.current) return;
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % avaliacoes.length);
+    }, 4000);
+  };
+
+  const stopAutoPlay = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  };
+
+  const resetAutoPlay = () => {
+    stopAutoPlay();
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => startAutoPlay(), 8000);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleCount(window.innerWidth <= 768 ? 1 : 3);
     };
 
-    const startAutoPlay = () => {
-        if (intervalRef.current) return;
-        intervalRef.current = setInterval(() => setCurrentIndex(prev => (prev + 1) % avaliacoes.length), 4000);
+    window.addEventListener("resize", handleResize);
+    startAutoPlay();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      stopAutoPlay();
+      clearTimeout(timeoutRef.current);
     };
+  }, []);
 
-    const stopAutoPlay = () => {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-    };
+  return (
+    <section className="banner_listagem">
+      <div className="banner_cards">
+        <h2 className="titulo">Avaliações recentes</h2>
 
-    const resetAutoPlay = () => {
-        stopAutoPlay();
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = setTimeout(() => startAutoPlay(), 10000);
-    };
+        <div className="botBanner">
+          <img src={botBanner} alt="" />
+        </div>
 
-    useEffect(() => { startAutoPlay(); return () => { stopAutoPlay(); clearTimeout(timeoutRef.current); }; }, []);
+        <div className="carousel_container">
+          <button className="carousel_button prev" onClick={prevSlide}>
+            <img src={Esquerda} alt="voltar" />
+          </button>
 
-    const visibleCards = getVisibleCards();
+          <div className="carousel_wrapper">
+            <div className="carousel_inner">
+              {getVisibleCards().map((item, index) => (
+                <div key={index} className="card_feedback">
+                  <span className={`badge_sentimento ${item.sentimento}`}>
+                    {item.sentimento}
+                  </span>
 
-    return (
-        <section className='banner_listagem'>
-            <div className="layout_grid banner_cards">
-                <div className="titulo"><h2>Avaliações recentes</h2></div>
-                <div className='botBanner'><img src={botBanner} alt="" /></div>
-                <div className="carousel_container">
-                    <button className="carousel_button prev" onClick={prevSlide}><img src={Esquerda} alt="" /></button>
-                    <div className={`carousel_wrapper ${classificacao}`}>
-                        <div className="carousel_inner">
-                            {visibleCards.map((item) => (
-                                <div key={item.id} className="card_avaliacao">
-                                    <article className="usuario"><img src={Usuario} alt="Usuário" /></article>
-                                    <h3>Usuário</h3>
-                                    <span className={`badge_sentimento ${classificacao}`}>
-                                        {classificacao === "positivo" && "Positivo"}
-                                        {classificacao === "negativo" && "Negativo"}
-                                        {classificacao === "neutro" && "Neutro"}
-                                    </span>
-                                    <p>{item.texto}</p>
-                                    <Link className='link_responder' to="/chat">Responder</Link>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <button className="carousel_button next" onClick={nextSlide}><img src={Direita} alt="" /></button>
+                  <h3 className="nome">{item.nome}</h3>
+
+                  <p className="resumo">{item.resumo}</p>
+
+                  <Link className="link_responder" to="/chat">Responder</Link>
                 </div>
+              ))}
             </div>
-        </section>
-    );
+          </div>
+
+          <button className="carousel_button next" onClick={nextSlide}>
+            <img src={Direita} alt="avançar" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default CardAvaliacao;

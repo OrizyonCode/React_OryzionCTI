@@ -14,7 +14,7 @@ function Chamado() {
     <div className="container_cadastro">
       <form className="form_cadastro">
         <h2>Cadastro de Chamado</h2>
-
+        
         <div className="grid_campos">
           <div className="campo">
             <label>Nome completo</label>
@@ -86,7 +86,6 @@ function Chamado() {
             </label>
           </div>
         </div>
-
         <div className="btn_cadastrar">
           <Botao nomeBotao="Cadastrar" type="submit" />
         </div>

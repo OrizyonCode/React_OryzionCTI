@@ -24,8 +24,6 @@ const ListagemFeedback = () => {
         (f) => f.idFeedback !== idFeedback && f.IdFeedback !== idFeedback
       );
 
-      // 🔹 Se quiser que apareça outro logo em seguida:
-      // (simula a chegada de um novo item da API)
       api.get('/feedback').then((res) => {
         const novos = res.data;
         const feedbackNovo = novos.find(
@@ -115,7 +113,6 @@ const ListagemFeedback = () => {
   return (
     <>
       <Header visibilidade="none" />
-      <BarraPesquisa botaoVoltar="none" />
       <CardAvaliacao />
 
       <main className="main_feedbacks">

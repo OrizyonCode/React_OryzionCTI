@@ -1,191 +1,135 @@
-body {
-    font-family: "Poppins", sans-serif;
-}
-
-
 .banner_listagem {
-    background-color: #040F1E;
+    background-color: #0a1020;
     width: 100%;
-    height: 500px;
-    /* 👈 volta para a altura antiga */
-    position: relative;
-    /* 👈 importante para o posicionamento absoluto dos filhos */
+    height: 380px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .banner_cards {
     width: 100%;
-    height: 100%;
     max-width: 1200px;
-    position: relative;
+    text-align: center;
+    padding-top: 20px;
 }
 
-/* Título fixo no topo */
-.banner_cards .titulo {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
+.titulo {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 20px;
 }
 
-.titulo h2 {
+/* IMAGEM DO ROBO */
+.botBanner img {
+    width: 380px;
+    opacity: 0.15;
     position: absolute;
-    top: 10px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
-    color: white;
-    font-size: 22px;
-    font-weight: 600;
-
-    margin-top: 22px;
 }
 
-
-.card_avaliacao img {
-    margin-top: -20px;
-}
-
-.card_avaliacao h3 {
-    margin-top: -30px;
-}
-
-.botBanner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.botBanner img {
-    height: 500px;
-    object-fit: contain;
-}
-
-.link_responder {
-    color: #313D65;
-    font-weight: 700;
-    text-decoration: none;
-
-}
-
-.link_responder:hover {
-    color: #040F1E;
-    transition: all 0.2s ease-in-out;
-}
-
-/* ------------------ */
-/*   CARROSSEL        */
-/* ------------------ */
+/* ------------------- */
+/*       CARROSSEL     */
+/* ------------------- */
 
 .carousel_container {
     position: absolute;
-    /* 👈 agora fica sobreposto */
-    bottom: 60px;
-    /* 👈 ajusta a posição vertical */
+    bottom: 25px;
+    width: 100%;
+    max-width: 900px;
     left: 50%;
     transform: translateX(-50%);
-    /* centraliza no meio do banner */
-    width: 100%;
-    max-width: 1000px;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .carousel_wrapper {
-    overflow: hidden;
     width: 100%;
+    overflow: hidden;
 }
 
 .carousel_inner {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    transition: transform 0.6s ease-in-out;
+    gap: 25px;
+    transition: transform 0.5s ease;
 }
 
-.carousel_inner .card_avaliacao {
-    background: white;
-    color: black;
+/* CARD DO FEEDBACK */
+.card_feedback {
+    background: #ffffff;
     width: 260px;
-    height: 310px;
-    border-radius: 10%;
-    box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    border: 4px solid #313D65;
-    flex: 0 0 auto;
+    min-height: 170px;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
+    text-align: left;
 }
 
-/* Botões */
+/* NOME DO USUÁRIO */
+.card_feedback .nome {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* RESUMO */
+.card_feedback .resumo {
+    font-size: 14px;
+    color: #444;
+    margin-top: 5px;
+}
+
+/* BADGE */
+.badge_sentimento {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 8px;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.badge_sentimento.positivo {
+    background: #6CCD8F;
+}
+
+.badge_sentimento.negativo {
+    background: #E06C6C;
+}
+
+.badge_sentimento.neutro {
+    background: #8AA7B6;
+}
+
+/* LINK */
+.link_responder {
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 13px;
+    color: #313D65;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* BOTÕES */
 .carousel_button {
-    position: absolute;
-
-    transform: translateY(-50%);
-    background-color: #313D65;
-    color: white;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-
+    background: #1f2740;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    opacity: 0.85;
-
-    height: 40px;
-    width: 40px;
-
+    border: 2px solid #8893b0;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
-.carousel_button.prev {
-    left: -50px;
-
-
-}
-
-.carousel_button.next {
-    right: -50px;
+.carousel_button img {
+    width: 15px;
 }
 
 .carousel_button:hover {
-    opacity: 1;
-    background-color: #1f2a44;
-}
-
-
-@media (max-width: 600px) {
-  .botBanner img {
-    height: 400px;
-    margin-top: 40px;
-  }
-
-  .carousel_button {
-    background-color: #313D65;
-    width: 30px;
-    height: 30px;
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .carousel_button img {
-    width: 14px;
-    height: 14px;
-  }
-
-  .carousel_button.prev {
-    left: 10px;
-  }
-
-  .carousel_button.next {
-    right: 10px;
-  }
+    background-color: #2b3550;
 }

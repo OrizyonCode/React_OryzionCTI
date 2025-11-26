@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Header.css';
-import Logo from '../../assets/img/LogoOryzion.svg';
-import Suporte from '../../assets/img/IconSuporte.svg';
+import Logo from '../../assets/img/oryzionLogo.svg';
+import Suporte from '../../assets/img/clara.svg';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import secureLocalStorage from "react-secure-storage";
@@ -33,7 +33,7 @@ const Header = (props) => {
           </div>
           <div className='header_pefil'>
             <h3 className='usuario'>
-              {usuario?.nome ? usuario.nome : "Usuário"}
+              {usuario?.nome ? usuario.nome : "Clara"}
             </h3>
               <img src={Suporte} alt="Ícone de perfil" />
           </div>
@@ -47,9 +47,8 @@ const Header = (props) => {
       <nav className='layout_grid header_header'>
         <div className='logo_header'>
           <img src={Logo} alt="Logo Oryzion" />
-        </div>
-
-        <div className={`mobile_menu ${menuAtivo ? 'active' : ''}`} onClick={toggleMenu}>
+          
+                  <div className={`mobile_menu ${menuAtivo ? 'active' : ''}`} onClick={toggleMenu}>
           <div className='line1'></div>
           <div className='line2'></div>
           <div className='line3'></div>
@@ -89,12 +88,15 @@ const Header = (props) => {
           )}
         </ul>
         
+        </div>
+
         <div className='header_pefil'>
           <h3 className='usuario'>
-            {usuario?.nome ? usuario.nome : "Usuário"}
+            {usuario?.nome ? usuario.nome : "Clara"}
           </h3>
             <img src={Suporte} alt="Ícone de perfil" />
         </div>
+
         
       </nav>
     </header>
