@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './ListagemChamado.css';
+
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
-import mais from '../../assets/img/MaisBotao.svg';
-import adiciona from '../../assets/img/adicionar.svg';
-import upload from '../../assets/img/Upload.svg';
-import edita from '../../assets/img/Editar.svg';
 import BarraPesquisa from '../../components/barraPesquisa/BarraPesquisa';
 
-const ListagemChamado = () => {
+import './ListagemChamado.css';
 
+import mais from '../../assets/img/MaisBotao.svg';
+import adiciona from '../../assets/img/adicionar.svg';
+import transcricao from '../../assets/img/transcricao.png';
+import download from '../../assets/img/download.png';
+
+const ListagemChamado = () => {
   const [chamados, setChamados] = useState([]);
   const [erro, setErro] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [modalAberto, setModalAberto] = useState(false);
+  const [transcricaoSelecionada, setTranscricaoSelecionada] = useState("");
 
+  // Buscar chamados
   useEffect(() => {
     async function buscarChamados() {
       try {
         const resposta = await fetch("http://localhost:5128/api/Chamado");
-
         const contentType = resposta.headers.get("content-type") || "";
 
         if (!resposta.ok) {
@@ -28,13 +32,13 @@ const ListagemChamado = () => {
         }
 
         if (!contentType.includes("application/json")) {
-          throw new Error(`⚠️ Resposta da API não é JSON. content-type: ${contentType}`);
+          throw new Error(`Resposta da API não é JSON. Tipo recebido: ${contentType}`);
         }
 
         const dados = await resposta.json();
         setChamados(dados);
+
       } catch (error) {
-        console.error("Erro ao buscar chamados:", error);
         setErro(error.message);
       } finally {
         setLoading(false);
@@ -44,14 +48,47 @@ const ListagemChamado = () => {
     buscarChamados();
   }, []);
 
-  if (erro) {
-    return <p style={{ color: 'red', textAlign: 'center' }}>Erro ao carregar chamados: {erro}</p>;
-  }
+  if (loading) return <p>🔄 Carregando chamados...</p>;
+  if (erro) return <p className="erro">Erro ao carregar chamados: {erro}</p>;
 
-  // FILTRO — pesquisa pelo nome do cliente
-  const chamadosFiltrados = chamados.filter(c =>
-    c.cliente?.usuario?.nome?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filtro seguro
+  const chamadosFiltrados = chamados.filter((c) => {
+    const termo = searchTerm.toLowerCase();
+
+    const protocolo = (c.idChamado ?? "").toString().toLowerCase();
+    const cliente = (c.cliente?.usuario?.nome ?? "").toLowerCase();
+    const status = c.status ? "ativo" : "pendente";
+
+    return (
+      protocolo.includes(termo) ||
+      cliente.includes(termo) ||
+      status.includes(termo)
+    );
+  });
+
+
+  // 🔥 ABRIR MODAL + GERAR TRANSCRIÇÃO
+  const abrirModal = async (idChamado) => {
+    try {
+      setTranscricaoSelecionada("Gerando transcrição...");
+      setModalAberto(true);
+
+      const resposta = await fetch(
+        `http://localhost:5128/api/Chamado/transcricao/${idChamado}`
+      );
+
+      if (!resposta.ok) {
+        throw new Error("Erro ao gerar a transcrição.");
+      }
+
+      const dados = await resposta.json();
+      setTranscricaoSelecionada(dados.transcricao);
+
+    } catch (error) {
+      console.error(error);
+      setTranscricaoSelecionada("Não foi possível gerar a transcrição.");
+    }
+  };
 
   return (
     <>
@@ -59,75 +96,91 @@ const ListagemChamado = () => {
 
       <BarraPesquisa mostrarFiltros={false} onSearch={setSearchTerm} />
 
-      <section className='layout_grid listagemChamado'>
-        <div className='img_adiciona'>
+      <section className="layout_grid listagemChamado">
+
+        {/* Botão Adicionar */}
+        <div className="img_adiciona">
           <Link to="/chamado" className="botao_adicionar">
             <img src={mais} alt="Mais" />
             <img src={adiciona} alt="Adicionar Chamado" />
           </Link>
         </div>
 
-        {loading ? (
-          <p>🔄 Carregando chamados...</p>
-        ) : (
-          <div className='tabela_chamados'>
+        {/* Tabela */}
+        <div className="tabela_chamados">
 
-            {/* PROTOCOLO */}
-            <div className='coluna tabela_header'>
-              <h3>Protocolo</h3>
-              {chamadosFiltrados.map((c, index) => (
-                <p key={c.idChamado}>
-                  {String(index + 1).padStart(5, '0')}
-                </p>
-              ))}
-            </div>
+          {/* Cabeçalho */}
+          <div className="linha header">
+            <h3>Protocolo</h3>
+            <h3>Cliente</h3>
+            <h3>Transcrição</h3>
+            <h3>Áudio</h3>
+            <h3>Status</h3>
+          </div>
 
-            {/* NOME (nome do cliente) */}
-            <div className='coluna tabela_header'>
-              <h3>Nome</h3>
-              {chamadosFiltrados.map((c, index) => (
-                <p key={index}>{c.cliente?.usuario?.nome || "—"}</p>
-              ))}
-            </div>
+          {/* Linhas */}
+          {chamadosFiltrados.map((c, index) => (
+            <div className="linha" key={c.idChamado}>
 
-            {/* RESUMO */}
-            <div className='coluna tabela_header'>
-              <h3>Resumo</h3>
-              {chamadosFiltrados.map((c, index) => (
-                <div key={index}>
-                  <Link to={`/resumo/${c.idChamado}`}>
-                    <img src={mais} alt="Ver resumo" />
-                  </Link>
+              {/* Protocolo */}
+              <p>{c.idChamado}</p>
+
+              {/* Cliente */}
+              <p>{c.cliente?.usuario?.nome ?? "—"}</p>
+
+              {/* Transcrição */}
+              <div className="acao">
+                <div onClick={() => abrirModal(c.idChamado)}>
+                  <img
+                    src={transcricao}
+                    alt="Transcrição"
+                    style={{ cursor: "pointer" }}
+                  />
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* UPLOAD */}
-            <div className='coluna tabela_header'>
-              <h3>Upload</h3>
-              {chamadosFiltrados.map((c, index) => (
-                <div key={index}>
-                  <label htmlFor={`uploadItem-${index}`}>
-                    <img src={upload} alt="Upload" style={{ cursor: 'pointer' }} />
-                  </label>
-                  <input type="file" id={`uploadItem-${index}`} accept="*" hidden />
-                </div>
-              ))}
-            </div>
+              {/* Áudio */}
+              <div className="acao">
+                {c.audio ? (
+                  <a href={c.audio} download>
+                    <img
+                      src={download}
+                      alt="Baixar áudio"
+                      style={{ cursor: "pointer" }}
+                    />
+                  </a>
+                ) : (
+                  <p style={{ opacity: 0.5 }}>—</p>
+                )}
+              </div>
 
-            {/* STATUS */}
-            <div className='coluna tabela_header'>
-              <h3>Status</h3>
-              {chamadosFiltrados.map((c, index) => (
-                <p key={index}>
-                  {c.status ? "✅ Ativo" : "⏳ Pendente"}
-                </p>
-              ))}
+              {/* Status */}
+              <p>{c.status ? "✅ Ativo" : "⏳ Pendente"}</p>
+
             </div>
+          ))}
+
+        </div>
+      </section>
+
+      {/* MODAL */}
+      {modalAberto && (
+        <div className="modal_overlay">
+          <div className="modal_conteudo">
+
+            <h2 className='titulo_do_modal'>Transcrição do Áudio</h2>
+
+            <p className="texto_transcricao">
+              {transcricaoSelecionada || "Nenhuma transcrição disponível."}
+            </p>
+
+            <button onClick={() => setModalAberto(false)}>
+              Fechar
+            </button>
 
           </div>
-        )}
-      </section>
+        </div>
+      )}
 
       <Footer />
     </>
