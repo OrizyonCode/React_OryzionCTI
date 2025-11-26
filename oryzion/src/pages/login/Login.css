@@ -121,7 +121,7 @@
 /* ===== Botão ===== */
 .login_botao button {
     width: 100%;
-    padding: 14px;
+    /* padding: 14px; */
     border-radius: 6px;
 }
 
