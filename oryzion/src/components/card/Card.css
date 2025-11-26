@@ -1,31 +1,33 @@
 .card {
-  width: 100%;
-  max-width: 1100px; /* Aumentado para esticar o card */
+  width: 100%;          /* ocupa toda a largura possível */
+  max-width: 1400px;    /* limite máximo = bem esticado */
+  margin: 0 auto;       /* centraliza na tela */
+
   background: #ffffff;
-  padding: 30px; /* Aumentado para dar mais espaço interno */
+  padding: 30px; 
   border-radius: 16px;
-  /* O card precisa de position relative para posicionar o botão */
   position: relative; 
   display: flex;
   flex-direction: column;
-  gap: 30px; /* Aumentado o espaçamento entre as seções */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  justify-content: center;
+  gap: 30px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.193);
   font-family: sans-serif;
 }
 
 /* --- SEÇÃO SUPERIOR (Foto, Texto e Botão) --- */
 
 /* Novo container para o conteúdo de cima */
-.card-top-content {
+.card_top_content {
   display: flex;
-  align-items: flex-start; /* Alinha os itens ao topo */
-  gap: 25px; /* Aumentado */
+  align-items: flex_start; /* Alinha os itens ao topo */
+  gap: 25px; 
   /* Garante que os elementos de texto e foto fiquem alinhados */
-  padding-right: 140px; /* Aumentado para manter o espaço do botão Responder */
+  padding-right: 140px; /* Espaço para o botão "Responder" que é absoluto */
 }
 
 /* Agrupamento da foto e nome (Nome em baixo da foto) */
-.card-user-info {
+.card_user_info {
   display: flex;
   flex-direction: column; /* Organiza verticalmente */
   align-items: center; /* Centraliza a foto e o nome */
@@ -40,17 +42,18 @@
   object-fit: cover;
 }
 
-.card-name {
+.card_name {
   font-size: 16px; /* Tamanho ajustado conforme a imagem */
   font-weight: 600;
   margin: 0;
   color: #333;
 }
 
-.card-text {
+.card_text {
   font-size: 18px;
   color: #333;
   line-height: 1.5;
+  max-width: 1000px;
   margin-top: 5px; /* Alinha o texto com o topo da foto */
   flex-grow: 1; /* Permite que o texto ocupe o espaço restante */
 }
@@ -73,43 +76,43 @@
   border-radius: 8px;
   cursor: pointer;
   transition: 0.2s ease;
-  font-weight: 100;
 }
 
 .responder_botao button:hover {
   background: #111828;
+  color: #fff;
   border: none;
-  color: white;
 }
 
 /* --- SEÇÃO INFERIOR (Footer: Badge e Áudio) --- */
-.card-footer {
+.card_footer {
   display: flex;
   align-items: center;
   gap: 25px; /* Aumentado */
 }
 
 /* Estilos do Badge (Neutro) */
-.card-tag {
+.card_tag {
   /* Cor e estilo como na imagem: Fundo claro, texto escuro, cantos arredondados */
-  background: #e0e6ec; 
-  color: #4b4b4b; 
+  background: #DAE8FF; 
+  color: #586E9D; 
   padding: 8px 16px;
-  border-radius: 10px;
+  border-radius: 50px;
   font-size: 14px;
   font-weight: 600;
   flex-shrink: 0;
+  margin-top: -25px;
 }
 
 /* Estilos do Áudio Player */
-.card-audio {
+.card_audio {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-grow: 1;
 }
 
-.card-play {
+.card_play {
   /* Botão Play do jeito que está na imagem */
   background: #fff;
   border: none;
@@ -122,20 +125,21 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 0 0 1px #e0e6ec; /* Borda sutil como na imagem */
+  box-shadow: 0 0 0 1px black; /* Borda sutil como na imagem */
   padding-left: 3px; /* Ajuste visual para o triângulo */
   flex-shrink: 0;
 }
 
-.card-bar {
+.card_bar {
   flex: 1;
   height: 8px;
   background: #ddd;
   border-radius: 6px;
   position: relative;
+  max-width: 900px;
 }
 
-.card-bar-progress {
+.card_bar_progress {
   height: 100%;
   background: #5d50e8; /* Cor do progresso */
   border-radius: 6px;
@@ -143,7 +147,7 @@
   /* Ponto de arraste (handle) */
 }
 
-.card-bar-progress::after {
+.card_bar_progress::after {
     content: '';
     position: absolute;
     right: 0;
@@ -156,7 +160,7 @@
     border: 3px solid #5d50e8; /* Borda roxa do handle */
 }
 
-.card-time {
+.card_time {
   font-size: 14px;
   /* Cor cinza sutil */
   color: #999; 

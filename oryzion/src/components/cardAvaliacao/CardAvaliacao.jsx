@@ -3,57 +3,108 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Esquerda from '../../assets/img/setaEsquerda.svg'
 import Direita from '../../assets/img/setaDireita.svg'
-// O import de 'botBanner' foi removido, pois a imagem não o exibe.
-// import botBanner from '../../assets/img/botBanner.svg' 
+import api from '../../Services/services';
 
-const feedbacks = [
-    {
-        id: 1,
-        nome: "Ana Clara",
-        classificacao: "neutro",
-        texto: "Ótimo suporte, mas a interface poderia ser mais intuitiva.",
-        cor: "#DDE6FF"
-    },
-    {
-        id: 2,
-        nome: "Carlos Souza",
-        classificacao: "negativo",
-        texto: "Péssimo suporte, demoraram muito para resolver um simples problema.",
-        cor: "#FFD6D6"
-    },
-    {
-        id: 3,
-        nome: "Carlos Souza",
-        classificacao: "positivo",
-        texto: "Ótimo suporte, resolveram meu problema rapidamente.",
-        cor: "#CCF2D5"
-    }
-];
+// Mapeamento das cores dos badges com base na classificação (sentimento)
+const BADGE_COLORS = {
+    positivo: '#CCF2D5',
+    negativo: '#FFD6D6',
+    neutro: '#DDE6FF'
+};
 
 const CardAvaliacao = () => {
 
+    const [feedbacksData, setFeedbacksData] = useState([]); 
+    const [isLoading, setIsLoading] = useState(true); 
+    
     const [index, setIndex] = useState(0);
-    // Define 3 cards visíveis em telas grandes, 1 em telas pequenas.
     const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
 
+
     useEffect(() => {
+        
+        const fetchFeedbacks = async () => {
+            try {
+                // 1. Apenas uma chamada: /api/Feedback (inclui a classificação)
+                const response = await api.get('/Feedback'); 
+                
+                const rawFeedbacks = response.data;
+
+                // 2. Filtrar, Mapear e Enriquecer os Feedbacks
+                const filteredData = rawFeedbacks
+                    .filter(fb => {
+                        // 2a. Regra de Negócio: Filtro de MENOS de 10 palavras
+                        const wordCount = fb.texto.trim().split(/\s+/).length;
+                        return wordCount < 10;
+                    })
+                    .map(fb => {
+                        // 🛑 CORREÇÃO AQUI: Acessando "classificacao" e "comentario" (camelCase)
+                        const classificacaoNome = fb.classificacao?.comentario?.toLowerCase() || 'neutro'; 
+                        const cor = BADGE_COLORS[classificacaoNome] || BADGE_COLORS.neutro;
+
+                        return {
+                            id: fb.idFeedback, 
+                            // O nome do usuário permanece como placeholder (Usuário Anônimo)
+                            nome: "Usuário Anônimo", 
+                            classificacao: classificacaoNome,
+                            texto: fb.texto,
+                            cor: cor
+                        };
+                    });
+
+                setFeedbacksData(filteredData);
+                setIndex(0);
+                
+
+            } catch (error) {
+                console.error("Erro ao buscar dados da API:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        
+        fetchFeedbacks();
+
+        // Lógica de resize handler
         const h = () => setVisibleCount(window.innerWidth <= 768 ? 1 : 3);
         window.addEventListener("resize", h);
         return () => window.removeEventListener("resize", h);
-    }, []);
+        
+    }, []); 
 
-    const next = () => setIndex(prev => (prev + 1) % feedbacks.length);
-    const prev = () => setIndex(prev => (prev - 1 + feedbacks.length) % feedbacks.length);
+    // --- Lógica do Carrossel (invariável) ---
+    const totalItems = feedbacksData.length;
+    const next = () => setIndex(prev => (prev + 1) % totalItems);
+    const prev = () => setIndex(prev => (prev - 1 + totalItems) % totalItems);
 
     const getVisibleCards = () => {
+        if (totalItems === 0) return [];
+
         const arr = [];
         for (let i = 0; i < visibleCount; i++) {
-            // Usa o operador módulo (%) para criar um loop de cards.
-            arr.push(feedbacks[(index + i) % feedbacks.length]);
+            arr.push(feedbacksData[(index + i) % totalItems]);
         }
         return arr;
     };
+    
+    // --- Renderização de Estado ---
+    if (isLoading) {
+        return (
+            <section className='banner_listagem'>
+                <div style={{color: 'white', fontSize: '24px', textAlign: 'center'}}>Carregando feedbacks curtos...</div>
+            </section>
+        );
+    }
+    
+    if (totalItems === 0) {
+         return (
+            <section className='banner_listagem'>
+                <div style={{color: 'white', fontSize: '24px', textAlign: 'center'}}>Nenhum feedback curto encontrado para o carrossel.</div>
+            </section>
+        );
+    }
 
+    // --- Renderização Principal ---
     return (
         <section className='banner_listagem'>
             <div className="layout_grid banner_cards">
@@ -68,10 +119,8 @@ const CardAvaliacao = () => {
                         <div className="carousel_inner_feedback">
                             {getVisibleCards().map((fb) => (
                                 <div key={fb.id} className="feedback_card">
-
-                                  
-
-                                    <h3>{fb.nome}</h3>
+                                    
+                                    <h3>{fb.nome}</h3> 
 
                                     <span
                                         className="badge_feedback"
@@ -97,12 +146,12 @@ const CardAvaliacao = () => {
                     </button>
                 </div>
 
-                {/* Adicionado o indicador de bolinhas (dots) */}
+                {/* Indicador de bolinhas (dots) */}
                 <div className="carousel_dots">
-                    {feedbacks.map((_, i) => (
+                    {feedbacksData.map((_, i) => (
                         <span
                             key={i}
-                            className={`dot ${i === index % feedbacks.length ? "active" : ""}`}
+                            className={`dot ${i === index % totalItems ? "active" : ""}`}
                             onClick={() => setIndex(i)}
                         />
                     ))}
