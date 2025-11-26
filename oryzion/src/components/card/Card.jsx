@@ -1,94 +1,49 @@
-import React, { useState } from 'react';
-import './Card.css';
-import audioMp3 from '../../assets/audio/audio.teste.mp3';
-import audioMobile from "../../assets/img/audioPlay.svg";
-import imgUsuario from "../../assets/img/Usuario.svg";
-import Botao from '../botao/Botao';
-import { Link } from "react-router-dom";
-import Like from "../../assets/img/like.svg";
-import Dislike from "../../assets/img/dislike.svg";
+import React from "react";
+// Assumindo que você ainda precisa importar Usuario e Botao
+import Usuario from '../../assets/img/Profile2.png' 
+import Botao from "../botao/Botao";
+import "./Card.css";
 
-const Card = ({ classificacao = "neutro", resumo, texto, onAtivar, onDesativar }) => {
-  const [expandir, setExpandir] = useState(false);
-  const [ativo, setAtivo] = useState(true); 
-
-  const textoSentimento = {
-    positivo: "Positivo",
-    negativo: "Negativo",
-    neutro: "Neutro",
-  }[classificacao] || "Neutro";
-
-  async function checkFeedback() {
-    try {
-      setAtivo(true);
-      if (onAtivar) onAtivar(); 
-    } catch (error) {
-      alert("Erro ao ativar feedback");
-    }
-  }
-
-  async function desativarFeedback() {
-    try {
-      setAtivo(false);
-      if (onDesativar) onDesativar(); 
-    } catch (error) {
-      alert("Erro ao desativar feedback");
-    }
-  }
-
-  if (!ativo) return null;
-
+export default function Card() {
   return (
-    <div className={`divs_card ${classificacao}`}>
-      <div className="card_header">
-        <div className="campo_usuario">
-          <img src={imgUsuario} alt="Foto do usuário" />
-          <p>Usuário</p>
+    <div className="card">
+      
+      {/* 1. Header (Contém Foto/Nome, Texto e Botão) */}
+      <div className="card_top_content">
+        
+        {/* Lado Esquerdo: Foto e Nome */}
+        <div className="card_user_info">
+          <img className="avatar_user" src={Usuario} alt="Usuário" />
+          <h3 className="card_name">João</h3>
         </div>
 
-        <span className={`badge_sentimento ${classificacao}`}>
-          {textoSentimento}
-        </span>
+        {/* Centro: Texto do Feedback */}
+        <p className="card_text">
+          O aplicativo é bom, mas o processo de chatboarding poderia ser mais
+          claro. Fiquei um pouco perdido no início mas depois consegui explicar
+          meu problema.
+        </p>
+        
+        {/* Lado Direito: Botão Responder */}
+        <div className="responder_botao">
+          <Botao nomeBotao="Responder" type="submit" />
+        </div>
       </div>
-
-      <div className="campo_feedback">
-        <div className={`campo_comentario ${expandir ? 'expandido' : ''}`}>
-          <p className={expandir ? 'mostrar' : 'ocultar'}>{resumo || texto}</p>
-
-          <button
-            className="botao_leia_mais"
-            onClick={() => setExpandir(!expandir)}
-          >
-            {expandir ? 'Mostrar menos' : 'Mostrar mais'}
-          </button>
-        </div>
-      </div>
-
-      <div className="campo_audio">
-        <picture>
-          <source media="(max-width: 768px)" srcSet={audioMobile} />
-          <audio controls>
-            <source src={audioMp3} type="audio/mpeg" />
-          </audio>
-        </picture>
-
-        <div className='like_dislike'>
-          <button onClick={checkFeedback}>
-            <img src={Like} alt="Like" />
-          </button>
-          <button onClick={desativarFeedback}>
-            <img src={Dislike} alt="Dislike" />
-          </button>
-        </div>
-
-        <div className="botao_responde_card">
-          <Link to="/chat">
-            <Botao nomeBotao="Responder" />
-          </Link>
+      
+      {/* 2. Footer (Contém Badge, Áudio e Tempo) */}
+      <div className="card_footer">
+        {/* Badge "Neutro" */}
+        <span className="card_tag">Neutro</span>
+        
+        {/* Player de Áudio */}
+        <div className="card_audio">
+          <button className="card_play">▶</button>
+          <div className="card_bar">
+            <div className="card_bar_progress" style={{ width: "40%" }}></div>
+          </div>
+          <span className="card_time">00:43/01:53</span>
         </div>
       </div>
     </div>
   );
-};
-
-export default Card;
+}

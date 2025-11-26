@@ -1,5 +1,4 @@
 import './CardAvaliacao.css'
-import Usuario from '../../assets/img/Usuario.svg'
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Esquerda from '../../assets/img/setaEsquerda.svg'
@@ -59,14 +58,6 @@ const CardAvaliacao = () => {
         <section className='banner_listagem'>
             <div className="layout_grid banner_cards">
 
-                {/* Removido o título fixo para replicar a imagem */}
-                {/* <div className="titulo"><h2>Avaliações recentes</h2></div> */}
-
-                {/* Removido o robô para replicar a imagem */}
-                {/* <div className='botBanner'>
-                    <img src={botBanner} alt="" />
-                </div> */}
-
                 <div className="carousel_container">
 
                     <button className="carousel_button prev" onClick={prev}>
@@ -78,7 +69,7 @@ const CardAvaliacao = () => {
                             {getVisibleCards().map((fb) => (
                                 <div key={fb.id} className="feedback_card">
 
-                                    <img className="avatar_user" src={Usuario} alt="Usuário" />
+                                  
 
                                     <h3>{fb.nome}</h3>
 

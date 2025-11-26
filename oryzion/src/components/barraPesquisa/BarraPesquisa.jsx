@@ -3,23 +3,28 @@ import Lupa from "../../assets/img/lupa2.png";
 import Filtro from "../../assets/img/Slider.svg";
 import "./BarraPesquisa.css";
 
-const BarraPesquisa = ({ visibilidade, onSearch }) => {
+const BarraPesquisa = ({ mostrarFiltros = true, onSearch }) => {
   const [mostrarMenu, setMostrarMenu] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Atualiza isMobile no primeiro render e no resize
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check(); 
+    window.addEventListener("resize", check);
+
+    return () => window.removeEventListener("resize", check);
   }, []);
 
-  const toggleMenu = () => setMostrarMenu(!mostrarMenu);
+  const toggleMenu = () => {
+    setMostrarMenu((prev) => !prev);
+  };
 
   return (
     <div className="barra_pesquisa_container">
 
       {/* Filtro Mobile */}
-      {isMobile && visibilidade !== "none" && (
+      {isMobile && mostrarFiltros && (
         <div className="filtro_container">
           <img
             src={Filtro}
@@ -43,16 +48,15 @@ const BarraPesquisa = ({ visibilidade, onSearch }) => {
       {/* Barra de Pesquisa */}
       <div className="search_box">
         <img src={Lupa} alt="Pesquisar" className="lupa_icon" />
-        
         <input
           type="text"
           placeholder="Pesquise por feedback..."
-          onChange={(e) => onSearch(e.target.value)} // ← AGORA FUNCIONA
+          onChange={(e) => onSearch(e.target.value)}
         />
       </div>
 
       {/* Filtro Desktop */}
-      {!isMobile && visibilidade !== "none" && (
+      {!isMobile && mostrarFiltros && (
         <ul className="links">
           <li>Negativos</li>
           <li>Positivos</li>
