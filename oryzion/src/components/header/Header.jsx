@@ -58,10 +58,8 @@ const Header = (props) => {
           <div className='line3'></div>
         </div>
 
-        {/* 2. Lógica Condicional de Agrupamento de Links com a Regra de Ocultar na Própria Página */}
         <ul className={`nav_list ${menuAtivo ? 'active' : ''}`} style={props.link_header}>
           {estaNoDashboard ? (
-            // Só aparece no dashboard (e some na própria página do link)
             <>
               {!estaNoCadastroEquipe && (
                 <li>
@@ -72,7 +70,6 @@ const Header = (props) => {
               )}
             </>
           ) : (
-            // Aparece em todas as outras telas (e some na própria página do link)
             <>
               {!estaNaListaChamados && (
                 <li>

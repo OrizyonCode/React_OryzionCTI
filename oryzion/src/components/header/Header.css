@@ -63,7 +63,7 @@ ul p{
   line-height: 1;             /* ⬅️ Remove altura extra */
   display: flex;
   align-items: center;        /* ⬅️ Centraliza verticalmente */
-  height: 32px;               /* ⬅️ Igual à imagem */
+  height: 36px;               /* ⬅️ Igual à imagem */
 }
 
 .header_pefil img {
