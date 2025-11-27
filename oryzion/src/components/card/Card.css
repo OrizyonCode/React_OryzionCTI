@@ -1,184 +1,168 @@
-.divs_card {
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 750px;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 4px 5px 15px rgba(0, 0, 0, 0.1);
-  margin: 0 auto 25px auto;
-}
+.card {
+  width: 100%;          /* ocupa toda a largura possível */
+  max-width: 1400px;    /* limite máximo = bem esticado */
+  margin: 0 auto;       /* centraliza na tela */
 
-/* Header */
-.card_header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-}
-
-.like_dislike button{
-  background-color: transparent;
-  border: none;
-  color: #fff; 
-  cursor: pointer;
-}
-
-.like_dislike img{
-  height: 37px;
-}
-
-.like_dislike{
-  gap: 20px;
-}
-
-
-
-.badge_sentimento {
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  color: #fff;
-  margin-left: auto;
-}
-
-.badge_sentimento.positivo {
-  background-color: #2ecc71; /* verde */
-}
-
-.badge_sentimento.negativo {
-  background-color: #e74c3c; /* vermelho */
-}
-
-.badge_sentimento.neutro {
-  background-color: #95a5a6; /* cinza */
-}
-
-
-.campo_usuario {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.campo_usuario img {
-  width: 55px;
-  border-radius: 50%;
-}
-
-.campo_usuario p {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2c2c2c;
-}
-
-/* Comentário */
-.campo_feedback {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.campo_comentario {
-  background-color: #d7dbeb;
+  background: #ffffff;
+  padding: 30px; 
   border-radius: 16px;
-  padding: 15px 18px;
-  transition: all 0.3s ease;
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.193);
+  font-family: sans-serif;
 }
 
-.campo_comentario p {
-  font-size: 16px;
-  color: #2c2c2c;
-  line-height: 1.5;
+/* --- SEÇÃO SUPERIOR (Foto, Texto e Botão) --- */
+
+/* Novo container para o conteúdo de cima */
+.card_top_content {
+  display: flex;
+  align-items: flex_start; /* Alinha os itens ao topo */
+  gap: 25px; 
+  /* Garante que os elementos de texto e foto fiquem alinhados */
+  padding-right: 140px; /* Espaço para o botão "Responder" que é absoluto */
 }
 
-/* Oculta parte do texto */
-.campo_comentario p.ocultar {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Agrupamento da foto e nome (Nome em baixo da foto) */
+.card_user_info {
+  display: flex;
+  flex-direction: column; /* Organiza verticalmente */
+  align-items: center; /* Centraliza a foto e o nome */
+  gap: 5px; /* Espaço entre a foto e o nome */
+  flex-shrink: 0; /* Impede que este bloco encolha */
 }
 
-/* Botão “Mostrar mais” */
-.botao_leia_mais {
-  background: none;
-  border: none;
-  color: #313D65;
+.avatar_user {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card_name {
+  font-size: 16px; /* Tamanho ajustado conforme a imagem */
   font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.card_text {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.5;
+  max-width: 1000px;
+  margin-top: 5px; /* Alinha o texto com o topo da foto */
+  flex-grow: 1; /* Permite que o texto ocupe o espaço restante */
+}
+
+/* Botão "Responder" Posicionamento */
+.responder_botao {
+  /* Posicionamento ABSOLUTO para ficar no canto superior direito */
+  position: absolute;
+  top: 30px; /* Ajustado para o novo padding */
+  right: 30px; /* Ajustado para o novo padding */
+}
+
+.responder_botao button {
+  background: #5d50e8; /* Cor roxa da imagem */
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 6px;
-  font-size: 15px;
-  align-self: flex-end;
   transition: 0.2s ease;
 }
 
-.botao_leia_mais:hover {
-  color: #000;
-}
-
-/* Áudio e botão lado a lado */
-.campo_audio {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-.campo_audio audio {
-  flex: 1;
-}
-
-.botao_responde_card {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.botao_responde_card button {
-  background-color: #313D65;
+.responder_botao button:hover {
+  background: #111828;
   color: #fff;
-  font-size: 15px;
-  font-weight: 600;
   border: none;
-  border-radius: 8px;
-  padding: 10px 25px;
+}
+
+/* --- SEÇÃO INFERIOR (Footer: Badge e Áudio) --- */
+.card_footer {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Aumentado */
+}
+
+/* Estilos do Badge (Neutro) */
+.card_tag {
+  /* Cor e estilo como na imagem: Fundo claro, texto escuro, cantos arredondados */
+  background: #DAE8FF; 
+  color: #586E9D; 
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: -25px;
+}
+
+/* Estilos do Áudio Player */
+.card_audio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+.card_play {
+  /* Botão Play do jeito que está na imagem */
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+  color: #5d50e8; /* Cor do ícone play */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background 0.3s ease;
+  box-shadow: 0 0 0 1px black; /* Borda sutil como na imagem */
+  padding-left: 3px; /* Ajuste visual para o triângulo */
+  flex-shrink: 0;
 }
 
-.botao_responde_card button:hover {
-  background-color: #040F1E;
+.card_bar {
+  flex: 1;
+  height: 8px;
+  background: #ddd;
+  border-radius: 6px;
+  position: relative;
+  max-width: 900px;
 }
 
-/* ===== Responsividade ===== */
-@media (max-width: 768px) {
-  .divs_card {
-    padding: 15px;
-    gap: 12px;
-  }
+.card_bar_progress {
+  height: 100%;
+  background: #5d50e8; /* Cor do progresso */
+  border-radius: 6px;
+  position: relative;
+  /* Ponto de arraste (handle) */
+}
 
-  .campo_usuario img {
-    width: 45px;
-  }
+.card_bar_progress::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 3px solid #5d50e8; /* Borda roxa do handle */
+}
 
-  .campo_usuario p {
-    font-size: 16px;
-  }
-
-  .campo_audio {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .botao_responde_card {
-    width: 100%;
-  }
-
-  .botao_responde_card button {
-    width: 100%;
-  }
+.card_time {
+  font-size: 14px;
+  /* Cor cinza sutil */
+  color: #999; 
+  flex-shrink: 0;
 }

@@ -203,8 +203,17 @@
   font-size: 14px;
 }
 
+<<<<<<< HEAD
 .linha_feedback p {
   color: #E2E9F0;
+=======
+.linha_feedback:nth-child(){
+  margin-left: 10px;
+}
+
+.linha_feedback:last-child {
+  border-bottom: none;
+>>>>>>> 66ae530078e929a99d5d4e80c3fd4ca93d315efb
 }
 
 /* Feedback com ellipsis */

@@ -43,7 +43,6 @@ const Login = () => {
       const resposta = await api.post("Login", usuario);
       const token = resposta.data.token;
 
-      // ⚠️ ALERTA PARA CAMPOS VAZIOS — MINI ADICIONADO AQUI
       if (email.trim() === "" || senha.trim() === "") {
         Swal.fire({
           position: "top-end",

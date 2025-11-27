@@ -11,6 +11,7 @@ import TelaInicial from '../pages/telaInicial/TelaInicial.jsx'
 import Login from '../pages/login/Login.jsx'
 import Error from '../pages/error/ErrorPage.jsx'
 import DashLista from "../pages/dashListagem/DashListagem.jsx"
+import RedefinirSenha from '../pages/redefinirSenha/RedefinirSenha.jsx';
 
 
 
@@ -29,6 +30,8 @@ const Rotas = () => {
                 <Route path='/resumo' element={<Resumo/>} />
                 <Route path='/DashListagem' element={<DashLista/>} />
                 <Route path='*' element={<Error/>} />
+                <Route path="/redefinir-senha/:token" element={<RedefinirSenha />} />
+
         </Routes>
     )
 }

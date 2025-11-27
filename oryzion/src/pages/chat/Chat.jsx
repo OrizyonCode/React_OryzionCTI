@@ -1,66 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
-import ModalSuporte from '../../components/modal/Modal'; 
-import audioMp3 from '../../assets/audio/audio.teste.mp3';
+import ModalSuporte from '../../components/modal/Modal';
 import Usuario from '../../assets/img/Usuario.svg';
 import { Link } from 'react-router-dom';
 import "./Chat.css";
 
-const Chat = () => {
-  const [modalAberto, setModalAberto] = useState(false);
-  const [chat, setChat] = useState([]);
+const Chat = ({ idFeedback, respostaService }) => {
+const [modalAberto, setModalAberto] = useState(false);
+const [mensagem, setMensagem] = useState("");
+const [chat, setChat] = useState([]);
 
-  const abrirModal = () => setModalAberto(true);
-  const fecharModal = () => setModalAberto(false);
+const abrirModal = () => setModalAberto(true);
+const fecharModal = () => setModalAberto(false);
 
-        
+const carregarMensagens = async () => {
+if (!idFeedback) return;
+try {
+const response = await respostaService.listarporFeedback(idFeedback);
+setChat(response.data);
+} catch (error) {
+console.error("Erro ao carregar mensagens:", error);
+}
+};
 
-  return (
-    <>
-      <Header onSuporteClick={abrirModal} />
-      {modalAberto && <ModalSuporte onClose={fecharModal} />}
+useEffect(() => {
+carregarMensagens();
+}, [idFeedback]);
 
-      <div className="chat-principal ">
-        <div className="chat-topo-info">
-          <div className="perfil-icone">
-            <Link to="/historicofeedback">
-              <img src={Usuario} alt="Ícone de perfil" />
-            </Link>
-          </div>
-          <span className="nome-usuario">Usuário</span>
-        </div>
+const enviarMensagem = async () => {
+if (!mensagem.trim()) return;
 
-        <div className="chat-mensagens-area ">
-          <div className="mensagem recebida ">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
+const novaMensagem = {  
+  idFeedback,  
+  texto: mensagem,  
+  data: new Date().toISOString()  
+};  
 
-          <div>
-            <audio controls>
-              <source src={audioMp3} type="audio/mpeg" />
-            </audio>
-          </div>
-        </div>
+try {  
+  await respostaService.enviarMensagem(novaMensagem);  
+  setChat(prev => [...prev, novaMensagem]);  
+  setMensagem("");  
+} catch (error) {  
+  console.error("Erro ao enviar mensagem:", error);  
+}  
 
-        <div className="chat-area-input"> 
-          <input 
-            type="text" 
-            placeholder="Digite sua mensagem..." 
-            className="input-mensagem"
-          />
-          <button className="botao-enviar">
-            <span className="icone-enviar">➤</span>
-          </button>
-        </div>
-      </div>
+};
 
-      <Footer />
-    </>
-  );
+return (
+<> <Header onSuporteClick={abrirModal} />
+{modalAberto && <ModalSuporte onClose={fecharModal} />}
+
+  <div className="chat-container">  
+    <div className="chat-topo-info">  
+      <Link to="/historicofeedback">  
+        <img src={Usuario} alt="Ícone de perfil" className="chat-avatar"/>  
+      </Link>  
+      <span className="nome-usuario">João</span>  
+    </div>  
+
+    <div className="chat-content">  
+      {chat.map((item, index) => (  
+        <div key={index} className="mensagem-bloco">  
+          <p>{item.texto}</p>  
+        </div>  
+      ))}  
+      <div className="chat-ilustracao"></div>  
+    </div>  
+
+    <div className="chat-area-input">  
+      <input  
+        type="text"  
+        placeholder="Digite a sua mensagem"  
+        className="input-mensagem"  
+        value={mensagem}  
+        onChange={(e) => setMensagem(e.target.value)}  
+        onKeyDown={(e) => { if(e.key === 'Enter') enviarMensagem(); }}  
+      />  
+      <button className="botao-enviar" onClick={enviarMensagem}>➤</button>  
+    </div>  
+  </div>  
+
+  <Footer />  
+</>  
+
+);
 };
 
 export default Chat;

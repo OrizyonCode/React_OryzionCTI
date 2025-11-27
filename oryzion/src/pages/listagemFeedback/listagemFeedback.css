@@ -18,72 +18,68 @@ main {
 
 .listagem_feedbacks {
   display: flex;
-  justify-content: center;
-  flex: 1;
-  padding-bottom: 40px; /* evita que o conteúdo encoste no footer */
+  flex-direction: column; 
+  align-items: center;
+  width: 100%; 
+  max-width: 1400px; 
+  margin: 0 auto; 
+  padding-bottom: 40px; 
 }
 
-.qtd_feedback h2{
-   font-size: 20px;
+.qtd_feedback { 
+   width: 100%; 
+   color: black;
    display: flex;
-   justify-content: flex-start;
+   font-size: 20px;
+   margin-top: 30px;
+   margin-bottom: -70px;
 }
 
 
 
 
 .listagem_cards {
-    margin-top: 40px;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     gap: 30px; /* espaço entre cards */
     width: 100%;
-    max-width: 800px;
+    max-width: 100%;
     height: auto; /* 👈 deixa a altura automática */
     margin-left: auto;
     margin-right: auto;
 }
 
-
-.paginacao {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+.paginacao_container {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    align-items: center;
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 50px; /* Espaço entre o último card e a paginação */
+    margin-bottom: 20px;
 }
 
-.paginacao button {
-  background-color: #dadde9;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: 0.2s;
+.botao_pagina {
+    background: #fff;
+    color: #444;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px; /* Cantos levemente arredondados */
+    min-width: 40px; /* Garante que o botão tenha um tamanho mínimo */
+    transition: 0.2s ease;
 }
 
-.paginacao button:hover:not(:disabled) {
-  background-color: #313D65;
-  color: #fff;
+.botao_pagina:hover {
+    background: #f0f0f0;
 }
 
-.paginacao button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-
-@media (max-width: 768px) {
-    .qtd_feedback h2{
-        display: flex;
-        justify-content: center;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .main_feedbacks{
-        height: 90%;
-    }
-
-
-
+/* Estilo para o botão ATIVO (o que representa a página atual) */
+.botao_pagina.ativo {
+    background: #5d50e8; /* Cor roxa do seu layout */
+    color: white;
+    border-color: #5d50e8;
+    font-weight: 600;
 }

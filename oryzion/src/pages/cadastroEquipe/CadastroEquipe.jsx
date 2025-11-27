@@ -12,7 +12,7 @@ const CadastroEquipe = () => {
   const [senha, setSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [idTipoUsuario, setIdTipoUsuario] = useState(
-    "4f210bb6-3eec-40df-b0ca-46d10d86b356"
+    "8a4e3cf5-5714-4d01-b7a8-6577ccd6234e"
   );
 
   function alertar(icone, mensagem) {
@@ -46,7 +46,7 @@ const CadastroEquipe = () => {
         setNome("");
         setEmail("");
         setSenha("");
-        setIdTipoUsuario("4f210bb6-3eec-40df-b0ca-46d10d86b356");
+        setIdTipoUsuario("8a4e3cf5-5714-4d01-b7a8-6577ccd6234e");
       } else {
         alertar("warning", "Verifique os dados e tente novamente.");
       }
@@ -73,7 +73,7 @@ const CadastroEquipe = () => {
             <label>Nome</label>
             <input
               type="text"
-              placeholder="Digite seu nome completo"
+              placeholder="Digite o nome completo"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
@@ -83,7 +83,7 @@ const CadastroEquipe = () => {
             <label>Email</label>
             <input
               type="email"
-              placeholder="Digite seu e-mail"
+              placeholder="Digite o e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -95,7 +95,7 @@ const CadastroEquipe = () => {
             <div className="cadastro_senha_container">
               <input
                 type={mostrarSenha ? "text" : "password"}
-                placeholder="Digite sua senha"
+                placeholder="Digite a senha"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
               />
