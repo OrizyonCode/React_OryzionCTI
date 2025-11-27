@@ -16,7 +16,7 @@ body {
 
 .banner_cards {
     width: 100%;
-    max-width: 1400px; /* MAIS LARGO AINDA PARA AJUDAR NO ESTICAMENTO */
+    max-width: 1400px; 
     position: relative;
 
     padding: 0 60px;
@@ -35,7 +35,7 @@ body {
     left: 50%;
     
     width: 100%;
-    max-width: 1300px; 
+    max-width: 1300px; /* Container principal que acomoda os 3 cards */
     
     display: flex;
     justify-content: center;
@@ -50,7 +50,9 @@ body {
 
 .carousel_inner_feedback {
     display: flex;
-    gap: 30px; /* MAIS ESPAÇO ENTRE OS CARDS */
+    gap: 30px; 
+    /* 🛑 IMPORTANTE: Centraliza o grupo de cards, essencial se houver menos de 3 cards */
+    justify-content: center;
 }
 
 /* ======================= */
@@ -58,7 +60,8 @@ body {
 /* ======================= */
 
 .feedback_card {
-    width: 420px; /* ESTICADÃO DE VERDADE AGORA */
+    /* 🛑 CORREÇÃO: Largura ajustada para que 3 cards caibam confortavelmente */
+    width: 390px; 
     background: white;
     border-radius: 20px;
     padding: 30px 25px;
@@ -70,6 +73,8 @@ body {
     align-items: center;
 
     box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.3);
+    /* Impede que o card seja espremido */
+    flex-shrink: 0; 
 }
 
 .avatar_user {

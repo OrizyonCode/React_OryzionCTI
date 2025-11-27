@@ -117,7 +117,7 @@ if (!modoRapido) {
     email: email,
     senha: senha,
     imagem: "",
-    idTipoUsuario: "5d2b5810-729e-4815-80e5-93f2ae04416c"
+    idTipoUsuario: "b7e03bc1-fe79-4aec-adc2-3eff4ab966d8"
   };
 
   // Criar usuário
@@ -181,7 +181,7 @@ try {
   form.append("Status", true);
   form.append("Data", new Date().toISOString());
   form.append("IdCliente", idClienteCriado);
-  form.append("IdSuporte", "d360f543-b886-41fd-b52f-be06373b9b7f");
+  form.append("IdSuporte", "361df76a-c597-4d58-9b9c-51411674793e");
   if (audioFile) form.append("ArquivoAudio", audioFile);
 
   console.log("Enviando chamado:", form);

@@ -117,7 +117,7 @@ const Login = () => {
             }
           }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-              naviGate("/chat");
+              naviGate("/chat/:idFeedback");
             }
           });
         } else if (tokenDecodificado.tipoUsuario === "suporte") {
