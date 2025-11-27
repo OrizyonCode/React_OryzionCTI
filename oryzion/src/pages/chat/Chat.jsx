@@ -5,20 +5,17 @@ import ModalSuporte from "../../components/modal/Modal";
 import Usuario from "../../assets/img/joao.png";
 import { Link, useParams } from "react-router-dom";
 import "./Chat.css";
+import respostaService from "../../Services/respostaService";
 
-
-const Chat = ({ respostaService }) => {
+const Chat = () => {
   const { idFeedback } = useParams();
   const [modalAberto, setModalAberto] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [chat, setChat] = useState([]);
 
-  const abrirModal = () => setModalAberto(true);
-  const fecharModal = () => setModalAberto(false);
-
   const carregarMensagens = async () => {
     try {
-      const response = await respostaService.listarporFeedback(idFeedback);
+      const response = await respostaService.listarPorFeedback(idFeedback);
       setChat(response.data);
     } catch (error) {
       console.error("Erro ao carregar mensagens:", error);
@@ -49,11 +46,10 @@ const Chat = ({ respostaService }) => {
 
   return (
     <>
-      <Header onSuporteClick={abrirModal} />
-      {modalAberto && <ModalSuporte onClose={fecharModal} />}
+      <Header onSuporteClick={() => setModalAberto(true)} />
+      {modalAberto && <ModalSuporte onClose={() => setModalAberto(false)} />}
 
       <div className="chat-wrapper">
-        {/* TOPO ESCURO IGUAL A IMAGEM */}
         <div className="chat-header-bar">
           <div className="chat-left">
             <Link to="/historicofeedback" className="chat-back">
@@ -63,12 +59,8 @@ const Chat = ({ respostaService }) => {
             <img src={Usuario} className="chat-user-avatar" alt="Usuário" />
             <span className="chat-user-name">João</span>
           </div>
-
-          <div className="chat-right">
-          </div>
         </div>
 
-        {/* CONTEÚDO */}
         <div className="chat-body">
           <div className="chat-mensagens-list">
             {chat.map((item, idx) => (
@@ -77,16 +69,8 @@ const Chat = ({ respostaService }) => {
               </div>
             ))}
           </div>
-
-          {/* ILUSTRAÇÃO */}
-          <div className="chat-ilustracao">
-            <div className="chat-illus-line"></div>
-            <div className="chat-illus-line"></div>
-            <div className="chat-illus-line small"></div>
-          </div>
         </div>
 
-        {/* INPUT IGUAL AO MODELO */}
         <div className="chat-input-bar">
           <input
             type="text"

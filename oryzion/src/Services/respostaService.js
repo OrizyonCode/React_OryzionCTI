@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:7162/api/resposta";
+const api = axios.create({
+  baseURL: "http://localhost:5128/api/resposta",
+});
 
 export default {
-  
-  listarPorFeedback: (idFeedback) => {
-    return axios.get(`${API_URL}/feedback/${idFeedback}`);
+  listarporFeedback(idFeedback) {
+    return api.get(`/feedback/${idFeedback}`);
   },
 
-  enviar: (mensagem) => {
-    return axios.post(API_URL, mensagem);
-  }
-
+  enviarMensagem(msg) {
+    return api.post("/enviar", msg);
+  },
 };

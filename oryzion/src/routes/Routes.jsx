@@ -22,7 +22,7 @@ const Rotas = () => {
                 <Route path='/telainicial' element={<TelaInicial/>} />
                 <Route path='/listagemfeedback' element={<ListagemFeedback/>} />
                 <Route path='/listagemchamado' element={<ListagemChamado/>} />
-                <Route path='/chat/:idFeedback' element={<Chat/>} />
+                <Route path='/chat' element={<Chat/>} />
                 <Route path='/dashboard' element={<DashBoard/>} />
                 <Route path='/cadastroequipe' element={<CadastroEquipe/>} />
                 <Route path='/historicofeedback' element={<HistoricoFeedback/>} />
