@@ -18,12 +18,25 @@ const Chat = () => {
 
   const carregarMensagens = async () =>  {
       try {
-        const response = await fetch(``) 
+        const response = await respostaService.listarporFeedback(idFeedback);
+        setChat(response.data);
       } catch (error) {
-        
+        console.error("Erro ao carregar mensagens:", error);
       }
 
+    };
 
+
+  const enviarMensagem = async () => {
+      if(!mensagem.trim()) return;
+
+      const nova = {
+        idFeedback: idFeedback,
+        texto: mensagem,
+        data: new Data().toISOString()
+      }
+ 
+  }
 
 
 
