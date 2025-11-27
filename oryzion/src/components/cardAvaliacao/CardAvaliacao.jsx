@@ -18,6 +18,7 @@ const CardAvaliacao = () => {
     const [isLoading, setIsLoading] = useState(true); 
     
     const [index, setIndex] = useState(0);
+    // Define 1 card visível para mobile e 3 para desktop
     const [visibleCount, setVisibleCount] = useState(window.innerWidth <= 768 ? 1 : 3);
 
 
@@ -25,26 +26,24 @@ const CardAvaliacao = () => {
         
         const fetchFeedbacks = async () => {
             try {
-                // 1. Apenas uma chamada: /api/Feedback (inclui a classificação)
+                // Busca os dados
                 const response = await api.get('/Feedback'); 
-                
                 const rawFeedbacks = response.data;
 
                 // 2. Filtrar, Mapear e Enriquecer os Feedbacks
                 const filteredData = rawFeedbacks
                     .filter(fb => {
-                        // 2a. Regra de Negócio: Filtro de MENOS de 10 palavras
+                        // Regra de Negócio: Filtro de MENOS de 10 palavras
                         const wordCount = fb.texto.trim().split(/\s+/).length;
                         return wordCount < 10;
                     })
                     .map(fb => {
-                        // 🛑 CORREÇÃO AQUI: Acessando "classificacao" e "comentario" (camelCase)
+                        // Acessa a classificação e define a cor
                         const classificacaoNome = fb.classificacao?.comentario?.toLowerCase() || 'neutro'; 
                         const cor = BADGE_COLORS[classificacaoNome] || BADGE_COLORS.neutro;
 
                         return {
                             id: fb.idFeedback, 
-                            // O nome do usuário permanece como placeholder (Usuário Anônimo)
                             nome: "Usuário Anônimo", 
                             classificacao: classificacaoNome,
                             texto: fb.texto,
@@ -65,23 +64,34 @@ const CardAvaliacao = () => {
         
         fetchFeedbacks();
 
-        // Lógica de resize handler
+        // Lógica de resize handler para mudar visibleCount
         const h = () => setVisibleCount(window.innerWidth <= 768 ? 1 : 3);
         window.addEventListener("resize", h);
         return () => window.removeEventListener("resize", h);
         
     }, []); 
 
-    // --- Lógica do Carrossel (invariável) ---
+    // --- Lógica do Carrossel (Avanço de Grupos) ---
     const totalItems = feedbacksData.length;
-    const next = () => setIndex(prev => (prev + 1) % totalItems);
-    const prev = () => setIndex(prev => (prev - 1 + totalItems) % totalItems);
+    
+    // Avança o índice pelo número de cards visíveis (evita duplicação)
+    const next = () => {
+        setIndex(prev => (prev + visibleCount) % totalItems);
+    }
+    
+    // Volta o índice pelo número de cards visíveis
+    const prev = () => {
+        // Garante que o resultado seja positivo antes de aplicar o módulo
+        setIndex(prev => (prev - visibleCount + totalItems) % totalItems);
+    }
 
+    // Retorna APENAS os cards que devem estar visíveis
     const getVisibleCards = () => {
         if (totalItems === 0) return [];
 
         const arr = [];
         for (let i = 0; i < visibleCount; i++) {
+            // Aplica o módulo para criar o efeito de loop
             arr.push(feedbacksData[(index + i) % totalItems]);
         }
         return arr;
@@ -146,12 +156,14 @@ const CardAvaliacao = () => {
                     </button>
                 </div>
 
-                {/* Indicador de bolinhas (dots) */}
+                {/* Indicador de bolinhas (dots) - Representa cada item individual */}
                 <div className="carousel_dots">
                     {feedbacksData.map((_, i) => (
                         <span
                             key={i}
+                            // O dot é ativo se o seu índice for igual ao index atual (módulo para o loop)
                             className={`dot ${i === index % totalItems ? "active" : ""}`}
+                            // Ao clicar, o carrossel vai para o início daquele card
                             onClick={() => setIndex(i)}
                         />
                     ))}
