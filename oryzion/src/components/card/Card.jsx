@@ -1,48 +1,106 @@
-import React from "react";
-// Assumindo que você ainda precisa importar Usuario e Botao
-import Usuario from '../../assets/img/Profile2.png' 
+import React, { useState, useEffect } from "react";
+import Usuario from '../../assets/img/Profile2.png';
 import Botao from "../botao/Botao";
+import AudioPlayer from "../audioPlayer/AudioPlayer";
 import "./Card.css";
+import arquiva from "../../assets/img/exibir.svg";
 
-export default function Card() {
+export default function Card({
+  nome,
+  texto,
+  audio,
+  data,
+  sentimento,
+  idChamado,
+  onArquivar,
+  onOpenModal
+}) {
+
+  const [transcricao, setTranscricao] = useState("");
+  const [carregando, setCarregando] = useState(true);
+
+  const formatDate = (dateString) => {
+    const d = new Date(dateString);
+    return d.toLocaleString("pt-BR");
+  };
+
+  useEffect(() => {
+    async function transcrever() {
+      if (!audio) {
+        setCarregando(false);
+        return;
+      }
+
+      try {
+        setCarregando(true);
+
+        const audioResponse = await fetch(audio);
+        const blob = await audioResponse.blob();
+
+        const formData = new FormData();
+        formData.append("arquivoAudio", blob, "audio.mp3");
+
+        const resposta = await fetch("http://localhost:5128/api/AzureSpeechServiceClient/transcrever", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!resposta.ok) throw new Error("Erro ao transcrever áudio");
+
+        const textoTranscrito = await resposta.text();
+        setTranscricao(textoTranscrito);
+
+      } catch (error) {
+        setTranscricao("Erro ao transcrever");
+      } finally {
+        setCarregando(false);
+      }
+    }
+
+    transcrever();
+  }, [audio]);
+
   return (
-    <div className="card">
-      
-      {/* 1. Header (Contém Foto/Nome, Texto e Botão) */}
+    <div
+  className="card"
+  onClick={() => onOpenModal()}   // AGORA FUNCIONA
+  style={{ cursor: "pointer" }}
+>
+
       <div className="card_top_content">
-        
-        {/* Lado Esquerdo: Foto e Nome */}
+
         <div className="card_user_info">
           <img className="avatar_user" src={Usuario} alt="Usuário" />
-          <h3 className="card_name">João</h3>
+          <h3 className="card_name">{nome}</h3>
         </div>
 
-        {/* Centro: Texto do Feedback */}
         <p className="card_text">
-          O aplicativo é bom, mas o processo de chatboarding poderia ser mais
-          claro. Fiquei um pouco perdido no início mas depois consegui explicar
-          meu problema.
+          {texto || transcricao || "Nenhuma transcrição disponível."}
         </p>
-        
-        {/* Lado Direito: Botão Responder */}
+
         <div className="responder_botao">
-          <Botao nomeBotao="Responder" type="submit" />
+          <Botao nomeBotao="Responder" />
+
+          <img
+            src={arquiva}
+            alt="Arquivar"
+            className="icone_arquivar"
+            onClick={(e) => {
+              e.stopPropagation();
+              onArquivar?.(idChamado);  // 🔥 evita erro
+            }}
+          />
         </div>
       </div>
-      
-      {/* 2. Footer (Contém Badge, Áudio e Tempo) */}
+
       <div className="card_footer">
-        {/* Badge "Neutro" */}
-        <span className="card_tag">Neutro</span>
-        
-        {/* Player de Áudio */}
-        <div className="card_audio">
-          <button className="card_play">▶</button>
-          <div className="card_bar">
-            <div className="card_bar_progress" style={{ width: "40%" }}></div>
-          </div>
-          <span className="card_time">00:43/01:53</span>
-        </div>
+        <span className="card_tag">
+          {sentimento || "Neutro"}
+        </span>
+
+        <AudioPlayer src={audio} />
+
+        <span className="card_time">{formatDate(data)}</span>
       </div>
     </div>
   );

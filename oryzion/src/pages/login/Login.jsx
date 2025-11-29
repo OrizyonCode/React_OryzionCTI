@@ -98,7 +98,7 @@ const Login = () => {
 
         let timerInterval;
 
-        if (tokenDecodificado.tipoUsuario === "cliente") {
+        if (tokenDecodificado.tipoUsuario === "Cliente") {
           let timerInterval;
           Swal.fire({
             title: "Cliente Encontrado!",
@@ -120,7 +120,7 @@ const Login = () => {
               naviGate("/chat/:idFeedback");
             }
           });
-        } else if (tokenDecodificado.tipoUsuario === "suporte") {
+        } else if (tokenDecodificado.tipoUsuario === "Suporte") {
           let timerInterval;
           Swal.fire({
             title: "Suporte Encontrado!",
