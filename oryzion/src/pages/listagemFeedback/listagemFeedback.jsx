@@ -140,6 +140,7 @@ const ListagemFeedback = () => {
         setTimeout(() => setToast(false), 2700);
       }, 400);
     } catch (err) {
+      console.log("ID recebido:", idChamado);
       console.error("Erro ao arquivar:", err);
       setRemovendoId(null);
     }

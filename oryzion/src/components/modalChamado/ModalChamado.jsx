@@ -1,6 +1,11 @@
 import "./ModalChamado.css";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ModalChamado({ chamado, idChamado, onClose, onArquivar }) {
+
+  const navigate = useNavigate();
+
   // se não tiver dados, não renderiza
   if (!chamado && !idChamado) return null;
 
@@ -23,7 +28,7 @@ export default function ModalChamado({ chamado, idChamado, onClose, onArquivar }
   return (
     <div className="modal_overlay" onClick={onClose}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
-        
+
         <div className="modal_header">
           <h2>Detalhes do Feedback</h2>
           <button className="modal_close" onClick={onClose}>×</button>
@@ -70,9 +75,20 @@ export default function ModalChamado({ chamado, idChamado, onClose, onArquivar }
             Marcar como resolvido
           </button>
 
-          <button className="btn_responder" onClick={(e) => { e.stopPropagation(); /* implementar ação de responder se quiser */ }}>
+          <button
+            className="btn_responder"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/chat/${chamadoIdEfetivo}`, {
+                state: {
+                  chamado: chamado, // envia o objeto completo
+                },
+              });
+            }}
+          >
             ↩ Responder
           </button>
+
         </div>
       </div>
     </div>

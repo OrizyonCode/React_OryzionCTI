@@ -3,12 +3,17 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import ModalSuporte from "../../components/modal/Modal";
 import Usuario from "../../assets/img/joao.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import "./Chat.css";
 import respostaService from "../../Services/respostaService";
 
 const Chat = () => {
   const { idFeedback } = useParams();
+  const location = useLocation();
+
+  // Dados vindos do ModalChamado
+  const chamado = location.state?.chamado;
+
   const [modalAberto, setModalAberto] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [chat, setChat] = useState([]);
@@ -50,18 +55,39 @@ const Chat = () => {
       {modalAberto && <ModalSuporte onClose={() => setModalAberto(false)} />}
 
       <div className="chat-wrapper">
+        {/* TOPO DO CHAT */}
         <div className="chat-header-bar">
           <div className="chat-left">
             <Link to="/historicofeedback" className="chat-back">
               ← Voltar
             </Link>
 
-            <img src={Usuario} className="chat-user-avatar" alt="Usuário" />
-            <span className="chat-user-name">João</span>
+            {/* Avatar do cliente */}
+            <img
+              src={Usuario}
+              className="chat-user-avatar"
+              alt={chamado?.cliente?.usuario?.nome || "Usuário"}
+            />
+
+            {/* Nome dinâmico */}
+            <span className="chat-user-name">
+              {chamado?.cliente?.usuario?.nome || "Usuário"}
+            </span>
           </div>
         </div>
 
+        {/* CORPO DO CHAT */}
         <div className="chat-body">
+
+          {/* Mensagem original do feedback */}
+          {chamado && (
+            <div className="chat-mensagem-original">
+              <h4>Feedback recebido:</h4>
+              <p>{chamado.transcricao || "Sem mensagem disponível."}</p>
+            </div>
+          )}
+
+          {/* Lista de mensagens do chat */}
           <div className="chat-mensagens-list">
             {chat.map((item, idx) => (
               <div key={idx} className="chat-mensagem-card">
@@ -71,6 +97,7 @@ const Chat = () => {
           </div>
         </div>
 
+        {/* INPUT DO CHAT */}
         <div className="chat-input-bar">
           <input
             type="text"
@@ -80,7 +107,9 @@ const Chat = () => {
             onKeyDown={(e) => e.key === "Enter" && enviarMensagem()}
           />
 
-          <button onClick={enviarMensagem} className="chat-send-btn">➤</button>
+          <button onClick={enviarMensagem} className="chat-send-btn">
+            ➤
+          </button>
         </div>
 
         <Footer />
