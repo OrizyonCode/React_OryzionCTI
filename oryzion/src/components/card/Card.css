@@ -131,13 +131,10 @@ BOTÃO + ÍCONE ARQUIVAR
   border-radius: 8px;
   cursor: pointer;
   transition: 0.2s ease;
-}
+} 
 
-.responder_botao button:hover {
-  background: #111828;
-}
 
-/* Evita que clique no botão abra modal */
+
 .responder_botao button,
 .icone_arquivar {
   pointer-events: auto;

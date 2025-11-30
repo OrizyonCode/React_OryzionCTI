@@ -2,7 +2,7 @@
 .chat-wrapper {
   width: 100%;
   min-height: 100vh;
-  background: #0f172a; 
+  background: #0f172a;
   display: flex;
   flex-direction: column;
   color: white;
@@ -49,72 +49,69 @@
   color: white;
 }
 
-/* ATENDENTE */
-.chat-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.chat-atendente-name {
-  font-size: 15px;
-  color: #cbd5e1;
-}
-
-.chat-atendente-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #e2c792;
-}
-
 /* CORPO */
 .chat-body {
   flex: 1;
   display: flex;
-  padding: 50px 80px;
-  gap: 80px;
+  flex-direction: column;
+  padding: 40px 80px;
+  gap: 20px;
 }
 
+/* LISTA DE MENSAGENS */
 .chat-mensagens-list {
   width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
+/* CARTÃO DA MENSAGEM */
 .chat-mensagem-card {
   background: #1e293b;
-  padding: 22px 26px;
-  border-radius: 12px;
+  padding: 16px 20px;
+  border-radius: 16px;
   color: #d1d5db;
   font-size: 16px;
-  width: fit-content;
-  max-width: 95%;
+  max-width: 70%;
   border: 1px solid #2b3a52;
-}
-
-/* ILUSTRAÇÃO CINZA */
-.chat-ilustracao {
-  width: 50%;
-  height: 300px;
-  background: transparent;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 18px;
-  opacity: 0.15;
+  gap: 10px;
 }
 
-.chat-illus-line {
-  width: 280px;
-  height: 22px;
-  background: #6164F0;
-  border-radius: 8px;
+/* CLIENTE -> esquerda */
+.mensagem-cliente {
+  align-self: flex-start;
+  background: #1e293b;
 }
 
-.chat-illus-line.small {
-  width: 200px;
+/* SUPORTE -> direita */
+.mensagem-suporte {
+  align-self: flex-end;
+  background: #3b82f6;
+  border: 1px solid #1e40af;
+  color: white;
+}
+
+/* TEXTO */
+.chat-mensagem-card p {
+  margin: 0;
+}
+
+/* ÁUDIO */
+audio {
+  width: 100%;
+  margin-top: 5px;
+  filter: brightness(0.9);
+}
+
+/* DATA */
+.mensagem-data {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-top: 4px;
+  text-align: right;
 }
 
 /* INPUT */
@@ -139,7 +136,7 @@
   font-size: 15px;
 }
 
-.chat-text::placeholder {
+.chat-input-bar input::placeholder {
   color: #64748b;
 }
 
@@ -161,17 +158,11 @@
 /* RESPONSIVO */
 @media (max-width: 900px) {
   .chat-body {
-    flex-direction: column;
-    padding: 40px 30px;
+    padding: 30px 20px;
   }
 
-  .chat-mensagens-list,
-  .chat-ilustracao {
-    width: 100%;
-  }
-
-  .chat-illus-line {
-    width: 70%;
+  .chat-mensagem-card {
+    max-width: 90%;
   }
 
   .chat-input-bar {
