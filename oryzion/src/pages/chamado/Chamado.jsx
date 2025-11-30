@@ -4,6 +4,7 @@ import api from "../../Services/services";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "animate.css";
+import GravadorAudio from "../../components/gravadorAudio/GravadorAudio";
 
 function Chamado() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -13,13 +14,14 @@ function Chamado() {
   const [cnpj, setCnpj] = useState("");
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const [audioFile, setAudioFile] = useState(null);
+  const [audioFile, setAudioFile] = useState(null); // File or Blob
   const [isDragging, setIsDragging] = useState(false);
 
   const [modoRapido, setModoRapido] = useState(false);
   const [clientes, setClientes] = useState([]);
   const [idClienteSelecionado, setIdClienteSelecionado] = useState("");
 
+  const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
   const alertSuccess = () => {
     Swal.fire({
@@ -40,10 +42,10 @@ function Chamado() {
     });
   };
 
-  const alertError = () => {
+  const alertError = (title = "Erro ao Criar!", text = "Não foi possível criar o chamado. Verifique os dados e tente novamente.") => {
     Swal.fire({
-      title: "Erro ao Criar!",
-      text: "Não foi possível criar o chamado. Verifique os dados e tente novamente.",
+      title,
+      text,
       icon: "error",
       background: "#0d0d0d",
       color: "#fff",
@@ -65,7 +67,11 @@ function Chamado() {
   const alternarSenha = () => setMostrarSenha(!mostrarSenha);
 
   const handleFileChange = (files) => {
-    if (files && files.length > 0) setAudioFile(files[0]);
+    if (files && files.length > 0) {
+      // Pega o primeiro arquivo
+      const f = files[0];
+      setAudioFile(f);
+    }
   };
 
   const handleDragOver = (e) => {
@@ -90,263 +96,285 @@ function Chamado() {
 
   useEffect(() => {
     if (modoRapido) {
-      api.get("Cliente").then((res) => {
-        setClientes(res.data);
-      }).catch((err) => console.log(err));
+      api.get("Cliente")
+        .then((res) => {
+          setClientes(res.data);
+        })
+        .catch((err) => {
+          console.error("Erro ao buscar clientes:", err);
+        });
     }
   }, [modoRapido]);
 
-const handleCadastro = async (e) => {
-e.preventDefault();
-setStatusCadastro("Enviando...");
-
-try {
-let idClienteCriado = idClienteSelecionado;
-
-// Cadastro normal
-if (!modoRapido) {
-  // Validações básicas
-  if (!nomeCompleto.trim() || !email.trim() || !senha.trim()) {
-    alertError();
-    setStatusCadastro("Preencha todos os campos obrigatórios");
-    return;
-  }
-
-  const usuario = {
-    nome: nomeCompleto,
-    email: email,
-    senha: senha,
-    imagem: "",
-    idTipoUsuario: "9AF4AFAE-B0F0-4FBE-B135-10127ED6B65A"
+  // Recebe blob WAV do GravadorAudio (o gravador retorna WAV Blob)
+  const handleAudioReady = (wavBlob) => {
+    // Transformar Blob em File para FormData (opcional, Blob também funciona)
+    const file = new File([wavBlob], "gravacao.wav", { type: "audio/wav" });
+    setAudioFile(file);
+    console.log("Áudio gravado pronto:", file);
   };
 
-  // Criar usuário
-  try {
-    console.log("Enviando usuário:", usuario);
-    const resposta = await api.post("Usuario", usuario);
-    console.log("Resposta usuário:", resposta.data);
-    if (resposta.status !== 201) throw new Error("Erro ao criar usuário");
-    idClienteCriado = resposta.data.idUsuario;
-  } catch (err) {
-    console.error("Erro ao criar usuário:", err.response?.data || err.message);
-    alertError();
-    setStatusCadastro("Erro ao criar usuário");
-    return;
-  }
+  const handleCadastro = async (e) => {
+    e.preventDefault();
+    setStatusCadastro("Enviando...");
 
-  // Criar cliente
-  const clienteObj = { idUsuario: idClienteCriado };
-  try {
-    console.log("Enviando cliente:", clienteObj);
-    const resCliente = await api.post("Cliente", clienteObj);
-    console.log("Resposta cliente:", resCliente.data);
-    if (resCliente.status !== 201) throw new Error("Erro ao criar cliente");
-    idClienteCriado = resCliente.data.idCliente;
-  } catch (err) {
-    console.error("Erro ao criar cliente:", err.response?.data || err.message);
-    alertError();
-    setStatusCadastro("Erro ao criar cliente");
-    return;
-  }
-
-  // Criar empresa se CNPJ informado
-  if (cnpj.trim() !== "") {
-    const empresaObj = {
-      nomeFantasia: nomeFantasia || nomeCompleto,
-      numeroIdentificador: cnpj.replace(/\D/g, "")
-    };
     try {
-      console.log("Enviando empresa:", empresaObj);
-      const resEmpresa = await api.post("Empresa", empresaObj);
-      console.log("Resposta empresa:", resEmpresa.data);
-      if (resEmpresa.status !== 201) throw new Error("Erro ao criar empresa");
+      let idClienteCriado = idClienteSelecionado;
+
+      // Cadastro normal (quando não for modo rápido)
+      if (!modoRapido) {
+        // Validações básicas
+        if (!nomeCompleto.trim() || !email.trim() || !senha.trim()) {
+          alertError("Dados incompletos", "Preencha todos os campos obrigatórios.");
+          setStatusCadastro("Preencha todos os campos obrigatórios");
+          return;
+        }
+
+        const usuario = {
+          nome: nomeCompleto,
+          email: email,
+          senha: senha,
+          imagem: "",
+          idTipoUsuario: "1A9F077D-E0BA-4EEC-BBBE-8F56166E7DFE",
+        };
+
+        // Criar usuário
+        try {
+          console.log("Enviando usuário:", usuario);
+          const resposta = await api.post("Usuario", usuario);
+          console.log("Resposta usuário:", resposta.data);
+          if (resposta.status !== 201 && resposta.status !== 200) throw new Error("Erro ao criar usuário");
+          idClienteCriado = resposta.data.idUsuario;
+        } catch (err) {
+          console.error("Erro ao criar usuário:", err.response?.data || err.message);
+          alertError("Erro ao criar usuário", JSON.stringify(err.response?.data || err.message));
+          setStatusCadastro("Erro ao criar usuário");
+          return;
+        }
+
+        // Criar cliente
+        const clienteObj = { idUsuario: idClienteCriado };
+        try {
+          console.log("Enviando cliente:", clienteObj);
+          const resCliente = await api.post("Cliente", clienteObj);
+          console.log("Resposta cliente:", resCliente.data);
+          if (resCliente.status !== 201 && resCliente.status !== 200) throw new Error("Erro ao criar cliente");
+          idClienteCriado = resCliente.data.idCliente;
+        } catch (err) {
+          console.error("Erro ao criar cliente:", err.response?.data || err.message);
+          alertError("Erro ao criar cliente", JSON.stringify(err.response?.data || err.message));
+          setStatusCadastro("Erro ao criar cliente");
+          return;
+        }
+
+        // Criar empresa se CNPJ informado
+        if (cnpj.trim() !== "") {
+          const empresaObj = {
+            nomeFantasia: nomeFantasia || nomeCompleto,
+            numeroIdentificador: cnpj.replace(/\D/g, ""),
+          };
+          try {
+            console.log("Enviando empresa:", empresaObj);
+            const resEmpresa = await api.post("Empresa", empresaObj);
+            console.log("Resposta empresa:", resEmpresa.data);
+            if (resEmpresa.status !== 201 && resEmpresa.status !== 200) throw new Error("Erro ao criar empresa");
+          } catch (err) {
+            console.error("Erro ao criar empresa:", err.response?.data || err.message);
+            alertError("Erro ao criar empresa", JSON.stringify(err.response?.data || err.message));
+            setStatusCadastro("Erro ao criar empresa");
+            return;
+          }
+        }
+      }
+
+      // -------- Criação de chamado (modo rápido ou após cadastro completo) --------
+      try {
+        if (audioFile && audioFile.size > MAX_SIZE_BYTES) {
+          alertError("Arquivo muito grande", "O áudio deve ter no máximo 10MB");
+          setStatusCadastro("O áudio deve ter no máximo 10MB");
+          return;
+        }
+
+        const form = new FormData();
+        form.append("Status", true);
+        form.append("Data", new Date().toISOString());
+        form.append("IdCliente", idClienteCriado);
+        form.append("IdSuporte", "34D984CE-6AD9-47FF-86C7-74A12716996A");
+
+        if (audioFile) {
+          // audioFile pode ser File ou Blob; se for Blob, o terceiro parâmetro é o filename
+          if (audioFile instanceof File) {
+            form.append("ArquivoAudio", audioFile, audioFile.name);
+          } else {
+            form.append("ArquivoAudio", audioFile, "audio.wav");
+          }
+        }
+
+        console.log("Enviando chamado (FormData):", {
+          Status: true,
+          Data: new Date().toISOString(),
+          IdCliente: idClienteCriado,
+          HasAudio: !!audioFile,
+        });
+
+        const resChamado = await api.post("Chamado/cadastrar-com-audio", form);
+        console.log("Resposta chamado:", resChamado.data);
+
+        if (resChamado.status !== 201 && resChamado.status !== 200) throw new Error("Erro ao criar chamado");
+
+        alertSuccess();
+        setStatusCadastro("Chamado criado!");
+        // limpa campos úteis
+        setAudioFile(null);
+        if (!modoRapido) {
+          setNomeCompleto("");
+          setEmail("");
+          setSenha("Senai@134");
+          setCnpj("");
+          setNomeFantasia("");
+        }
+      } catch (err) {
+        console.error("Erro ao criar chamado:", err.response?.data || err.message);
+        alertError("Erro ao criar chamado", JSON.stringify(err.response?.data || err.message));
+        setStatusCadastro("Erro ao criar chamado");
+        return;
+      }
     } catch (err) {
-      console.error("Erro ao criar empresa:", err.response?.data || err.message);
+      console.error("Erro desconhecido:", err);
       alertError();
-      setStatusCadastro("Erro ao criar empresa");
-      return;
+      setStatusCadastro("Erro desconhecido");
     }
-  }
-}
-
-// Criação de chamado (modo rápido ou após cadastro completo)
-try {
-  if (audioFile && audioFile.size > 10 * 1024 * 1024) {
-    alertError();
-    setStatusCadastro("O áudio deve ter no máximo 10MB");
-    return;
-  }
-
-  const form = new FormData();
-  form.append("Status", true);
-  form.append("Data", new Date().toISOString());
-  form.append("IdCliente", idClienteCriado);
-  form.append("IdSuporte", "75F9D8FB-D244-4E2C-AFB7-0387FBE3A24D");
-  if (audioFile) form.append("ArquivoAudio", audioFile);
-
-  console.log("Enviando chamado:", form);
-  const resChamado = await api.post("Chamado/cadastrar-com-audio", form);
-  console.log("Resposta chamado:", resChamado.data);
-  if (resChamado.status !== 201) throw new Error("Erro ao criar chamado");
-
-  alertSuccess();
-  setStatusCadastro("Chamado criado!");
-} catch (err) {
-  console.error("Erro ao criar chamado:", err.response?.data || err.message);
-  alertError();
-  setStatusCadastro("Erro ao criar chamado");
-  return;
-}
-
-} catch (err) {
-console.error("Erro desconhecido:", err);
-alertError();
-setStatusCadastro("Erro desconhecido");
-}
-};
-
-
+  };
 
   return (
-    <div className="container_cadastro">
-      <form className="form_cadastro" onSubmit={handleCadastro}>
-        <h2>Cadastro de Chamado</h2>
+  <div className="container_cadastro">
+    <form className="form_cadastro" onSubmit={handleCadastro}>
 
-        {/* Botãozinho de modo rápido */}
-        <div style={{ textAlign: 'right', marginBottom: '15px' }}>
-          <button
-            type="button"
-            className="btn_modo_rapido"
-            onClick={() => setModoRapido(!modoRapido)}
+      <div>
+        <button
+          type="button"
+          className="btn_modo_rapido"
+          onClick={() => setModoRapido(!modoRapido)}
+        >
+          {modoRapido ? "Modo completo" : "Modo rápido"}
+        </button>
+      </div>
+
+      <h2>Cadastro de Chamado</h2>
+
+      {/* ================= CAMPOS ================= */}
+      {!modoRapido && (
+        <div className="grid_campos">
+
+          <div className="campo">
+            <label>Nome Completo</label>
+            <input
+              type="text"
+              value={nomeCompleto}
+              onChange={(e) => setNomeCompleto(e.target.value)}
+              placeholder="Digite seu nome"
+            />
+          </div>
+
+          <div className="campo">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Digite seu e-mail"
+            />
+          </div>
+
+          <div className="campo">
+            <label>Senha</label>
+            <div className="campo_senha">
+              <input
+                type={mostrarSenha ? "text" : "password"}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+              <button
+                type="button"
+                className="btn_visibilidade"
+                onClick={alternarSenha}
+              >
+                👁
+              </button>
+            </div>
+          </div>
+
+          <div className="campo">
+            <label>CNPJ (Opcional)</label>
+            <input
+              type="text"
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
+              placeholder="Somente números"
+            />
+          </div>
+
+          <div className="campo">
+            <label>Nome Fantasia (Opcional)</label>
+            <input
+              type="text"
+              value={nomeFantasia}
+              onChange={(e) => setNomeFantasia(e.target.value)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODO RÁPIDO ================= */}
+      {modoRapido && (
+        <div className="campo">
+          <label>Cliente</label>
+          <select
+            value={idClienteSelecionado}
+            onChange={(e) => setIdClienteSelecionado(e.target.value)}
           >
-            {modoRapido ? "Voltar para cadastro completo" : "Chamado rápido"}
-          </button>
+            <option value="">Selecione um cliente</option>
+            {clientes.map((c) => (
+              <option key={c.idCliente} value={c.idCliente}>
+                {c.usuario?.nome}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* ================= UPLOAD / ÁUDIO ================= */}
+      <div className="upload_section">
+        <label>Áudio / Gravação</label>
+
+        <div
+          className={`upload_area ${isDragging ? "dragging" : ""}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <label className="upload_label">
+            <span className="icone_upload">🎤</span>
+            <p>Clique ou arraste o áudio aqui</p>
+            <small>Máx 10MB</small>
+            <input
+              type="file"
+              accept="audio/*"
+              style={{ display: "none" }}
+              onChange={handleInputFileChange}
+            />
+          </label>
         </div>
 
-        {modoRapido ? (
-          <div className="grid_campos">
-            <div className="campo">
-              <label>Cliente</label>
-              <select
-                value={idClienteSelecionado}
-                onChange={(e) => setIdClienteSelecionado(e.target.value)}
-                required
-              >
-                <option value="">Selecione um cliente</option>
-                {clientes.map((c) => (
-                  <option key={c.idCliente} value={c.idCliente}>
-                    {c.nome}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <GravadorAudio onAudioReady={handleAudioReady} />
+      </div>
 
-            <div className="campo">
-              <label>Upload de áudio</label>
-              <input
-                type="file"
-                accept=".mp3,.wav,.m4a"
-                onChange={handleInputFileChange}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="grid_campos">
-            <div className="campo">
-              <label>Nome completo</label>
-              <input
-                type="text"
-                placeholder="Insira seu nome completo"
-                value={nomeCompleto}
-                onChange={(e) => setNomeCompleto(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="campo">
-              <label>E-mail</label>
-              <input
-                type="email"
-                placeholder="exemplo@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="campo">
-              <label>Senha Padrão</label>
-              <div className="campo_senha">
-                <input
-                  type={mostrarSenha ? "text" : "password"}
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                  required
-                />
-                <button type="button" className="btn_visibilidade" onClick={alternarSenha}>
-                  {mostrarSenha ? "🙈" : "👁️"}
-                </button>
-              </div>
-            </div>
-
-            <div className="campo">
-              <label>CNPJ (opcional)</label>
-              <input
-                type="text"
-                placeholder="00.000.000/0000-00"
-                value={cnpj}
-                onChange={(e) => setCnpj(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Nome Fantasia"
-                value={nomeFantasia}
-                onChange={(e) => setNomeFantasia(e.target.value)}
-              />
-            </div>
-
-            <div className="upload_section">
-              <label>Upload de áudio</label>
-              <div
-                className={`upload_area ${isDragging ? "dragging" : ""}`}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-              >
-                <input
-                  type="file"
-                  accept=".mp3,.wav,.m4a"
-                  id="audioUpload"
-                  hidden
-                  onChange={handleInputFileChange}
-                />
-                <label htmlFor="audioUpload" className="upload_label">
-                  <span className="icone_upload">📤</span>
-                  {audioFile ? (
-                    <p>
-                      <strong>Arquivo Selecionado:</strong><br />
-                      <small>
-                        {audioFile.name} ({(audioFile.size / 1024 / 1024).toFixed(2)} MB)
-                      </small>
-                    </p>
-                  ) : (
-                    <p>
-                      <strong>Clique ou arraste um áudio</strong><br />
-                      <small>WAV, MP3 ou M4A (MAX. 10MB)</small>
-                    </p>
-                  )}
-                </label>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="btn_cadastrar">
-          <Botao nomeBotao="Cadastrar" type="submit" />
-        </div>
-      </form>
-    </div>
-  );
+      {/* ================= BOTÃO ================= */}
+      <div className="btn_cadastrar">
+        <button type="submit">Criar Chamado</button>
+      </div>
+    </form>
+  </div>
+);
 }
-
 export default Chamado;

@@ -2,14 +2,13 @@ import "./ModalChamado.css";
 import { useNavigate } from "react-router-dom";
 
 
-export default function ModalChamado({ chamado, idChamado, onClose, onArquivar }) {
+export default function ModalChamado({ chamado, idChamado, onClose, onArquivar, sentimentoCalculado }) {
 
   const navigate = useNavigate();
 
   // se não tiver dados, não renderiza
   if (!chamado && !idChamado) return null;
 
-  // 👉 Função para formatar data no padrão brasileiro
   function formatarData(dataStr) {
     if (!dataStr) return "Data inválida";
     const data = new Date(dataStr);
@@ -24,6 +23,11 @@ export default function ModalChamado({ chamado, idChamado, onClose, onArquivar }
 
   // id efetivo do chamado (prioriza idChamado recebido, senão tenta o do objeto)
   const chamadoIdEfetivo = idChamado ?? chamado?.idChamado;
+
+  // 🎯 CORREÇÃO: Usa o sentimento calculado do Card (se existir) ou o do objeto
+  const sentimentoBase = chamado?.sentimento || chamado?.classificacao || "Neutro";
+  const sentimentoAtual = (sentimentoCalculado || sentimentoBase).toLowerCase();
+
 
   return (
     <div className="modal_overlay" onClick={onClose}>
@@ -45,8 +49,11 @@ export default function ModalChamado({ chamado, idChamado, onClose, onArquivar }
               <span className="modal_data">{formatarData(chamado?.data)}</span>
             </div>
 
-            <span className="modal_status">
-              {chamado?.sentimento || "Neutro"}
+            {/* 🎯 BADGE DE SENTIMENTO ATUALIZADO 🎯 */}
+            <span className={`modal_status sentimento-${sentimentoAtual}`}>
+              {sentimentoAtual === "positivo" && "😊 Positivo"}
+              {sentimentoAtual === "negativo" && "😠 Negativo"}
+              {sentimentoAtual === "neutro" && "😐 Neutro"}
             </span>
           </div>
 

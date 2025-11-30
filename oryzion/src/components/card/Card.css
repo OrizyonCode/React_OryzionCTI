@@ -15,14 +15,13 @@ ESTILOS DO CARD
   gap: 30px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.193);
   font-family: sans-serif;
-
-  cursor: pointer; /* ← importante para modal */
+  cursor: pointer;
   opacity: 1;
   transform: translateY(0);
   transition: all 0.4s ease;
 }
 
-/* Evitar clique em filho sobrepor o card */
+/* Evitar que clique em filhos sobreponha o card */
 .card * {
   pointer-events: auto;
 }
@@ -57,11 +56,11 @@ ANIMAÇÃO DE SAÍDA DO CARD
 SEÇÃO SUPERIOR DO CARD
 ============================== */
 .card_top_content {
-  margin-left: 10px;
   display: flex;
   align-items: flex-start;
   gap: 55px;
   padding-right: 160px;
+  margin-left: 10px;
 }
 
 .card_user_info {
@@ -93,8 +92,7 @@ SEÇÃO SUPERIOR DO CARD
   max-width: 1000px;
   margin-top: 5px;
   flex-grow: 1;
-  pointer-events: none; 
-  /* ← permite clique no card mesmo sobre o texto */
+  pointer-events: none; /* Permite clique no card mesmo sobre o texto */
 }
 
 /* ==============================
@@ -154,6 +152,7 @@ SEÇÃO INFERIOR DO CARD
   gap: 50px;
 }
 
+/* BADGE DE SENTIMENTO */
 .card_tag {
   background: #DAE8FF;
   color: #586E9D;
@@ -163,6 +162,22 @@ SEÇÃO INFERIOR DO CARD
   font-weight: 600;
   flex-shrink: 0;
   margin-top: -25px;
+}
+
+/* Cores de sentimento */
+.sentimento-positivo {
+  background: #D1FAE5;
+  color: #16A34A;
+}
+
+.sentimento-negativo {
+  background: #FECACA;
+  color: #B91C1C;
+}
+
+.sentimento-neutro {
+  background: #E5E7EB;
+  color: #6B7280;
 }
 
 .card_audio {

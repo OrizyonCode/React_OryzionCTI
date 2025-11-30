@@ -43,10 +43,8 @@ const ListagemFeedback = () => {
         const resposta = await fetch("http://localhost:5128/api/Chamado");
         if (!resposta.ok) throw new Error(`Erro HTTP ${resposta.status}`);
         const dados = await resposta.json();
-        // filtra status true (conforme regra sua)
         const filtrados = Array.isArray(dados) ? dados.filter((ch) => ch.status === true) : [];
         setFeedbacks(filtrados);
-        // reset pagina
         setPaginaAtual(1);
       } catch (err) {
         console.error("Erro ao buscar feedbacks:", err);
@@ -57,7 +55,6 @@ const ListagemFeedback = () => {
     buscarFeedbacks();
   }, []);
 
-  // PAGINAÇÃO calculos
   const totalPaginas = Math.max(1, Math.ceil(feedbacks.length / CARDS_POR_PAGINA));
   const indiceInicial = (paginaAtual - 1) * CARDS_POR_PAGINA;
   const indiceFinal = indiceInicial + CARDS_POR_PAGINA;
@@ -71,13 +68,11 @@ const ListagemFeedback = () => {
     window.scrollTo({ top: 200, behavior: "smooth" });
   };
 
-  // CARROSSEL: controles
   const carouselItems = feedbacks.slice(0, Math.max(CAROUSEL_VISIBLE, 6)); // pega primeiros itens para o carrossel
   const nextSlide = () => setCarouselIndex((i) => (i + 1) % Math.max(carouselItems.length, 1));
   const prevSlide = () =>
     setCarouselIndex((i) => (i - 1 + Math.max(carouselItems.length, 1)) % Math.max(carouselItems.length, 1));
 
-  // autoplay
   useEffect(() => {
     if (carouselItems.length <= 1) return;
     carouselTimerRef.current?.() && clearInterval(carouselTimerRef.current);
@@ -86,16 +81,13 @@ const ListagemFeedback = () => {
     }, CAROUSEL_AUTOPLAY_MS);
     carouselTimerRef.current = () => clearInterval(timer);
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carouselItems.length]);
 
-  // abrir modal
   const abrirModalChamado = (chamado) => {
     setChamadoSelecionado(chamado);
     setModalOpen(true);
   };
 
-  // arquivar com SweetAlert
   const confirmarArquivarChamado = async (idChamado) => {
     const result = await Swal.fire({
       title: "Arquivar chamado?",
@@ -127,10 +119,10 @@ const ListagemFeedback = () => {
     try {
       setRemovendoId(idChamado);
       const resposta = await fetch(`http://localhost:5128/api/Chamado/${idChamado}/status`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: false }),
-      });
+  method: "PATCH",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(false), // apenas o booleano puro!
+});
       if (!resposta.ok) throw new Error("Erro ao atualizar status");
       // animação + remoção
       setTimeout(() => {
@@ -164,7 +156,6 @@ const ListagemFeedback = () => {
       <BarraPesquisa />
 
       <section className="listagem_feedbacks">
-        {/* --- CARROSSEL SIMPLES --- */}
         <div className="carrossel_container" style={{ width: "100%", maxWidth: 1200, margin: "20px auto 0 auto" }}>
           <div className="carrossel_inner" style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <button className="carrossel_nav" onClick={prevSlide} aria-label="Anterior">

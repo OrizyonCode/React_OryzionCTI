@@ -80,25 +80,21 @@ const Login = () => {
 
         const tokenDecodificado = userDecodeToken(token);
 
-        // 👉 Pega só o primeiro nome
         const primeiroNome = tokenDecodificado.nome?.split(" ")[0];
 
-        // 👉 Cria um novo objeto com o nome ajustado
         const usuarioComPrimeiroNome = {
           ...tokenDecodificado,
           nome: primeiroNome
         };
 
-        // 👉 Salva no contexto
         setUsuario(usuarioComPrimeiroNome);
 
-        // 👉 Salva no storage
         secureLocalStorage.setItem("tokenLogin", JSON.stringify(usuarioComPrimeiroNome));
         localStorage.setItem("token", token);
 
         let timerInterval;
 
-        if (tokenDecodificado.tipoUsuario === "Cliente") {
+        if (tokenDecodificado.tipoUsuario === "cliente") {
           let timerInterval;
           Swal.fire({
             title: "Cliente Encontrado!",
@@ -120,7 +116,7 @@ const Login = () => {
               naviGate("/chat/:idFeedback");
             }
           });
-        } else if (tokenDecodificado.tipoUsuario === "Suporte") {
+        } else if (tokenDecodificado.tipoUsuario === "suporte") {
           let timerInterval;
           Swal.fire({
             title: "Suporte Encontrado!",
