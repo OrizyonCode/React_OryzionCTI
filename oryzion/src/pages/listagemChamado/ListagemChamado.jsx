@@ -20,7 +20,31 @@ const ListagemChamado = () => {
   const [modalAberto, setModalAberto] = useState(false);
   const [transcricaoSelecionada, setTranscricaoSelecionada] = useState(null);
 
-  // Buscar chamados
+  // ------------------------------------------
+  // HASH DETERMINÍSTICO PARA GUID → 4 dígitos
+  // ------------------------------------------
+  function hashStringToNumber(str) {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash * 33) ^ str.charCodeAt(i);
+    }
+    return (hash >>> 0) % 10000; // retorna 0–9999
+  }
+
+  // ------------------------------------------
+  // GERA PROTOCOLO FIXO: OC-2025-XXXX
+  // ------------------------------------------
+  function gerarProtocolo(id) {
+    if (!id) return "—";
+
+    const num = hashStringToNumber(String(id))
+      .toString()
+      .padStart(4, "0");
+
+    return `OC-2025-${num}`;
+  }
+
+  // Buscar chamados da API
   useEffect(() => {
     async function buscarChamados() {
       try {
@@ -42,19 +66,23 @@ const ListagemChamado = () => {
   if (loading) return <p>🔄 Carregando chamados...</p>;
   if (erro) return <p className="erro">Erro ao carregar chamados: {erro}</p>;
 
-  // Filtro seguro
+  // Filtro
   const chamadosFiltrados = chamados.filter((c) => {
     const termo = searchTerm.toLowerCase();
-    const protocolo = (c.idChamado ?? "").toString().toLowerCase();
+    const protocolo = gerarProtocolo(c.idChamado).toLowerCase();
     const cliente = (c.cliente?.usuario?.nome ?? "").toLowerCase();
     const status = c.status ? "ativo" : "pendente";
 
-    return protocolo.includes(termo) || cliente.includes(termo) || status.includes(termo);
+    return (
+      protocolo.includes(termo) ||
+      cliente.includes(termo) ||
+      status.includes(termo)
+    );
   });
 
-  // Abrir modal mostrando a transcrição do chamado
+  // Abrir modal da transcrição
   const abrirModal = (transcricao) => {
-    setTranscricaoSelecionada(transcricao ?? null); // mantém nulo se não houver transcrição
+    setTranscricaoSelecionada(transcricao ?? null);
     setModalAberto(true);
   };
 
@@ -65,7 +93,7 @@ const ListagemChamado = () => {
 
       <section className="layout_grid listagemChamado">
 
-        {/* Botão Adicionar */}
+        {/* Botão adicionar */}
         <div className="img_adiciona">
           <Link to="/chamado" className="botao_adicionar">
             <img src={mais} alt="Mais" />
@@ -76,7 +104,6 @@ const ListagemChamado = () => {
         {/* Tabela */}
         <div className="tabela_chamados">
 
-          {/* Cabeçalho */}
           <div className="linha header">
             <h3>Protocolo</h3>
             <h3>Cliente</h3>
@@ -85,14 +112,14 @@ const ListagemChamado = () => {
             <h3>Status</h3>
           </div>
 
-          {/* Linhas */}
           {chamadosFiltrados.map((c) => (
             <div className="linha" key={c.idChamado}>
 
-              <p>{c.idChamado}</p>
+              {/* PROTOCOLO FIXO */}
+              <p>{gerarProtocolo(c.idChamado)}</p>
+
               <p>{c.cliente?.usuario?.nome ?? "—"}</p>
 
-              {/* Transcrição */}
               {/* Transcrição */}
               <div className="acao">
                 {c.transcricao ? (
@@ -100,18 +127,15 @@ const ListagemChamado = () => {
                     <img
                       src={transcricaoIcon}
                       alt="Transcrição"
-                      style={{ cursor: "pointer", opacity: 1 }}
+                      style={{ cursor: "pointer" }}
                     />
                   </div>
                 ) : (
-                  <div>
-                    <img
-                      src={transcricaoIcon}
-                      alt="Sem transcrição"
-                      style={{ opacity: 0.3, cursor: "not-allowed" }}
-                      title="Nenhuma transcrição disponível"
-                    />
-                  </div>
+                  <img
+                    src={transcricaoIcon}
+                    alt="Sem transcrição"
+                    style={{ opacity: 0.3, cursor: "not-allowed" }}
+                  />
                 )}
               </div>
 
@@ -121,7 +145,9 @@ const ListagemChamado = () => {
                   <a href={c.audio} download>
                     <img src={download} alt="Baixar áudio" style={{ cursor: "pointer" }} />
                   </a>
-                ) : <p style={{ opacity: 0.5 }}>—</p>}
+                ) : (
+                  <p style={{ opacity: 0.5 }}>—</p>
+                )}
               </div>
 
               <p>{c.status ? "✅ Ativo" : "⏳ Pendente"}</p>
@@ -136,7 +162,7 @@ const ListagemChamado = () => {
       {modalAberto && (
         <div className="modal_overlay">
           <div className="modal_conteudo">
-            <h2 className='titulo_do_modal'>Transcrição do Áudio</h2>
+            <h2 className="titulo_do_modal">Transcrição do Áudio</h2>
             <p className="texto_transcricao">
               {transcricaoSelecionada ?? "Nenhuma transcrição disponível."}
             </p>
