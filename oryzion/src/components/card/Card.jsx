@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import Usuario from '../../assets/img/Profile2.png';
 import AudioPlayer from "../audioPlayer/AudioPlayer";
 import "./Card.css";
@@ -34,14 +35,17 @@ export default function Card({
   const [transcricao, setTranscricao] = useState("");
   const [sentimento, setSentimento] = useState("neutro");
   const [carregando, setCarregando] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
+    let mounted = true;
+
     async function transcrever() {
       let textoBase = texto || "";
 
       if (!audio) {
+        if (!mounted) return;
+        setTranscricao(textoBase);
         setSentimento(classificarSentimento(textoBase));
         return;
       }
@@ -63,27 +67,88 @@ export default function Card({
         if (!resposta.ok) throw new Error("Falha na transcrição");
 
         const text = await resposta.text();
+        if (!mounted) return;
         setTranscricao(text);
         textoBase = text;
       } catch {
+        if (!mounted) return;
         setTranscricao("Erro ao transcrever áudio");
       } finally {
+        if (!mounted) return;
         setCarregando(false);
       }
 
-      setSentimento(classificarSentimento(textoBase));
+      if (mounted) setSentimento(classificarSentimento(textoBase));
     }
 
     transcrever();
+    return () => { mounted = false; };
   }, [audio, texto]);
 
   const formatDate = (d) => new Date(d).toLocaleString("pt-BR");
 
+  const handleOpenModal = (e) => {
+    if (e) e.stopPropagation?.();
+    const chamadoParaModal = {
+      idChamado,
+      nome,
+      texto: texto || transcricao,
+      transcricao: texto || transcricao,
+      audio,
+      data,
+      sentimento,
+    };
+    onOpenModal?.(chamadoParaModal);
+  };
+
+  const handleResponder = (e) => {
+    e.stopPropagation();
+
+    let timerInterval;
+    let timeLeft = 0.0;
+
+    Swal.fire({
+      title: "Chamado Encontrado!",
+      html: "Redirecionando para o Chat em <b>4.0</b> s",
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          timeLeft -= 0.1;
+          if (b) b.textContent = timeLeft.toFixed(1);
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      }
+    }).then(() => {
+      navigate(`/chat/${idChamado}`, {
+        state: {
+          chamado: {
+            idFeedback: idChamado,
+            nome,
+            texto: texto || transcricao,
+            audio,
+            data,
+            sentimento,
+          },
+        },
+      });
+    });
+  };
+
   return (
-    <div className="card">
+    <div
+      className="card"
+      onClick={handleOpenModal}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter") handleOpenModal(); }}
+    >
       <div className="card_top_content">
         <div className="card_user_info">
-          <img className="avatar_user" src={Usuario} />
+          <img className="avatar_user" src={Usuario} alt="Usuário" />
           <h3 className="card_name">{nome}</h3>
         </div>
 
@@ -94,21 +159,7 @@ export default function Card({
         <div className="responder_botao">
           <button
             className="btn_responder"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/chat/${idChamado}`, {
-                state: {
-                  chamado: {
-                    idFeedback: idChamado,
-                    nome,
-                    texto: texto || transcricao,
-                    audio,
-                    data,
-                    sentimento,
-                  },
-                },
-              });
-            }}
+            onClick={handleResponder}
           >
             Responder
           </button>
@@ -116,10 +167,12 @@ export default function Card({
           <img
             src={arquiva}
             className="icone_arquivar"
+            alt="Arquivar"
             onClick={(e) => {
               e.stopPropagation();
               onArquivar?.(idChamado);
             }}
+            style={{ cursor: "pointer" }}
           />
         </div>
       </div>

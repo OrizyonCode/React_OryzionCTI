@@ -23,7 +23,6 @@ const BarraPesquisa = ({ mostrarFiltros = true, onSearch }) => {
   return (
     <div className="barra_pesquisa_container">
 
-      {/* Filtro Mobile */}
       {isMobile && mostrarFiltros && (
         <div className="filtro_container">
           <img

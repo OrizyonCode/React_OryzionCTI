@@ -46,13 +46,15 @@ export default function AudioPlayer({ src }) {
 
   return (
     <div className="audio-container">
-      <button className="audio-play-btn" onClick={togglePlay}>
-        {isPlaying ? (
-          <span className="pause-icon">❚❚</span>
-        ) : (
-          <span className="play-icon">▶</span>
-        )}
-      </button>
+     <button className="audio-play-btn" onClick={togglePlay}>
+    {isPlaying ? (
+        <span className="pause-icon">❚❚</span> // O pause (❚❚) geralmente não tem esse problema
+    ) : (
+        <svg className="play-icon" viewBox="0 0 24 24" fill="black" width="16" height="16">
+            <path d="M6 3.5l14 8.5-14 8.5z"/>
+        </svg>
+    )}
+</button>
 
       <div className="audio-track">
         <input

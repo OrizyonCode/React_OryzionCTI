@@ -150,3 +150,19 @@
 .btn_responder:hover {
   background: #111828;
 }
+
+.sentimento-positivo {
+  background: #d4f8d4 !important; 
+  color: #1a7f1a !important;       
+}
+
+.sentimento-negativo {
+  background: #ffd6d6 !important; 
+  color: #c62828 !important;       
+}
+
+.sentimento-neutro {
+  background: #e3e3e3 !important; 
+  color: #555 !important;
+}
+

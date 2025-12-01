@@ -177,6 +177,11 @@ SEÇÃO INFERIOR DO CARD
   color: #6B7280;
 }
 
+/* Exemplo para remover ou customizar a aparência nativa */
+audio::-webkit-media-controls-play-button {
+    /* Estilos de remoção ou customização */
+}
+
 .card_audio {
   display: flex;
   align-items: center;
