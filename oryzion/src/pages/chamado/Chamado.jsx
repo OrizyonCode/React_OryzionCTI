@@ -171,7 +171,7 @@ function Chamado() {
           email: email,
           senha: senha,
           imagem: "",
-          idTipoUsuario: "1A9F077D-E0BA-4EEC-BBBE-8F56166E7DFE",
+          idTipoUsuario: "1a1f3099-b8ac-485c-98f3-90cdcb5138f8",
         };
 
         // Criar usuário
@@ -238,7 +238,7 @@ function Chamado() {
         form.append("Status", true);
         form.append("Data", new Date().toISOString());
         form.append("IdCliente", idClienteCriado);
-        form.append("IdSuporte", "34D984CE-6AD9-47FF-86C7-74A12716996A");
+        form.append("IdSuporte", "54e19194-8b89-49a3-bba1-631b1107cbc0");
 
         if (audioFile) {
           if (audioFile instanceof File) {

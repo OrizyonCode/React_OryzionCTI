@@ -1,15 +1,19 @@
 /* Layout principal */
 .listagemChamado {
   width: 100%;
-  height: auto;
+  min-height: 70vh; 
+  overflow-y: auto; 
+  padding-bottom: 100px; 
+  box-sizing: border-box;
 }
 
 /* Botão adicionar */
 .img_adiciona {
-  width: 100%;
+  width: 90%; /* Ajustado para alinhar com a tabela */
+  max-width: 1200px;
   display: flex;
   justify-content: flex-start;
-  margin: 40px 0;
+  margin: 40px auto 30px auto; /* Centralizado com a tabela */
 }
 
 .botao_adicionar {
@@ -34,24 +38,23 @@
   height: 24px;
 }
 
-/* Tabela geral */
 .tabela_chamados {
   width: 90%;
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 0 auto 30px auto;
   padding: 0;
   border: 2px solid #000;
   border-radius: 12px;
   background: #fff;
-  overflow: hidden;
+  overflow: hidden; 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: auto; 
 }
 
-/* Linha */
 .linha {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
-  padding: 12px 20px;
+  grid-template-columns: 0.8fr 1.5fr 1fr 0.5fr 0.8fr; 
+  padding: 15px 20px; /* Aumentei um pouco o padding vertical */
   border-top: 1px solid #000;
   align-items: center;
   text-align: center;
@@ -67,19 +70,21 @@
   font-weight: 700;
   text-transform: uppercase;
   font-size: 16px;
+  position: sticky; 
+  top: 0;
+  z-index: 10;
 }
 
 .header h3 {
   margin: 0;
 }
 
-/* Células */
 .linha p {
   margin: 0;
   font-size: 15px;
+  word-wrap: break-word; 
 }
 
-/* Área com ícones (transcrição / download) */
 .acao img {
   height: 22px;
   cursor: pointer;
@@ -90,7 +95,6 @@
   transform: scale(1.1);
 }
 
-/* Erro */
 .erro {
   color: red;
   text-align: center;
@@ -108,7 +112,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 9999; /* Z-index bem alto */
 }
 
 .modal_conteudo {
@@ -117,32 +121,33 @@
   max-width: 600px;
   width: 90%;
   border-radius: 12px;
-}
-
-.modal_conteudo textarea {
-  width: 100%;
-  height: 200px;
-  margin-top: 15px;
-  padding: 10px;
-  resize: none;
-}
-
-.modal_conteudo button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 .texto_transcricao {
   background: #f5f5f5;
   padding: 15px;
   border-radius: 8px;
-  min-height: 180px;
+  min-height: 100px;
+  max-height: 400px; /* Limite de altura para a transcrição */
+  overflow-y: auto; /* Scroll dentro do modal se o texto for muito grande */
   white-space: pre-wrap;
+  margin: 15px 0;
 }
 
 .titulo_do_modal{
   color: #000;
+  margin-top: 0;
+}
+
+.modal_conteudo button {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 /* Responsividade */
@@ -152,50 +157,39 @@
   }
 
   .linha {
-    grid-template-columns: 1fr 1fr;
-    grid-row-gap: 8px;
+    display: flex; /* Mudamos de Grid para Flex no mobile para melhor controle */
+    flex-direction: column;
     padding: 20px;
     text-align: left;
+    gap: 10px;
   }
 
   .header {
-    display: none; /* Esconde cabeçalho em telas pequenas */
+    display: none; 
   }
 
   .linha p,
   .acao {
     text-align: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
   }
 
-  .linha p::before {
+  .linha p::before, .acao::before {
     font-weight: 700;
-    margin-right: 6px;
-    text-transform: capitalize;
+    margin-right: 10px;
+    min-width: 100px; /* Alinha os rótulos */
+    display: inline-block;
   }
 
-  /* Labels simulados no mobile (estilo tabela responsiva) */
-  .linha:nth-child(n + 2) p:nth-child(1)::before {
-    content: "Protocolo: ";
-  }
-
-  .linha:nth-child(n + 2) p:nth-child(2)::before {
-    content: "Cliente: ";
-  }
-
-  .linha:nth-child(n + 2) div:nth-child(3)::before {
-    content: "Transcrição: ";
-    font-weight: 700;
-    margin-right: 6px;
-  }
-
-  .linha:nth-child(n + 2) div:nth-child(4)::before {
-    content: "Áudio: ";
-    font-weight: 700;
-    margin-right: 6px;
-  }
-
-  .linha:nth-child(n + 2) p:nth-child(5)::before {
-    content: "Status: ";
-  }
+  /* Labels simulados no mobile */
+  .linha p:nth-child(1)::before { content: "Protocolo: "; }
+  .linha p:nth-child(2)::before { content: "Cliente: "; }
+  
+  /* Ajuste específico para as divs de ação */
+  .linha div:nth-of-type(1)::before { content: "Transcrição: "; font-weight: 700; margin-right: 10px; }
+  .linha div:nth-of-type(2)::before { content: "Áudio: "; font-weight: 700; margin-right: 10px; }
+  
+  .linha p:last-child::before { content: "Status: "; }
 }
-

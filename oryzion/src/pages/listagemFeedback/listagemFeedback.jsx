@@ -14,217 +14,217 @@ const CAROUSEL_VISIBLE = 3;
 const CAROUSEL_AUTOPLAY_MS = 4000;
 
 const ListagemFeedback = () => {
-  const navigate = useNavigate(); // ⬅️ HOOK DE NAVEGAÇÃO
-  const [feedbacks, setFeedbacks] = useState([]);
-  const [loading, setLoading] = useState(true);
+    const navigate = useNavigate(); // ⬅️ HOOK DE NAVEGAÇÃO
+    const [feedbacks, setFeedbacks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  const [paginaAtual, setPaginaAtual] = useState(1);
+    const [paginaAtual, setPaginaAtual] = useState(1);
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [chamadoSelecionado, setChamadoSelecionado] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [chamadoSelecionado, setChamadoSelecionado] = useState(null);
 
-  const [removendoId, setRemovendoId] = useState(null);
-  const [toast, setToast] = useState(false);
+    const [removendoId, setRemovendoId] = useState(null);
+    const [toast, setToast] = useState(false);
 
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  const carouselTimerRef = useRef(null);
+    const [carouselIndex, setCarouselIndex] = useState(0);
+    const carouselTimerRef = useRef(null);
 
-  const clickTimers = useRef({});
+    const clickTimers = useRef({});
 
-  // 🟣 Normalizador único de sentimento
-  function normalizarSentimento(s) {
-    if (!s) return "neutro";
+    // 🟣 Normalizador único de sentimento
+    function normalizarSentimento(s) {
+        if (!s) return "neutro";
 
-    const val = s.toString().toLowerCase();
+        const val = s.toString().toLowerCase();
 
-    if (["positivo", "positive", "bom", "boa"].includes(val)) return "positivo";
-    if (["negativo", "negative", "ruim", "péssimo"].includes(val)) return "negativo";
+        if (["positivo", "positive", "bom", "boa"].includes(val)) return "positivo";
+        if (["negativo", "negative", "ruim", "péssimo"].includes(val)) return "negativo";
 
-    return "neutro";
-  }
+        return "neutro";
+    }
 
-  const handleTripleClick = (id, chamado) => {
-    if (!clickTimers.current[id]) {
-      clickTimers.current[id] = { count: 0, timeout: null };
-    }
+    const handleTripleClick = (id, chamado) => {
+        if (!clickTimers.current[id]) {
+            clickTimers.current[id] = { count: 0, timeout: null };
+        }
 
-    const obj = clickTimers.current[id];
-    obj.count++;
+        const obj = clickTimers.current[id];
+        obj.count++;
 
-    if (obj.timeout) clearTimeout(obj.timeout);
-    obj.timeout = setTimeout(() => {
-      obj.count = 0;
-    }, 350);
+        if (obj.timeout) clearTimeout(obj.timeout);
+        obj.timeout = setTimeout(() => {
+            obj.count = 0;
+        }, 350);
 
-    if (obj.count === 2) {
-      obj.count = 0;
+        if (obj.count === 2) {
+            obj.count = 0;
 
-      // 🔥 Já manda o sentimento normalizado para o modal
-      abrirModalChamado({
-        ...chamado,
-        sentimentoNormalizado: normalizarSentimento(
-          chamado.sentimento || chamado.classificacao
-        )
-      });
-    }
-  };
+            // 🔥 Já manda o sentimento normalizado para o modal
+            abrirModalChamado({
+                ...chamado,
+                sentimentoNormalizado: normalizarSentimento(
+                    chamado.sentimento || chamado.classificacao
+                )
+            });
+        }
+    };
 
-  useEffect(() => {
-    async function buscarFeedbacks() {
-      try {
-        setLoading(true);
-        const resposta = await fetch("http://localhost:5128/api/Chamado");
-        if (!resposta.ok) throw new Error(`Erro HTTP ${resposta.status}`);
-        const dados = await resposta.json();
+    useEffect(() => {
+        async function buscarFeedbacks() {
+            try {
+                setLoading(true);
+                const resposta = await fetch("http://localhost:5128/api/Chamado");
+                if (!resposta.ok) throw new Error(`Erro HTTP ${resposta.status}`);
+                const dados = await resposta.json();
 
-        const filtrados = Array.isArray(dados)
-          ? dados.filter((ch) => ch.status === true)
-          : [];
+                const filtrados = Array.isArray(dados)
+                    ? dados.filter((ch) => ch.status === true)
+                    : [];
 
-        // 🔥 Normaliza sentimento na listagem
-        const normalizados = filtrados.map((ch) => ({
-          ...ch,
-          sentimentoNormalizado: normalizarSentimento(
-            ch.sentimento || ch.classificacao
-          ),
-        }));
+                // 🔥 Normaliza sentimento na listagem
+                const normalizados = filtrados.map((ch) => ({
+                    ...ch,
+                    sentimentoNormalizado: normalizarSentimento(
+                        ch.sentimento || ch.classificacao
+                    ),
+                }));
 
-        setFeedbacks(normalizados);
-        setPaginaAtual(1);
-      } catch (err) {
-        console.error("Erro ao buscar feedbacks:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    buscarFeedbacks();
-  }, []);
+                setFeedbacks(normalizados);
+                setPaginaAtual(1);
+            } catch (err) {
+                console.error("Erro ao buscar feedbacks:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        buscarFeedbacks();
+    }, []);
 
-  const abrirModalChamado = (chamado) => {
-    setChamadoSelecionado(chamado);
-    setModalOpen(true);
-  };
+    const abrirModalChamado = (chamado) => {
+        setChamadoSelecionado(chamado);
+        setModalOpen(true);
+    };
 
-  // 🎯 NOVA FUNÇÃO: ABRE O CHAT COM O ID REAL
-  const abrirChat = (idChamado, chamado) => {
-    console.log("Navegando para o chat com ID:", idChamado);
-    navigate(`/chat/${idChamado}`, { state: { chamado: chamado } });
-  };
+    // 🎯 NOVA FUNÇÃO: ABRE O CHAT COM O ID REAL
+    const abrirChat = (idChamado, chamado) => {
+        console.log("Navegando para o chat com ID:", idChamado);
+        navigate(`/chat/${idChamado}`, { state: { chamado: chamado } });
+    };
 
-  const confirmarArquivarChamado = async (idChamado) => {
-    const result = await Swal.fire({
-      title: "Arquivar chamado?",
-      text: "Você tem certeza que deseja arquivar este feedback?",
-      icon: "warning",
-      background: "#111828",
-      color: "#FFFFFF",
-      showCancelButton: true,
-      confirmButtonColor: "#5D50E8",
-      cancelButtonColor: "#6B7280",
-      confirmButtonText: "Sim, arquivar",
-      cancelButtonText: "Cancelar",
-    });
+    const confirmarArquivarChamado = async (idChamado) => {
+        const result = await Swal.fire({
+            title: "Arquivar chamado?",
+            text: "Você tem certeza que deseja arquivar este feedback?",
+            icon: "warning",
+            background: "#111828",
+            color: "#FFFFFF",
+            showCancelButton: true,
+            confirmButtonColor: "#5D50E8",
+            cancelButtonColor: "#6B7280",
+            confirmButtonText: "Sim, arquivar",
+            cancelButtonText: "Cancelar",
+        });
 
-    if (result.isConfirmed) {
-      await arquivarChamado(idChamado);
-      Swal.fire({
-        title: "Arquivado!",
-        text: "O feedback foi movido para os arquivados.",
-        icon: "success",
-        background: "#111828",
-        color: "#FFFFFF",
-        confirmButtonColor: "#5D50E8",
-      });
-    }
-  };
+        if (result.isConfirmed) {
+            await arquivarChamado(idChamado);
+            Swal.fire({
+                title: "Arquivado!",
+                text: "O feedback foi movido para os arquivados.",
+                icon: "success",
+                background: "#111828",
+                color: "#FFFFFF",
+                confirmButtonColor: "#5D50E8",
+            });
+        }
+    };
 
-  const arquivarChamado = async (idChamado) => {
-    try {
-      setRemovendoId(idChamado);
-      const resposta = await fetch(
-        `http://localhost:5128/api/Chamado/${idChamado}/status`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(false),
-        }
-      );
-      if (!resposta.ok) throw new Error("Erro ao atualizar status");
+    const arquivarChamado = async (idChamado) => {
+        try {
+            setRemovendoId(idChamado);
+            const resposta = await fetch(
+                `http://localhost:5128/api/Chamado/${idChamado}/status`,
+                {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(false),
+                }
+            );
+            if (!resposta.ok) throw new Error("Erro ao atualizar status");
 
-      setTimeout(() => {
-        setFeedbacks((prev) => prev.filter((ch) => ch.idChamado !== idChamado));
-        setRemovendoId(null);
-        setToast(true);
-        setTimeout(() => setToast(false), 2700);
-      }, 400);
-    } catch (err) {
-      console.error("Erro ao arquivar:", err);
-      setRemovendoId(null);
-    }
-  };
+            setTimeout(() => {
+                setFeedbacks((prev) => prev.filter((ch) => ch.idChamado !== idChamado));
+                setRemovendoId(null);
+                setToast(true);
+                setTimeout(() => setToast(false), 2700);
+            }, 400);
+        } catch (err) {
+            console.error("Erro ao arquivar:", err);
+            setRemovendoId(null);
+        }
+    };
 
-  const totalPaginas = Math.max(
-    1,
-    Math.ceil(feedbacks.length / CARDS_POR_PAGINA)
-  );
-  const indiceInicial = (paginaAtual - 1) * CARDS_POR_PAGINA;
-  const indiceFinal = indiceInicial + CARDS_POR_PAGINA;
-  const cardsParaExibir = feedbacks.slice(indiceInicial, indiceFinal);
+    const totalPaginas = Math.max(
+        1,
+        Math.ceil(feedbacks.length / CARDS_POR_PAGINA)
+    );
+    const indiceInicial = (paginaAtual - 1) * CARDS_POR_PAGINA;
+    const indiceFinal = indiceInicial + CARDS_POR_PAGINA;
+    const cardsParaExibir = feedbacks.slice(indiceInicial, indiceFinal);
 
-  return (
-    <>
-      <Header />
-      <BarraPesquisa />
+    return (
+        <>
+            <Header />
+            <BarraPesquisa />
 
-      <section className="listagem_feedbacks">
+            <section className="listagem_feedbacks">
 
-        <h2 className="qtd_feedback">
-          Feedbacks ({feedbacks.length})
-        </h2>
+                <h2 className="qtd_feedback">
+                    Feedbacks ({feedbacks.length})
+                </h2>
 
-        <div className="listagem_cards">
-          {cardsParaExibir.map((fb) => (
-            <div
-              key={fb.idChamado}
-              className={`card-wrapper ${removendoId === fb.idChamado ? "removendo" : ""}`}
-              onClick={() => handleTripleClick(fb.idChamado, fb)}
-            >
-              <Card
-                idChamado={fb.idChamado}
-                nome={fb.cliente?.usuario?.nome ?? "Usuário"}
-                texto={fb.transcricao}
-                audio={fb.audio}
-                data={fb.data}
-                sentimento={fb.sentimentoNormalizado}
-                onArquivar={() => confirmarArquivarChamado(fb.idChamado)}
-                onOpenModal={(obj) => abrirModalChamado(obj)}
-                // 🎯 NOVA PROP: Passa a função de navegação para o Card
-                onOpenChat={() => abrirChat(fb.idChamado, fb)} 
-              />
-            </div>
-          ))}
-        </div>
+                <div className="listagem_cards">
+                    {cardsParaExibir.map((fb) => (
+                        <div
+                            key={fb.idChamado}
+                            className={`card-wrapper ${removendoId === fb.idChamado ? "removendo" : ""}`}
+                            onClick={() => handleTripleClick(fb.idChamado, fb)}
+                        >
+                            <Card
+                                idChamado={fb.idChamado}
+                                nome={fb.cliente?.usuario?.nome ?? "Usuário"}
+                                texto={fb.transcricao}
+                                audio={fb.audio}
+                                data={fb.data}
+                                sentimento={fb.sentimentoNormalizado}
+                                onArquivar={() => confirmarArquivarChamado(fb.idChamado)}
+                                onOpenModal={(obj) => abrirModalChamado(obj)}
+                                // 🎯 NOVA PROP: Passa a função de navegação para o Card
+                                onOpenChat={() => abrirChat(fb.idChamado, fb)}
+                            />
+                        </div>
+                    ))}
+                </div>
 
-        <div className="paginacao_container">
-          {/* botões de navegação */}
-        </div>
-      </section>
+                <div className="paginacao_container">
+                    {/* botões de navegação */}
+                </div>
+            </section>
 
-      {modalOpen && (
-        <ModalChamado
-          chamado={chamadoSelecionado}
-          idChamado={chamadoSelecionado?.idChamado}
-          sentimentoCalculado={chamadoSelecionado?.sentimentoNormalizado}
-          onClose={() => setModalOpen(false)}
-          onArquivar={(id) => confirmarArquivarChamado(id)}
-        />
-      )}
+            {modalOpen && (
+                <ModalChamado
+                    chamado={chamadoSelecionado}
+                    idChamado={chamadoSelecionado?.idChamado}
+                    sentimentoCalculado={chamadoSelecionado?.sentimentoNormalizado}
+                    onClose={() => setModalOpen(false)}
+                    onArquivar={(id) => confirmarArquivarChamado(id)}
+                />
+            )}
 
-      <Footer />
+            <Footer />
 
-      {toast && <div className="toast show">Chamado arquivado!</div>}
-    </>
-  );
+            {toast && <div className="toast show">Chamado arquivado!</div>}
+        </>
+    );
 };
 
 export default ListagemFeedback;
