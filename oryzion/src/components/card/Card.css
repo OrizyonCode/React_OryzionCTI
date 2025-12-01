@@ -1,6 +1,3 @@
-/* ==============================
-ESTILOS DO CARD
-============================== */
 .card {
   width: 100%;
   max-width: 1400px;
@@ -19,16 +16,13 @@ ESTILOS DO CARD
   opacity: 1;
   transform: translateY(0);
   transition: all 0.4s ease;
+  margin-bottom: 50px;
 }
 
-/* Evitar que clique em filhos sobreponha o card */
 .card * {
   pointer-events: auto;
 }
 
-/* ==============================
-ANIMAÇÃO DE SAÍDA DO CARD
-============================== */
 @keyframes cardSumir {
   0% {
     opacity: 1;
@@ -52,9 +46,6 @@ ANIMAÇÃO DE SAÍDA DO CARD
   padding: 0 !important;
 }
 
-/* ==============================
-SEÇÃO SUPERIOR DO CARD
-============================== */
 .card_top_content {
   display: flex;
   align-items: flex-start;
@@ -95,9 +86,6 @@ SEÇÃO SUPERIOR DO CARD
   pointer-events: none; /* Permite clique no card mesmo sobre o texto */
 }
 
-/* ==============================
-BOTÃO + ÍCONE ARQUIVAR
-============================== */
 .responder_botao {
   display: flex;
   flex-direction: column;
@@ -120,7 +108,6 @@ BOTÃO + ÍCONE ARQUIVAR
   opacity: 0.8;
 }
 
-/* Botão */
 .responder_botao button {
   background: #5d50e8;
   color: white;
@@ -140,16 +127,12 @@ BOTÃO + ÍCONE ARQUIVAR
   pointer-events: auto;
 }
 
-/* ==============================
-SEÇÃO INFERIOR DO CARD
-============================== */
 .card_footer {
   display: flex;
   align-items: center;
   gap: 50px;
 }
 
-/* BADGE DE SENTIMENTO */
 .card_tag {
   background: #DAE8FF;
   color: #586E9D;
@@ -161,7 +144,6 @@ SEÇÃO INFERIOR DO CARD
   margin-top: -25px;
 }
 
-/* Cores de sentimento */
 .sentimento-positivo {
   background: #D1FAE5;
   color: #16A34A;
@@ -177,9 +159,7 @@ SEÇÃO INFERIOR DO CARD
   color: #6B7280;
 }
 
-/* Exemplo para remover ou customizar a aparência nativa */
 audio::-webkit-media-controls-play-button {
-    /* Estilos de remoção ou customização */
 }
 
 .card_audio {
