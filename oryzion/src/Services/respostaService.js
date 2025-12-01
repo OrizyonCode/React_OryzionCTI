@@ -1,18 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5128/api/Resposta",
+  baseURL: "http://localhost:5128/api",
   headers: {
     "Content-Type": "application/json"
   }
 });
 
 const listarPorFeedback = (idFeedback) => {
-  return api.get(`/chamado/${idFeedback}`);
+  return api.get(`/Resposta/chamado/${idFeedback}`);
 };
 
 const enviarMensagem = (mensagem) => {
-  // Garante que Data seja ISO 8601 e que IDs existam
   const payload = {
     IdFeedback: mensagem.IdFeedback,
     IdUsuario: mensagem.IdUsuario,
@@ -20,7 +19,7 @@ const enviarMensagem = (mensagem) => {
     Data: mensagem.Data || new Date().toISOString()
   };
 
-  return api.post("/", payload);
+  return api.post("/Resposta", payload);
 };
 
 export default { listarPorFeedback, enviarMensagem };
