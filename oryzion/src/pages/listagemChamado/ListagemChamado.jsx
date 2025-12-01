@@ -124,7 +124,7 @@ const ListagemChamado = () => {
                 ) : <p style={{ opacity: 0.5 }}>—</p>}
               </div>
 
-              <p>{c.status ? "✅ Ativo" : "⏳ Pendente"}</p>
+              <p>{c.status ? "⏳ Pendente" : "✅ Ativo"}</p>
 
             </div>
           ))}
